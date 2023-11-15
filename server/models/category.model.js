@@ -5,7 +5,8 @@ const CategorySchema = new mongoose.Schema({
         type: String,
         required: [true, "Category name is required."]
     },
-    icon: {
+    // consider using enum to have set options for icons
+    iconPath: {
         type: String,
         required: [true, "Category icon is required."]
     }
