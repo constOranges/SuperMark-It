@@ -1,0 +1,42 @@
+.options {
+    margin: 100px 250px;
+
+    .top {
+        display: flex;
+        align-items: center;
+        margin-bottom: 50px;
+        gap: 25px;
+
+        .item {
+            font-size: 20px;
+            font-family: Verdana;
+        }
+    }
+
+    .bottom {
+
+        .categories {
+            display: flex;
+            justify-content: space-between;
+            font-family: Verdana;
+            font-size: 16px;
+            color: rgb(94, 94, 94);
+
+            .cat {
+                text-align: center;
+                border-style: solid;
+                border-width: 1px;
+                border-color: rgb(224, 224, 224);
+                border-radius: 5%;
+                height: 200px;
+                width: 200px;
+
+                .catIcon {
+                    margin-top: 30px;
+                    font-size: 70px;
+                    padding: 15px;
+                }
+            }
+        }
+    }
+}
