@@ -5,7 +5,7 @@ import Options from "../options/Options";
 const Homepage = () => {
     return(
         <div className="homepage">
-            <h1>SUPERMARK-IT</h1>
+            <Options />
         </div>
     )
 }
