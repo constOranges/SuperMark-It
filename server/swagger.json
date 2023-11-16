@@ -1,0 +1,98 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "Super Mark-It",
+        "description": "",
+        "termsOfService": "http://swagger.io/terms/",
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.11"
+    },
+    "externalDocs": {
+        "description": "Find out more about Swagger",
+        "url": "http://swagger.io"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000/api"
+        }
+    ],
+    "tags": [
+        {
+            "name": "users"
+        },
+        {
+            "name": "items"
+        }
+    ],
+    "components": {
+        "schemas": {
+            "UserRegister": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string",
+                        "minLength": 8
+                    },
+                    "confirmPassword": {
+                        "type": "string",
+                        "minLength": 8
+                    }
+                },
+                "required": [
+                    "name",
+                    "email",
+                    "password",
+                    "confirmPassword"
+                ]
+            }
+        }
+    },
+    "paths": {
+        "/users/register": {
+            "post": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Register a user to the database",
+                "description": "Register a user to the database",
+                "operationId": "createUser",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserRegister"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid form data supplied"
+                    },
+                    "405": {
+                        "description": "Validation exception"
+                    }
+                }
+            }
+        }
+    }
+}
