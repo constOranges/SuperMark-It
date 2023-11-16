@@ -20,11 +20,14 @@ module.exports.createUser = (req, res) => {
             const userToken = jwt.sign({
                 id: user._id
             }, secret);
+
+            const { password, ...userInfo } = user._doc;
+
             res
                 .cookie("usertoken", userToken, {
                     httpOnly: true
                 })
-                .json({ message: "Login success!", user: user });
+                .json({ user: userInfo });
         })
         .catch(err => res.status(400).json(err));
 }
@@ -44,11 +47,13 @@ module.exports.loginUser = async (req, res) => {
         id: user._id
     }, secret);
 
+    const { password, ...userInfo } = user._doc;
+
     res
         .cookie("usertoken", userToken, {
             httpOnly: true
         })
-        .json({ message: "Login success!" });
+        .json({ user: userInfo });
 }
 
 module.exports.logout = (req, res) => {

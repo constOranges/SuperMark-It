@@ -40,11 +40,13 @@
                     },
                     "password": {
                         "type": "string",
-                        "minLength": 8
+                        "minLength": 8,
+                        "format": "password"
                     },
                     "confirmPassword": {
                         "type": "string",
-                        "minLength": 8
+                        "minLength": 8,
+                        "format": "password"
                     }
                 },
                 "required": [
@@ -53,6 +55,44 @@
                     "password",
                     "confirmPassword"
                 ]
+            },
+            "UserLogin": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string",
+                        "format": "password"
+                    }
+                },
+                "required": [
+                    "email",
+                    "password"
+                ]
+            },
+            "UserReturn": {
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
             }
         }
     },
@@ -63,7 +103,6 @@
                     "users"
                 ],
                 "summary": "Register a user to the database",
-                "description": "Register a user to the database",
                 "operationId": "createUser",
                 "requestBody": {
                     "content": {
@@ -76,11 +115,11 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Successful operation, returns user information and stores usertoken in cookie",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/User"
+                                    "$ref": "#/components/schemas/UserReturn"
                                 }
                             }
                         }
@@ -90,6 +129,80 @@
                     },
                     "405": {
                         "description": "Validation exception"
+                    }
+                }
+            }
+        },
+        "/users/login": {
+            "post": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Login user",
+                "operationId": "loginUser",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserLogin"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation, returns user information and stores usertoken in cookie",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserReturn"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid form data supplied"
+                    },
+                    "405": {
+                        "description": "Validation exception"
+                    }
+                }
+            }
+        },
+        "/users/logout": {
+            "post": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Logout user",
+                "operationId": "logout",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation, logs out user and clears usertoken cookie"
+                    }
+                }
+            }
+        },
+        "/users/currentuser": {
+            "get": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Retrieves current logged-in user's information",
+                "operationId": "findOneUser",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation, returns current user's information",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserReturn"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Something went wrong retrieving user information"
                     }
                 }
             }
