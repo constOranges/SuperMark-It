@@ -23,7 +23,7 @@ const Options = () => {
           <div className="cat">
             <FastfoodRoundedIcon className="catIcon" />
             <div className="catBody">
-              <Link className="link">ALL</Link>
+              <Link className="link" to="/category/1">ALL</Link>
             </div>
           </div>
           <div className="cat">
