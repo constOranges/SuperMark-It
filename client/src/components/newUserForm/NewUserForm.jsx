@@ -47,6 +47,12 @@ const NewUserForm = ({ loggedIn, setLoggedIn }) => {
       });
   };
 
+
+  const resetHandler = (e) => {
+    e.preventDefault();
+    navigate("/")
+  }
+
   return (
     <div>
       <div className="errorMessage">
@@ -55,7 +61,7 @@ const NewUserForm = ({ loggedIn, setLoggedIn }) => {
 
       <div className="loginForm">
         <h2>Sign-Up</h2>
-        <form onSubmit={registrationHandler}>
+        <form onSubmit={registrationHandler} onReset={resetHandler}>
           <div className="form-group">
             <label htmlFor="name">Name</label>
             <input
@@ -100,9 +106,14 @@ const NewUserForm = ({ loggedIn, setLoggedIn }) => {
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </div>
-
-          <button type="submit">Submit</button>
-          <button type="reset">Cancel</button>
+          <div className="btn">
+            <button className="submitBtn" type="submit">
+              Submit
+            </button>
+            <button className="cancelBtn" type="reset">
+              Cancel
+            </button>
+          </div>
         </form>
       </div>
     </div>
