@@ -1,5 +1,6 @@
 import React from "react";
 import "./Category.scss";
+import ItemCard from "../itemCard/ItemCard";
 
 const Category = () => {
 
@@ -35,7 +36,16 @@ const Category = () => {
     ];
 
     return (
-        <div className="category">Category</div>
+        <div className="category">
+            <div className="top">
+                <h1>ALL</h1>
+            </div>
+            <div className="bottom">
+                {data.map(item => (
+                    <ItemCard item={item} key={item.id} />
+                ))}
+            </div>
+        </div>
     )
 }
 
