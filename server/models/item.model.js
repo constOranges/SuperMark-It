@@ -23,10 +23,7 @@ const ItemSchema = new mongoose.Schema({
     },
     imagePath: {
         type: String
-    },
-    // when creating a user, create the All category and add it to their schema
-    categories: [],
-    lists: []
+    }
 }, {timestamps: true});
 
 module.exports = mongoose.model('Item', ItemSchema);
