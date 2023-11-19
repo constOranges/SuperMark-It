@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const ItemSchema = require('./item.model');
+const Item = require('./item.model');
 
 const CategorySchema = new mongoose.Schema({
     categoryName: {
@@ -11,7 +11,7 @@ const CategorySchema = new mongoose.Schema({
         type: String,
         required: [true, "Category icon is required."]
     },
-    items: [ItemSchema]
+    items: [Item.schema]
 }, { timestamps: true });
 
 module.exports = mongoose.model('Category', CategorySchema);

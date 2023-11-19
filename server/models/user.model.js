@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const ItemSchema = require('./item.model');
+const Item = require('./item.model');
 
 const UserSchema = new mongoose.Schema({
     name: {
@@ -27,12 +27,12 @@ const UserSchema = new mongoose.Schema({
         categoryName: String,
         iconPath: String,
         // Consider changing items to references instead of embedded documents to save space
-        items: [ItemSchema]
+        items: [Item.schema]
     }],
     lists: [{
         listName: String,
         iconPath: String,
-        items: [ItemSchema]
+        items: [Item.schema]
     }]
 }, {timestamps: true});
 
