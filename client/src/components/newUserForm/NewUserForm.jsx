@@ -47,18 +47,13 @@ const NewUserForm = ({ loggedIn, setLoggedIn }) => {
       });
   };
 
-
   const resetHandler = (e) => {
     e.preventDefault();
-    navigate("/")
-  }
+    navigate("/");
+  };
 
   return (
-    <div>
-      <div className="errorMessage">
-        {errors ? errors.map((err) => <h3>{err}</h3>) : null}
-      </div>
-
+    <div className="newUserPage">
       <div className="loginForm">
         <h2>Sign-Up</h2>
         <form onSubmit={registrationHandler} onReset={resetHandler}>
@@ -116,6 +111,13 @@ const NewUserForm = ({ loggedIn, setLoggedIn }) => {
           </div>
         </form>
       </div>
+      {errors ? (
+        <div className="errorMessage">
+          {errors.map((err) => (
+            <p>{err}</p>
+          ))}
+        </div>
+      ) : null}
     </div>
   );
 };
