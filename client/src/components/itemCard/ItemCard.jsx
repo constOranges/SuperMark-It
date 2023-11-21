@@ -1,7 +1,7 @@
 import React from "react";
 import "./ItemCard.scss";
 
-const ItemCard = () => {
+const ItemCard = ({ item }) => {
     return (
         <div className="itemCard">Item Card</div>
     )

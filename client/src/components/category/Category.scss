@@ -1,0 +1,23 @@
+.category {
+    margin: 100px 250px;
+
+    .top {
+        display: flex;
+        align-items: center;
+        margin-bottom: 50px;
+        
+        h1 {
+            font-family: Verdana;
+            font-size: 20px;
+            color: rgb(105, 105, 105);
+        }
+    }
+
+    .bottom {
+        margin: 0;
+        position: absolute;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+}
