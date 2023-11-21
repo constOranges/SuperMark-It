@@ -19,7 +19,8 @@ const ItemSchema = new mongoose.Schema({
     },
     notifyDate: {
         type: Date,
-        min: [currentDate.getDate(), "Notification date must be some time in the future."]
+        min: [currentDate.getDate(), "Notification date must be some time in the future."],
+        // add default date for notifications or expirations
     },
     imagePath: {
         type: String
