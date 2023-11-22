@@ -4,21 +4,20 @@
     .top {
         display: flex;
         align-items: center;
-        margin-bottom: 50px;
+        margin-bottom: 30px;
         
         h1 {
             font-family: Verdana;
             font-size: 20px;
             color: rgb(105, 105, 105);
+            letter-spacing: 1.5px;
         }
     }
 
     .bottom {
-        margin: 0;
-        position: absolute;
-        top: 55%;
-        left: 50%;
-        -ms-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
+        border-style: solid;
+        border-width: 1px;
+        border-color: rgb(224, 224, 224);
+        border-radius: 15px;
     }
 }

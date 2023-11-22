@@ -1,11 +1,10 @@
 .itemCard {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    border-style: solid;
+    padding: 25px;
+    border-bottom: solid;
     border-width: 1px;
-    border-color: rgb(221, 221, 221);
-    padding: 20px;
+    border-color: rgb(224, 224, 224);
 
     .left {
 
@@ -17,6 +16,16 @@
     .middle {
         flex: 2;
         font-family: Verdana;
+        padding-left: 15px;
+
+        h3 {
+            font-weight: normal;
+        }
+
+        p {
+            font-size: 14px;
+            font-weight: normal;
+        }
     }
 
 }
