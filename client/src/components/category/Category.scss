@@ -1,5 +1,5 @@
 .category {
-    margin: 100px 250px;
+    margin: 90px 250px;
 
     .top {
         display: flex;
@@ -9,7 +9,8 @@
         h1 {
             font-family: Verdana;
             font-size: 20px;
-            color: rgb(105, 105, 105);
+            font-weight: normal;
+            color: rgb(59, 59, 59);
             letter-spacing: 1.5px;
         }
     }
@@ -19,5 +20,19 @@
         border-width: 1px;
         border-color: rgb(224, 224, 224);
         border-radius: 15px;
+
+        .arrows {
+            text-align: center;
+            
+            .arrowBack {
+                padding: 7px;
+                color: gray;
+            }
+
+            .arrowForward {
+                padding: 7px;
+                color: gray;
+            }
+        }
     }
 }
