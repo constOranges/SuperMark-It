@@ -1,3 +1,22 @@
+.newUserPage {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  opacity: 1;
+  animation: fadeIn .5s ease-in;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+
 .loginForm {
   padding: 16px;
 }
@@ -113,6 +132,16 @@ h2 {
   width: 30vw;
   margin: 1em;
   padding: .5em;
+  opacity: 1;
+  animation: horizontal-shaking 0.25s;
+}
+
+@keyframes horizontal-shaking {
+ 0% { transform: translateX(0) }
+ 25% { transform: translateX(7px) }
+ 50% { transform: translateX(-7px) }
+ 75% { transform: translateX(7px) }
+ 100% { transform: translateX(0) }
 }
 
 .errorMessage:empty {
