@@ -1,6 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./Category.scss";
 import ItemCard from "../itemCard/ItemCard";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 const Category = () => {
 
@@ -36,17 +39,21 @@ const Category = () => {
     ];
 
     return (
-        <div className="category">
-            <div className="top">
-                <h1>ALL ITEMS</h1>
-            </div>
-            <div className="bottom">
-                {data.map(item => (
-                    <ItemCard item={item} key={item.id} />
-                ))}
-            </div>
+      <div className="category">
+        <div className="top">
+          <h1>ALL ITEMS</h1>
         </div>
-    )
+        <div className="bottom">
+          {data.map((item) => (
+            <ItemCard item={item} key={item.id} />
+          ))}
+          <p className="arrows">
+            <Link><ArrowBackIcon className="arrowBack" /></Link>
+            <Link><ArrowForwardIcon className="arrowForward" /></Link>
+          </p>
+        </div>
+      </div>
+    );
 }
 
 export default Category;

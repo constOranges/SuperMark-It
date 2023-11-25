@@ -7,6 +7,7 @@ import Search from './components/search/Search';
 import AddNewItem from './components/addNewItem/AddNewItem';
 import NewUserForm from './components/newUserForm/NewUserForm';
 import Category from './components/category/Category';
+import List from './components/list/List';
 
 
 const Layout = () => {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "/category/:id",
         element: <Category />,
+      },
+      {
+        path: "/list/:id",
+        element: <List />,
       },
       {
         path: "/search",

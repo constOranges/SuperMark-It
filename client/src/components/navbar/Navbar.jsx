@@ -36,7 +36,9 @@ const Navbar = () => {
                 </Link>
               </div>
               <div className="favIcon">
-                <FavoriteRoundedIcon />
+                <Link className="link" to="/list/1">
+                  <FavoriteRoundedIcon />
+                </Link>
               </div>
               <div className="notifIcon">
                 <NotificationsRoundedIcon />

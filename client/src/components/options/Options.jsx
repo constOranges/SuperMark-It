@@ -12,10 +12,10 @@ const Options = () => {
     <div className="options">
       <div className="top">
         <div className="item">
-          <Link className="link">Kitchen</Link>
+          <Link className="link">KITCHEN</Link>
         </div>
         <div className="item">
-          <Link className="link">Lists</Link>
+          <Link className="link">LISTS</Link>
         </div>
       </div>
       <div className="bottom">

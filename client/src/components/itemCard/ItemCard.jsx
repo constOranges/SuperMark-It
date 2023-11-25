@@ -16,7 +16,7 @@ const ItemCard = ({ item }) => {
         </div>
         <div className="right">
           <Link>
-            <MoreHorizIcon />
+            <MoreHorizIcon className="moreIcon" />
           </Link>
         </div>
       </div>
