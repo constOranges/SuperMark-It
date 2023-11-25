@@ -13,28 +13,29 @@ module.exports.addCategory = (req, res) => {
             $push: {
                 categories: newCategory
             }
-    }).then(user => {
-        res.status(200).json({ message: "Category created succesfully." });
-    }).catch(err => {
-        res.status(400).json(err);
-    })
+        }, { new: true }).then(user => {
+            res.status(200).json({ message: "Category created succesfully." });
+        }).catch(err => {
+            res.status(400).json(err);
+        })
 }
 
 module.exports.removeCategory = (req, res) => {
     User.findByIdAndUpdate(req.userId,
         {
             $pull:
-            { categories: 
-                { '_id': req.params.id } // check if this needs to be a Mongo ObjectID
+            {
+                categories:
+                    { '_id': req.params.id } // can change to request body if necessary
             }
-    }).then(user => {
-        res.status(200).json({ message: "Category removed succesfully." });
-    }).catch(err => {
-        res.status(400).json(err);
-    })
+        }).then(user => {
+            res.status(200).json({ message: "Category removed succesfully." });
+        }).catch(err => {
+            res.status(400).json(err);
+        })
 }
 
 // Ask whether to have separate routes for name and icon or just one update route
-module.exports.renameCategory = (req, res) => {
+module.exports.editCategory = (req, res) => {
 
 }

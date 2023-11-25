@@ -1,4 +1,4 @@
-const CategoryController = require('../controllers/category.controller');
+const ItemController = require('../controllers/item.controller');
 const { authenticate, getIdFromCookie } = require('../config/jwt.config');
 
 module.exports = app => {
@@ -9,6 +9,5 @@ module.exports = app => {
         );
         next();
     })
-    app.post('/api/category/add', authenticate, getIdFromCookie, CategoryController.addCategory);
-    app.patch('/api/category/remove/:id', authenticate, getIdFromCookie, CategoryController.removeCategory);
+    app.post('/api/item/newItem/:id', authenticate, getIdFromCookie, ItemController.addItemToCategory);
 }
