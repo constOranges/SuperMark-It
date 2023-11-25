@@ -2,8 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./List.scss";
 import ItemCard from "../itemCard/ItemCard";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
 const List = () => {
 
@@ -35,6 +34,9 @@ const data = [
       <div className="list">
         <div className="top">
           <h1>FAVORITES</h1>
+          <Link>
+            <MoreHorizIcon className="moreIcon" />
+          </Link>
         </div>
         <div className="bottom">
           {data.map((item) => (
