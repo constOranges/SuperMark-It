@@ -1,0 +1,17 @@
+.list {
+    margin-top: 70px;
+
+    .top {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+
+        h1 {
+            font-family: Verdana;
+            font-size: 17px;
+            font-weight: normal;
+            color: rgb(59, 59, 59);
+            letter-spacing: 1.5px;
+        }
+    }
+}
