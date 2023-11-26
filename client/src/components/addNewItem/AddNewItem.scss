@@ -3,6 +3,8 @@
     display: flex;
     justify-content: center;
     background-color: beige;
+    max-width: 100%;
+    overflow-x: hidden;
   }
 
   h2 {
@@ -23,4 +25,12 @@
   input {
     width: 100%;
   }
+  form {
+    margin-bottom: 3em;
+  }
 }
+
+
+  form {
+    margin-bottom: 3em;
+  }
