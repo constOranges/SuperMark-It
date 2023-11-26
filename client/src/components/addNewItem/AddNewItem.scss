@@ -1,0 +1,26 @@
+@media (max-width: 700px) {
+  .newItemPage {
+    display: flex;
+    justify-content: center;
+    background-color: beige;
+  }
+
+  h2 {
+    margin: 3em;
+    text-align: center;
+  }
+
+  .form-group {
+    width: 295%;
+  }
+
+  select {
+    width: 30%;
+    height: 2.5em;
+    box-sizing: border-box;
+  }
+
+  input {
+    width: 100%;
+  }
+}

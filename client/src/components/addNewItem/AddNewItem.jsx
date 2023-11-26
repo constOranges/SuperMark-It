@@ -1,32 +1,79 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./AddNewItem.scss";
 
 const AddNewItem = () => {
+  const [itemName, setItemName] = useState("");
+  const [brand, setBrand] = useState("");
+  const [quantity, setQuantity] = useState(0);
+  const [expDate, setExpDate] = useState(new Date());
+  const [notifyDate, setNotifyDate] = useState(new Date());
+  const [imagePath, setImagePath] = useState(null);
+  const [categories, setCategories] = useState([]);
+  const [categoryId, setCategoryId] = useState(0);
+  const [errors, setErrors] = useState([]);
 
-    const [itemName, setItemName] = useState("");
-    const [brand, setBrand] = useState("");
-    const [quantity, setQuantity] = useState(0);
-    const [expDate, setExpDate] = useState(new Date());
-    const [notifyDate, setNotifyDate] = useState(new Date());
-    const [imagePath, setImagePath] = useState(null);
-    const [errors, setErrors] = useState([]);
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/users/currentuser`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setCategories(res.data.user.categories);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
+  const categoryHandler = (e) => {
+    e.preventDefault();
+    setCategoryId(e.target.value);
+  };
 
-    const resetHandler = (e) => {
-        e.preventDefault();
+  const resetHandler = (e) => {
+    e.preventDefault();
+    navigate("/");
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    axios
+      .post(
+        `${import.meta.env.VITE_REACT_APP_API_URL}/api/item/newItem/:id`,
+        {
+          itemName,
+          brand,
+          quantity,
+          expDate,
+          notifyDate,
+          imagePath,
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        console.log(res);
         navigate("/");
-    }
-
+      })
+      .catch((err) => {
+        console.log(err);
+        const errorResponse = err.response.data.errors;
+        const errorArray = [];
+        for (const key of Object.keys(errorResponse)) {
+          errorArray.push(errorResponse[key].message);
+        }
+        setErrors(errorArray);
+      });
+  };
 
   return (
     <div className="newItemPage">
       <div className="itemForm">
         <h2>Add an Item</h2>
-        <form onSubmit={""} onReset={resetHandler}>
+        <form onSubmit={submitHandler} onReset={resetHandler}>
           <div className="form-group">
             <label htmlFor="name">Item Name</label>
             <input
@@ -36,6 +83,28 @@ const AddNewItem = () => {
               id="itemName"
               onChange={(e) => setItemName(e.target.value)}
             />
+          </div>
+          <div className="form-group">
+            <label htmlFor="category">Category</label>
+            <select
+              name="categories_id"
+              className="categorySelect"
+              aria-label="Select Category"
+              id="categories_id"
+              onChange={categoryHandler}
+            >
+              <option defaultValue>Select Category</option>
+              {categories.map((category) => {
+                return (
+                  <option
+                    value={category.categories_id}
+                    key={category.categories_id}
+                  >
+                    {category.categoryName}
+                  </option>
+                );
+              })}
+            </select>
           </div>
           <div className="form-group">
             <label htmlFor="brand">Brand</label>
@@ -108,6 +177,6 @@ const AddNewItem = () => {
       ) : null}
     </div>
   );
-}
+};
 
 export default AddNewItem;
