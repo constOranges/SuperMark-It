@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Item = require('./item.model');
 
+// CategorySchema currently not being used
+
 const CategorySchema = new mongoose.Schema({
     categoryName: {
         type: String,
