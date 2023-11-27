@@ -2,6 +2,8 @@
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   opacity: 1;
   animation: fadeIn .5s ease-in;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 
@@ -123,7 +125,7 @@ h2 {
 }
 
 .errorMessage {
-  position: fixed;
+  position: sticky;
   top: 15em;
   right: 35em;
   background-color: rgba(255, 133, 133, 0.644);
@@ -131,6 +133,7 @@ h2 {
   border-radius: .5em;
   width: 30vw;
   margin: 1em;
+  margin-bottom: 2.5em;
   padding: .5em;
   opacity: 1;
   animation: horizontal-shaking 0.25s;
@@ -153,3 +156,23 @@ p {
   font-weight: bold;
 }
 
+
+@media (max-width: 700px) {
+
+  .errorMessage {
+    display: flex;
+    flex-direction: row;
+    position: sticky;
+    height: 7em;
+    width: 80%;
+    margin-left: 2.3em;
+    padding: 1em;
+    padding-bottom: 2em;
+  }
+
+  p {
+    margin-right: 1em;
+  }
+
+
+}
