@@ -31,6 +31,22 @@
 }
 
 
+.newItemPage {
+  opacity: 1;
+  animation: fadeIn .5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
   form {
     margin-bottom: 3em;
   }
