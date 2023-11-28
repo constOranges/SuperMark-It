@@ -1,6 +1,6 @@
 .category {
-    margin: 90px 250px;
-
+    margin-top: 70px;
+        
     .top {
         display: flex;
         align-items: center;
@@ -16,10 +16,6 @@
     }
 
     .bottom {
-        border-style: solid;
-        border-width: 1px;
-        border-color: rgb(224, 224, 224);
-        border-radius: 15px;
 
         .arrows {
             text-align: center;
