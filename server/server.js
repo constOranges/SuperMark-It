@@ -15,6 +15,7 @@ app.use(cors({ origin: process.env.CLIENT_URI, credentials: true }));
 require('./config/mongoose.config');
 require('./routes/user.route')(app);
 require('./routes/category.route')(app);
+require('./routes/list.route')(app);
 require('./routes/item.route')(app);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
