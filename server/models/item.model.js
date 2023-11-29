@@ -24,7 +24,8 @@ const ItemSchema = new mongoose.Schema({
     },
     imagePath: {
         type: String
-    }
+    },
+    inUseIDs: []
 }, {timestamps: true});
 
 module.exports = mongoose.model('Item', ItemSchema);
