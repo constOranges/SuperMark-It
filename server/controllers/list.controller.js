@@ -26,10 +26,10 @@ module.exports.removeList = (req, res) => {
             $pull:
             {
                 lists:
-                    { '_id': req.params.id } // can change to request body if necessary
+                    { '_id': req.body.listId }
             }
         }).then(user => {
-            res.status(200).json({ message: "Category removed succesfully." });
+            res.status(200).json({ message: "List removed succesfully." });
         }).catch(err => {
             res.status(400).json(err);
         })

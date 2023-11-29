@@ -9,10 +9,10 @@ module.exports = app => {
         );
         next();
     })
-    app.post('/api/item/newItemToCategory', authenticate, getIdFromCookie, ItemController.addItemToCategory);
-    app.post('/api/item/newItemToList', authenticate, getIdFromCookie, ItemController.addItemToList);
-    app.patch('/api/item/existingItemToCategory', authenticate, getIdFromCookie, ItemController.existingItemToCategory);
-    app.patch('/api/item/existingItemToList', authenticate, getIdFromCookie, ItemController.existingItemToList);
-    app.patch('/api/item/removeItemFromCategory', authenticate, getIdFromCookie, ItemController.removeItemFromCategory);
-    app.patch('/api/item/removeItemFromList', authenticate, getIdFromCookie, ItemController.removeItemFromList);
+    app.post('/api/items/newItemToCategory', authenticate, getIdFromCookie, ItemController.addItemToCategory);
+    app.post('/api/items/newItemToList', authenticate, getIdFromCookie, ItemController.addItemToList);
+    app.patch('/api/items/existingItemToCategory', authenticate, getIdFromCookie, ItemController.existingItemToCategory);
+    app.patch('/api/items/existingItemToList', authenticate, getIdFromCookie, ItemController.existingItemToList);
+    app.patch('/api/items/removeItemFromCategory', authenticate, getIdFromCookie, ItemController.removeItemFromCategory);
+    app.patch('/api/items/removeItemFromList', authenticate, getIdFromCookie, ItemController.removeItemFromList);
 }
