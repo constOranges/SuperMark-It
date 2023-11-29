@@ -17,34 +17,38 @@ const Navbar = () => {
             <Link className="link" to="/">
               SUPER MARK-IT
             </Link>
+            <div className="mobileNotifIcon">
+              <NotificationsRoundedIcon className="navIcon" />
+            </div>
           </div>
           <div className="right">
             <div className="icons">
               <div className="homeIcon">
                 <Link className="link" to="/">
-                  <HomeRoundedIcon />
-                </Link>
-              </div>
-              <div className="addIcon">
-                <Link className="link" to="/add">
-                  <AddBoxRoundedIcon />
+                  <HomeRoundedIcon className="navIcon" />
                 </Link>
               </div>
               <div className="searchIcon">
                 <Link className="link" to="/search">
-                  <SearchRoundedIcon />
+                  <SearchRoundedIcon className="navIcon" />
                 </Link>
               </div>
+              <div className="addIcon">
+                <Link className="link" to="/add">
+                  <AddBoxRoundedIcon className="navIcon" />
+                </Link>
+              </div>
+
               <div className="favIcon">
                 <Link className="link" to="/list/1">
-                  <FavoriteRoundedIcon />
+                  <FavoriteRoundedIcon className="navIcon" />
                 </Link>
               </div>
               <div className="notifIcon">
-                <NotificationsRoundedIcon />
+                <NotificationsRoundedIcon className="navIcon" />
               </div>
               <div className="profileIcon">
-                <PersonRoundedIcon />
+                <PersonRoundedIcon className="navIcon" />
               </div>
             </div>
           </div>
