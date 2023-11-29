@@ -25,6 +25,12 @@
         },
         {
             "name": "items"
+        },
+        {
+            "name": "categories"
+        },
+        {
+            "name": "lists"
         }
     ],
     "components": {
@@ -93,6 +99,142 @@
                         "format": "date-time"
                     }
                 }
+            },
+            "NewItemToCategory": {
+                "type": "object",
+                "properties": {
+                    "itemName": {
+                        "type": "string"
+                    },
+                    "brand": {
+                        "type": "string"
+                    },
+                    "quantity": {
+                        "type": "integer"
+                    },
+                    "expDate": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "notifyDate": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "imagePath": {
+                        "type": "string"
+                    },
+                    "categoryId": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "itemName"
+                ]
+            },
+            "NewItemToList": {
+                "type": "object",
+                "properties": {
+                    "itemName": {
+                        "type": "string"
+                    },
+                    "brand": {
+                        "type": "string"
+                    },
+                    "quantity": {
+                        "type": "integer"
+                    },
+                    "expDate": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "notifyDate": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "imagePath": {
+                        "type": "string"
+                    },
+                    "listId": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "itemName"
+                ]
+            },
+            "ItemAndCategoryIDs": {
+                "type": "object",
+                "properties": {
+                    "itemId": {
+                        "type": "string"
+                    },
+                    "categoryId": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "itemId",
+                    "categoryId"
+                ]
+            },
+            "ItemAndListIDs": {
+                "type": "object",
+                "properties": {
+                    "itemId": {
+                        "type": "string"
+                    },
+                    "listId": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "itemId",
+                    "listId"
+                ]
+            },
+            "NewCategory": {
+                "type": "object",
+                "properties": {
+                    "categoryName": {
+                        "type": "string"
+                    },
+                    "iconPath": {
+                        "type": "string"
+                    }
+                }
+            },
+            "NewList": {
+                "type": "object",
+                "properties": {
+                    "listName": {
+                        "type": "string"
+                    },
+                    "iconPath": {
+                        "type": "string"
+                    }
+                }
+            },
+            "RemoveCategory": {
+                "type": "object",
+                "properties": {
+                    "categoryId": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "categoryId"
+                ]
+            },
+            "RemoveList": {
+                "type": "object",
+                "properties": {
+                    "listId": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "listId"
+                ]
             }
         }
     },
@@ -188,7 +330,7 @@
                 "tags": [
                     "users"
                 ],
-                "summary": "Retrieves current logged-in user's information",
+                "summary": "Retrieves current user's information",
                 "operationId": "findOneUser",
                 "responses": {
                     "200": {
@@ -203,6 +345,268 @@
                     },
                     "400": {
                         "description": "Something went wrong retrieving user information"
+                    }
+                }
+            }
+        },
+        "/items/newItemToCategory": {
+            "post": {
+                "tags": [
+                    "items"
+                ],
+                "summary": "Adds a new, non-existing item to a category of choice",
+                "operationId": "addItemToCategory",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/NewItemToCategory"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation, creates an item and adds it to the categories array"
+                    },
+                    "400": {
+                        "description": "Something went wrong creating a new item, likely wrong input fields"
+                    }
+                }
+            }
+        },
+        "/items/newItemToList": {
+            "post": {
+                "tags": [
+                    "items"
+                ],
+                "summary": "Adds a new, non-existing item to a list of choice",
+                "operationId": "addItemToList",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/NewItemToList"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation, creates an item and adds it to the lists array"
+                    },
+                    "400": {
+                        "description": "Something went wrong creating a new item, likely wrong input fields"
+                    }
+                }
+            }
+        },
+        "/items/existingItemToCategory": {
+            "patch": {
+                "tags": [
+                    "items"
+                ],
+                "summary": "Adds an already existing item to a category of choice",
+                "operationId": "existingItemToCategory",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ItemAndCategoryIDs"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation, adds a previously existing item to category"
+                    },
+                    "400": {
+                        "description": "Something went wrong adding an item to a category, likely wrong IDs"
+                    }
+                }
+            }
+        },
+        "/items/existingItemToList": {
+            "patch": {
+                "tags": [
+                    "items"
+                ],
+                "summary": "Adds an already existing item to a list of choice",
+                "operationId": "existingItemToList",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ItemAndListIDs"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation, adds a previously existing item to list"
+                    },
+                    "400": {
+                        "description": "Something went wrong adding an item to a list, likely wrong IDs"
+                    }
+                }
+            }
+        },
+        "/items/removeItemFromCategory": {
+            "patch": {
+                "tags": [
+                    "items"
+                ],
+                "summary": "Deletes an item from a category",
+                "description": "If the item is the last instance of itself, the item also gets permanently deleted from the database.",
+                "operationId": "removeItemFromCategory",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ItemAndCategoryIDs"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation, deletes an item from its category"
+                    },
+                    "400": {
+                        "description": "Something went wrong removing the item from its category"
+                    }
+                }
+            }
+        },
+        "/items/removeItemFromList": {
+            "patch": {
+                "tags": [
+                    "items"
+                ],
+                "summary": "Deletes an item from a list",
+                "description": "If the item is the last instance of itself, the item also gets permanently deleted from the database.",
+                "operationId": "removeItemFromList",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ItemAndListIDs"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation, deletes an item from its list"
+                    },
+                    "400": {
+                        "description": "Something went wrong removing the item from its list"
+                    }
+                }
+            }
+        },
+        "/categories/add": {
+            "post": {
+                "tags": [
+                    "categories"
+                ],
+                "summary": "Adds a new category to categories array",
+                "operationId": "addCategory",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/NewCategory"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation, adds a new category to user object"
+                    },
+                    "400": {
+                        "description": "Something went wrong updating the user object with a new category"
+                    }
+                }
+            }
+        },
+        "/categories/remove": {
+            "patch": {
+                "tags": [
+                    "categories"
+                ],
+                "summary": "Removes an existing category (includes all items in category)",
+                "operationId": "removeCategory",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RemoveCategory"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation, removes category from user object"
+                    },
+                    "400": {
+                        "description": "Something went wrong pulling the category from its user object"
+                    }
+                }
+            }
+        },
+        "/lists/add": {
+            "post": {
+                "tags": [
+                    "lists"
+                ],
+                "summary": "Adds a new list to lists array",
+                "operationId": "addList",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/NewList"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation, adds a new list to user object"
+                    },
+                    "400": {
+                        "description": "Something went wrong updating the user object with a new list"
+                    }
+                }
+            }
+        },
+        "/lists/remove": {
+            "patch": {
+                "tags": [
+                    "lists"
+                ],
+                "summary": "Removes an existing list (includes all items in list)",
+                "operationId": "removeList",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RemoveList"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation, removes list from user object"
+                    },
+                    "400": {
+                        "description": "Something went wrong pulling the list from its user object"
                     }
                 }
             }

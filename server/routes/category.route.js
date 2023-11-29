@@ -9,6 +9,6 @@ module.exports = app => {
         );
         next();
     })
-    app.post('/api/category/add', authenticate, getIdFromCookie, CategoryController.addCategory);
-    app.patch('/api/category/remove/:id', authenticate, getIdFromCookie, CategoryController.removeCategory);
+    app.post('/api/categories/add', authenticate, getIdFromCookie, CategoryController.addCategory);
+    app.patch('/api/categories/remove', authenticate, getIdFromCookie, CategoryController.removeCategory);
 }

@@ -9,6 +9,6 @@ module.exports = app => {
         );
         next();
     })
-    app.post('/api/list/add', authenticate, getIdFromCookie, ListController.addList);
-    app.patch('/api/list/remove/:id', authenticate, getIdFromCookie, ListController.removeList);
+    app.post('/api/lists/add', authenticate, getIdFromCookie, ListController.addList);
+    app.patch('/api/lists/remove', authenticate, getIdFromCookie, ListController.removeList);
 }

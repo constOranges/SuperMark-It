@@ -20,13 +20,14 @@ module.exports.addCategory = (req, res) => {
         })
 }
 
+// Update this so that it removes category ID from inUseIDs in each occupying item
 module.exports.removeCategory = (req, res) => {
     User.findByIdAndUpdate(req.userId,
         {
             $pull:
             {
                 categories:
-                    { '_id': req.params.id } // can change to request body if necessary
+                    { '_id': req.body.categoryId }
             }
         }).then(user => {
             res.status(200).json({ message: "Category removed succesfully." });

@@ -12,7 +12,7 @@ module.exports.addItemToCategory = async (req, res) => {
         expDate: req.body.expDate,
         notifyDate: req.body.notifyDate,
         imagePath: req.body.imagePath, // alter to use filepath
-        inUseIDs: [req.body.categoryId]
+        inUseIDs: [req.body.categoryId] // change this to accommodate multiple categories
     });
 
     User.updateOne({
