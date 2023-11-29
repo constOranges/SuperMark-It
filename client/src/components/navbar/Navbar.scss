@@ -1,35 +1,90 @@
-.navbar {
+@media (max-width: 700px) {
+  .navbar {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .left {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 49px;
+    font-family: Verdana;
+    font-weight: bold;
+    letter-spacing: 2px;
+    padding: .05em;
+  }
+
+  .icons {
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr 2fr 2fr;
+    width: 100%;
+    position: fixed;
+    bottom: 1em;
+    margin-left: 1.5em;
+          
+    .navIcon {
+        font-size: 50px;
+
+    }
+  }
+
+  .mobileNotifIcon {
+    margin-top: .3em;
+    
+    .navIcon {
+        font-size: 50px;
+    }
+  }
+
+  .notifIcon {
+    display: none;
+  }
+
+}
+
+
+@media (max-width: 700px) and (min-width: 600px){
+    .icons{
+        margin-left: 2em;
+    }
+}
+
+
+@media (min-width: 701px) {
+  .navbar {
     height: 80px;
 
     .wrapper {
-        padding: 20px 120px;
-        border-bottom: solid;
-        border-bottom-width: 0.2px;
-        border-bottom-color: rgb(224, 224, 224);
+      padding: 20px 120px;
+      border-bottom: solid;
+      border-bottom-width: 0.2px;
+      border-bottom-color: rgb(224, 224, 224);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .left {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        font-size: 23px;
+        font-family: Verdana;
+        font-weight: bold;
+        letter-spacing: 2px;
+      }
 
-        .left {
-            display: flex;
-            align-items: center;
-            font-size: 23px;
-            font-family: Verdana;
-            font-weight: bold;
-            letter-spacing: 2px;
+      .right {
+        display: flex;
+        align-items: center;
+        gap: 25px;
+
+        .icons {
+          display: flex;
+          gap: 25px;
+          cursor: pointer;
+          color: rgb(59, 59, 59);
         }
-
-        .right {
-            display: flex;
-            align-items: center;
-            gap: 25px;
-
-            .icons {
-                display: flex;
-                gap: 25px;
-                cursor: pointer;
-                color: rgb(59, 59, 59);
-            }
-        }
+      }
     }
+  }
 }
