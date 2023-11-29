@@ -12,6 +12,7 @@ module.exports.addItemToCategory = async (req, res) => {
         expDate: req.body.expDate,
         notifyDate: req.body.notifyDate,
         imagePath: req.body.imagePath, // alter to use filepath
+        inUseIDs: [req.body.categoryId]
     });
 
     User.updateOne({
@@ -21,29 +22,73 @@ module.exports.addItemToCategory = async (req, res) => {
         $push: {
             "categories.$.items": newItem
         }
-    }, {new: true}).then(user => {
+    }, { new: true }).then(user => {
         res.status(200).json({ message: "Item created succesfully." });
     }).catch(err => {
         res.status(400).json(err);
     })
 }
 
-module.exports.removeItemFromCategory = async (req, res) => {
-    const currentItem = await Item.findById(req.body.itemId);
+module.exports.existingItemToCategory = async (req, res) => {
+    const currentItem = await Item.findByIdAndUpdate(req.body.itemId, {
+        $push: {
+            "inUseIDs": req.body.categoryId
+        }
+    }, { new: true });
 
     User.updateOne({
         "_id": req.userId,
         "categories._id": req.body.categoryId
     }, {
-        $pull: {
+        $push: {
             "categories.$.items": currentItem
         }
-    }, {new: true}).then(user => {
-        res.status(200).json({ message: "Item removed succesfully." });
+    }, { new: true }).then(user => {
+        res.status(200).json({ message: "Item added successfully." });
     }).catch(err => {
         res.status(400).json(err);
     })
 }
+
+// Consider adding more error handling
+module.exports.removeItemFromCategory = async (req, res) => {
+    try {
+        const currentItem = await Item.findByIdAndUpdate(
+            req.body.itemId,
+            {
+                $pull: {
+                    inUseIDs: req.body.categoryId,
+                },
+            }, {new: true}
+        );
+
+        await User.updateOne(
+            {
+                "_id": req.userId,
+                "categories._id": req.body.categoryId,
+            },
+            {
+                $pull: {
+                    "categories.$.items": {"_id" : currentItem._id},
+                },
+            }
+        );
+
+        if (currentItem.inUseIDs.length === 0) {
+            try {
+                await Item.findByIdAndDelete(req.body.itemId);
+                console.log("Item deleted permanently.");
+            } catch (error) {
+                console.error("Error deleting item permanently:", error.message);
+            }
+        }
+
+        res.status(200).json({ message: "Item removed successfully." });
+    } catch (error) {
+        console.error("Error:", error.message);
+        res.status(400).json({ error: error.message });
+    }
+};
 
 // LISTS
 
@@ -55,6 +100,7 @@ module.exports.addItemToList = async (req, res) => {
         expDate: req.body.expDate,
         notifyDate: req.body.notifyDate,
         imagePath: req.body.imagePath, // alter to use filepath
+        inUseIDs: [req.body.listId]
     });
 
     User.updateOne({
@@ -64,26 +110,70 @@ module.exports.addItemToList = async (req, res) => {
         $push: {
             "lists.$.items": newItem
         }
-    }, {new: true}).then(user => {
+    }, { new: true }).then(user => {
         res.status(200).json({ message: "Item created succesfully." });
     }).catch(err => {
         res.status(400).json(err);
     })
 }
 
-module.exports.removeItemFromList = async (req, res) => {
-    const currentItem = await Item.findById(req.body.itemId);
+module.exports.existingItemToList = async (req, res) => {
+    const currentItem = await Item.findByIdAndUpdate(req.body.itemId, {
+        $push: {
+            "inUseIDs": req.body.listId
+        }
+    }, { new: true });
 
     User.updateOne({
         "_id": req.userId,
         "lists._id": req.body.listId
     }, {
-        $pull: {
+        $push: {
             "lists.$.items": currentItem
         }
-    }, {new: true}).then(user => {
-        res.status(200).json({ message: "Item removed succesfully." });
+    }, { new: true }).then(user => {
+        res.status(200).json({ message: "Item added successfully." });
     }).catch(err => {
         res.status(400).json(err);
-    })
+    });
 }
+
+// Consider adding more error handling
+module.exports.removeItemFromList = async (req, res) => {
+    try {
+        const currentItem = await Item.findByIdAndUpdate(
+            req.body.itemId,
+            {
+                $pull: {
+                    inUseIDs: req.body.listId,
+                },
+            }, {new: true}
+        );
+
+        await User.updateOne(
+            {
+                "_id": req.userId,
+                "lists._id": req.body.listId,
+            },
+            {
+                $pull: {
+                    "lists.$.items": {"_id" : currentItem._id},
+                },
+            }
+        );
+
+        if (currentItem.inUseIDs.length === 0) {
+            try {
+                await Item.findByIdAndDelete(req.body.itemId);
+                console.log("Item deleted permanently.");
+            } catch (error) {
+                console.error("Error deleting item permanently:", error.message);
+            }
+        }
+
+        res.status(200).json({ message: "Item removed successfully." });
+    } catch (error) {
+        console.error("Error:", error.message);
+        res.status(400).json({ error: error.message });
+    }
+};
