@@ -41,7 +41,7 @@ const Category = () => {
     return (
       <div className="category">
         <div className="top">
-          <h1>ALL ITEMS</h1>
+          <h1>All Items</h1>
         </div>
         <div className="bottom">
           {data.map((item) => (
