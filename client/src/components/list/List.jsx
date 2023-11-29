@@ -33,7 +33,7 @@ const data = [
     return (
       <div className="list">
         <div className="top">
-          <h1>FAVORITES</h1>
+          <h1>Favorites</h1>
           <Link>
             <MoreHorizIcon className="moreIcon" />
           </Link>
