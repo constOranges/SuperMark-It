@@ -97,6 +97,92 @@
                     "updatedAt": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "categories": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CategoryObject"
+                        }
+                    },
+                    "lists": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ListObject"
+                        }
+                    }
+                }
+            },
+            "CategoryObject": {
+                "type": "object",
+                "properties": {
+                    "categoryName": {
+                        "type": "string"
+                    },
+                    "iconPath": {
+                        "type": "string"
+                    },
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ItemObject"
+                        }
+                    },
+                    "_id": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ListObject": {
+                "type": "object",
+                "properties": {
+                    "listName": {
+                        "type": "string"
+                    },
+                    "iconPath": {
+                        "type": "string"
+                    },
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ItemObject"
+                        }
+                    },
+                    "_id": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ItemObject": {
+                "type": "object",
+                "properties": {
+                    "itemName": {
+                        "type": "string"
+                    },
+                    "brand": {
+                        "type": "string"
+                    },
+                    "quantity": {
+                        "type": "integer"
+                    },
+                    "expDate": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "notifyDate": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "imagePath": {
+                        "type": "string"
+                    },
+                    "inUseIDs": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "_id": {
+                        "type": "string"
                     }
                 }
             },
