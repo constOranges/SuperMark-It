@@ -1,9 +1,13 @@
 import React from "react";
+import { useState } from "react";
 import "./ItemCard.scss";
 import { Link } from "react-router-dom";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import ItemOptions from "../itemOptions/ItemOptions";
 
 const ItemCard = ({ item }) => {
+    const [open, setOpen] = useState(false);
+
     return (
       <div className="itemCard">
         <div className="left">
@@ -15,10 +19,11 @@ const ItemCard = ({ item }) => {
           <p>Expires: {item.exp}</p>
         </div>
         <div className="right">
-          <Link>
+          <div className="more" onClick={() => setOpen(!open)}>
             <MoreHorizIcon className="moreIcon" />
-          </Link>
+          </div>
         </div>
+        {open && <ItemOptions />}
       </div>
     );
 }
