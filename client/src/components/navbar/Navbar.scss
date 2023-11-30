@@ -1,3 +1,5 @@
+
+
 @media (max-width: 700px) {
   .navbar {
     max-width: 100%;
@@ -12,44 +14,42 @@
     font-family: Verdana;
     font-weight: bold;
     letter-spacing: 2px;
-    padding: .05em;
+    padding: 0.05em;
   }
 
   .icons {
+    background-color: rgb(255, 255, 255);
+    padding-bottom: .5em;
+    padding-top: .5em;
     display: grid;
     grid-template-columns: 2fr 2fr 2fr 2fr 2fr;
+    justify-content: space-evenly;
+    justify-items: center;
+    align-content: space-evenly;
+    align-items: center;
     width: 100%;
     position: fixed;
-    bottom: 1em;
-    margin-left: 1.5em;
-          
-    .navIcon {
-        font-size: 50px;
+    bottom: 0;
+    left: 0;
 
+
+    .navIcon {
+      font-size: 50px;
     }
   }
 
   .mobileNotifIcon {
-    margin-top: .2em;
-    
+    margin-top: 0.2em;
+
     .navIcon {
-        font-size: 50px;
+      font-size: 50px;
     }
   }
 
   .notifIcon {
     display: none;
   }
-
 }
-
-
-@media (max-width: 700px) and (min-width: 600px){
-    .icons{
-        margin-left: 2em;
-    }
-}
-
 
 @media (min-width: 701px) {
   .navbar {

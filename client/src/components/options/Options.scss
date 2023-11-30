@@ -1,43 +1,165 @@
-.options {
-    margin: 100px 250px;
+.bottom {
+  z-index: 998;
+  animation: fadeIn 0.5s ease-in;
+}
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 700px) {
+  .options {
+    margin: 1em;
+    width: auto;
+    height: auto;
     .top {
-        display: flex;
-        align-items: center;
-        margin-bottom: 50px;
-        gap: 25px;
+      display: flex;
+      margin-bottom: 70px;
+      margin-left: 2.5em;
+      margin-top: 5em;
+      gap: 25px;
 
-        .item {
-            font-size: 19px;
-            font-family: Verdana;
-            letter-spacing: 1.5px;
-        }
+      .item {
+        font-size: 21px;
+        font-family: Verdana;
+        letter-spacing: 1.5px;
+      }
     }
 
     .bottom {
+      .categories {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        justify-content: space-evenly;
+        justify-items: center;
+        align-content: space-evenly;
+        align-items: center;
+        font-family: Verdana;
+        font-size: 16px;
+        color: rgb(94, 94, 94);
 
-        .categories {
-            display: flex;
-            justify-content: space-between;
-            font-family: Verdana;
-            font-size: 16px;
-            color: rgb(94, 94, 94);
+        .cat {
+          text-align: center;
+          border-style: solid;
+          border-width: 1px;
+          border-color: rgb(224, 224, 224);
+          border-radius: 5%;
+          margin-bottom: 3em;
+          height: 200px;
+          width: 200px;
 
-            .cat {
-                text-align: center;
-                border-style: solid;
-                border-width: 1px;
-                border-color: rgb(224, 224, 224);
-                border-radius: 5%;
-                height: 200px;
-                width: 200px;
-
-                .catIcon {
-                    margin-top: 30px;
-                    font-size: 70px;
-                    padding: 15px;
-                }
-            }
+          .catIcon {
+            margin-top: 30px;
+            font-size: 70px;
+            padding: 15px;
+          }
         }
+      }
     }
+  }
+}
+
+@media only screen and (max-width: 1600px) and (min-width: 701px) {
+  .options {
+    margin: 100px 250px;
+
+    .top {
+      display: flex;
+      align-items: center;
+      margin-bottom: 50px;
+      gap: 25px;
+
+      .item {
+        font-size: 19px;
+        font-family: Verdana;
+        letter-spacing: 1.5px;
+      }
+    }
+
+    .bottom {
+      .categories {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        justify-content: space-evenly;
+        justify-items: center;
+        align-content: space-evenly;
+        align-items: center;
+        font-family: Verdana;
+        font-size: 16px;
+        color: rgb(94, 94, 94);
+
+        .cat {
+          text-align: center;
+          border-style: solid;
+          border-width: 1px;
+          border-color: rgb(224, 224, 224);
+          border-radius: 5%;
+          height: 200px;
+          width: 200px;
+          margin-bottom: 3.5em;
+
+          .catIcon {
+            margin-top: 30px;
+            font-size: 70px;
+            padding: 15px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 1601px) {
+  .options {
+    margin: 100px 250px;
+
+    .top {
+      display: flex;
+      align-items: center;
+      margin-bottom: 50px;
+      gap: 25px;
+
+      .item {
+        font-size: 19px;
+        font-family: Verdana;
+        letter-spacing: 1.5px;
+      }
+    }
+
+    .bottom {
+      .categories {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        justify-content: space-evenly;
+        justify-items: center;
+        align-content: space-evenly;
+        align-items: center;
+        font-family: Verdana;
+        font-size: 16px;
+        color: rgb(94, 94, 94);
+
+        .cat {
+          text-align: center;
+          border-style: solid;
+          border-width: 1px;
+          border-color: rgb(224, 224, 224);
+          border-radius: 5%;
+          height: 200px;
+          width: 200px;
+
+          .catIcon {
+            margin-top: 30px;
+            font-size: 70px;
+            padding: 15px;
+          }
+        }
+      }
+    }
+  }
 }
