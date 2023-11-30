@@ -1,8 +1,16 @@
 .app {
-  z-index: 999;
-
   .link {
     color: inherit;
     text-decoration: none;
   }
+  .navbar{
+    z-index: 100;
+  }
+
+  .newItemPage {
+    z-index: 1;
+  }
 }
+
+
+
