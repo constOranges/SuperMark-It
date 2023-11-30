@@ -71,6 +71,10 @@
         font-family: Verdana;
         font-weight: bold;
         letter-spacing: 2px;
+
+        .mobileNotifIcon {
+          display: none;
+        }
       }
 
       .right {
