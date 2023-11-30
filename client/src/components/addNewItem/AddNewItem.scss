@@ -24,9 +24,6 @@
   input {
     width: 100%;
   }
-  form {
-    margin-bottom: 3em;
-  }
 }
 
 @keyframes fadeIn {
@@ -43,8 +40,9 @@
   opacity: 1;
   animation: fadeIn 0.5s ease-in;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-size: .90em;
+  font-size: 0.9em;
   font-weight: bold;
+  z-index: 2;
 }
 
 h2 {
@@ -53,11 +51,9 @@ h2 {
 }
 
 label {
-  margin-bottom: .5em;
+  margin-bottom: 0.5em;
 }
-
 
 form {
-  margin-bottom: 3em;
+  margin-bottom: 6em;
 }
-

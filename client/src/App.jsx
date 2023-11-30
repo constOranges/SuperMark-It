@@ -1,14 +1,13 @@
-import './App.scss';
+import "./App.scss";
 import React from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import Homepage from './components/homepage/Homepage';
-import Navbar from './components/navbar/Navbar';
-import Search from './components/search/Search';
-import AddNewItem from './components/addNewItem/AddNewItem';
-import NewUserForm from './components/newUserForm/NewUserForm';
-import Category from './components/category/Category';
-import List from './components/list/List';
-
+import Homepage from "./components/homepage/Homepage";
+import Navbar from "./components/navbar/Navbar";
+import Search from "./components/search/Search";
+import AddNewItem from "./components/addNewItem/AddNewItem";
+import NewUserForm from "./components/newUserForm/NewUserForm";
+import Category from "./components/category/Category";
+import List from "./components/list/List";
 
 const Layout = () => {
   return (
@@ -17,9 +16,7 @@ const Layout = () => {
       <Outlet />
     </div>
   );
-
-}
-
+};
 
 const router = createBrowserRouter([
   {
@@ -55,8 +52,6 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-
-
   return (
     <>
       <div>
@@ -66,4 +61,4 @@ function App() {
   );
 }
 
-export default App
+export default App;

@@ -1,4 +1,6 @@
-
+.navbar {
+  z-index: 100;
+}
 
 @media (max-width: 700px) {
   .navbar {
@@ -10,11 +12,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 49px;
+    font-size: 8vw;
     font-family: Verdana;
     font-weight: bold;
     letter-spacing: 2px;
     padding: 0.05em;
+    text-overflow: shrink;
   }
 
   .icons {
@@ -42,7 +45,7 @@
     margin-top: 0.2em;
 
     .navIcon {
-      font-size: 50px;
+      font-size: 7.5vw;
     }
   }
 
