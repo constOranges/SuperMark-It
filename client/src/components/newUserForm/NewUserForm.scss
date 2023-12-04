@@ -78,6 +78,7 @@ h2 {
   transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
   cursor: pointer;
   margin-right: 1.5em;
+  z-index: 1;
 }
 
 .submitBtn::after,
@@ -133,6 +134,7 @@ h2 {
   transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
   cursor: pointer;
   margin-right: 1.5em;
+  z-index: 1;
 }
 
 .cancelBtn:hover {
@@ -172,9 +174,11 @@ p {
     margin-left: 2.3em;
     padding: 1em;
     padding-bottom: 2em;
+    z-index: -1;
   }
 
   p {
     margin-right: 1em;
   }
+
 }

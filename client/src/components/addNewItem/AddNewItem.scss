@@ -26,6 +26,10 @@
   }
 }
 
+  .btn{
+    position: relative;
+  }
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -42,7 +46,6 @@
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 0.9em;
   font-weight: bold;
-  z-index: 2;
 }
 
 h2 {
