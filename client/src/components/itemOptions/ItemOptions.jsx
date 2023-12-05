@@ -13,34 +13,34 @@ const ItemOptions = () => {
     return (
         <div className="itemOptions">
             <div className="item">
-                <Link className="iconLink">
+                <Link className="link">
                     <PlaylistAddOutlinedIcon className="icon" />
                 </Link>
-                <Link>Add To List</Link>
+                <Link className="link">Add To List</Link>
             </div>
             <div className="item">
-                <Link className="iconLink">
+                <Link className="link">
                     <CreateNewFolderOutlinedIcon className="icon" />
                 </Link>
-                <Link>Add To Category</Link>
+                <Link className="link">Add To Category</Link>
             </div>
             <div className="item">
-                <Link className="iconLink">
+                <Link className="link">
                     <CreateOutlinedIcon className="icon" />
                 </Link>
-                <Link>Edit</Link>
+                <Link className="link">Edit</Link>
             </div>
             <div className="item">
-                <Link className="iconLink">
+                <Link className="link">
                     <AutorenewOutlinedIcon className="icon" />
                 </Link>
-                <Link>Renew</Link>
+                <Link className="link">Renew</Link>
             </div>
             <div className="item">
-                <Link className="iconLink">
+                <Link className="deleteLink">
                     <DeleteOutlineOutlinedIcon className="icon" />
                 </Link>
-                <Link>Delete</Link>
+                <Link className="deleteLink">Delete</Link>
             </div>
         </div>
     )
