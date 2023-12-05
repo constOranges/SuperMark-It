@@ -22,8 +22,8 @@
 
   .icons {
     background-color: rgb(255, 255, 255);
-    padding-bottom: .5em;
-    padding-top: .5em;
+    padding-bottom: 0.5em;
+    padding-top: 0.5em;
     display: grid;
     grid-template-columns: 2fr 2fr 2fr 2fr 2fr;
     justify-content: space-evenly;
@@ -34,7 +34,6 @@
     position: fixed;
     bottom: 0;
     left: 0;
-
 
     .navIcon {
       font-size: 50px;
@@ -94,4 +93,29 @@
       }
     }
   }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.userForm {
+  animation: fadeIn 0.1s ease-in;
+  background-color: rgb(255, 249, 243);
+  border-style: solid;
+  border-radius: .3em;
+  position: absolute;
+  right: 0.033em;
+  width: 15%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1em;
+  z-index: 5;
 }
