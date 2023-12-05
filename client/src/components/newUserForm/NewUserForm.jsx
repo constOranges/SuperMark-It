@@ -25,12 +25,12 @@ const NewUserForm = ({ loggedIn, setLoggedIn }) => {
         { withCredentials: true }
       )
       .then((res) => {
-        // setLoggedIn(true);
+        setLoggedIn(true);
         console.log("working");
         navigate("/");
       })
       .catch((err) => {
-        // setLoggedIn(false);
+        setLoggedIn(false);
         console.log("not working");
         if (err.response.data.code === 11000) {
           let keyName = Object.keys(err.response.data.keyValue)[0];
@@ -54,7 +54,7 @@ const NewUserForm = ({ loggedIn, setLoggedIn }) => {
 
   return (
     <div className="newUserPage">
-      <div className="loginForm">
+      <div className="registrationForm">
         <h2>Sign-Up</h2>
         <form onSubmit={registrationHandler} onReset={resetHandler}>
           <div className="form-group">
@@ -82,7 +82,7 @@ const NewUserForm = ({ loggedIn, setLoggedIn }) => {
           <div className="form-group">
             <label htmlFor="password">Password</label>
             <input
-              type="text"
+              type="password"
               className="form-control"
               name="password"
               id="password"
@@ -93,7 +93,7 @@ const NewUserForm = ({ loggedIn, setLoggedIn }) => {
           <div className="form-group">
             <label htmlFor="confirmPassword">Confirm Password</label>
             <input
-              type="text"
+              type="password"
               className="form-control"
               name="confirmPassword"
               id="confirmPassword"

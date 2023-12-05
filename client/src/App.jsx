@@ -1,5 +1,5 @@
 import "./App.scss";
-import React from "react";
+import React, { useState } from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Homepage from "./components/homepage/Homepage";
 import Navbar from "./components/navbar/Navbar";
@@ -10,10 +10,13 @@ import Category from "./components/category/Category";
 import List from "./components/list/List";
 
 const Layout = () => {
+
+  const [loggedIn, setLoggedIn] = useState(false);
+
   return (
     <div className="app">
-      <Navbar />
-      <Outlet />
+      <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
+      <Outlet loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
     </div>
   );
 };
@@ -25,7 +28,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Homepage />,
+        element: <Homepage  />,
       },
       {
         path: "/category/:id",
