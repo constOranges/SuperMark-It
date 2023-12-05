@@ -74,6 +74,7 @@ module.exports.removeItemFromCategory = async (req, res) => {
             }
         );
 
+        // deletes item permanently if no longer in use by any categories or lists
         if (currentItem.inUseIDs.length === 0) {
             try {
                 await Item.findByIdAndDelete(req.body.itemId);
@@ -162,6 +163,7 @@ module.exports.removeItemFromList = async (req, res) => {
             }
         );
 
+        // deletes item permanently if no longer in use by any categories or lists
         if (currentItem.inUseIDs.length === 0) {
             try {
                 await Item.findByIdAndDelete(req.body.itemId);
