@@ -1,10 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import "./List.scss";
+import ListCatOptions from "../listCatOptions/ListCatOptions";
 import ItemCard from "../itemCard/ItemCard";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
 const List = () => {
+
+const [open, setOpen] = useState(false);  
 
 const data = [
   {
@@ -35,7 +39,10 @@ const data = [
         <div className="top">
           <h1>Favorites</h1>
           <Link>
-            <MoreHorizIcon className="moreIcon" />
+            <MoreHorizIcon
+              className="moreIcon"
+              onClick={() => setOpen(!open)}
+            />
           </Link>
         </div>
         <div className="bottom">
@@ -43,6 +50,7 @@ const data = [
             <ItemCard item={item} key={item.id} />
           ))}
         </div>
+        {open && <ListCatOptions />}
       </div>
     );
 }
