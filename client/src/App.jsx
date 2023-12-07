@@ -15,8 +15,8 @@ const Layout = () => {
 
   return (
     <div className="app">
-      <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
-      <Outlet loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
+      <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+      <Outlet />
     </div>
   );
 };
@@ -48,7 +48,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/newUser",
-        element: <NewUserForm />,
+        element: <NewUserForm  />,
       },
     ],
   },
