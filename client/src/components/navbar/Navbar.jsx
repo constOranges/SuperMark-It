@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import AddBoxRoundedIcon from "@mui/icons-material/AddBoxRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
@@ -10,13 +10,10 @@ import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import LoginForm from "../loginForm/LoginForm.jsx";
 import "./Navbar.scss";
 
-const Navbar = ({ loggedIn, setLoggedIn }) => {
+const Navbar = ({loggedIn, setLoggedIn}) => {
 
   const [open, setOpen] = useState(false);
-
-  // const dropDownHandler = () => {
-  //   document.getElementById("myDropdown").classList.toggle("show");
-  // };
+  const navigate = useNavigate();
 
 
   const logoutHandler = (e) => {
@@ -28,8 +25,9 @@ const Navbar = ({ loggedIn, setLoggedIn }) => {
         { withCredentials: true }
       )
       .then((res) => {
-        console.log(res);
         setLoggedIn(false);
+        console.log(res);
+        navigate("/");
       })
       .catch((err) => console.log(err));
   };
@@ -84,13 +82,13 @@ const Navbar = ({ loggedIn, setLoggedIn }) => {
       </div>
       {open && (
         <div className="">
-          {loggedIn ? (
+          {loggedIn ? ( 
             <Link className="link" to="/" onClick={logoutHandler}>
               Logout
             </Link>
           ) : (
             <div className="userForm">
-              <LoginForm />
+              <LoginForm setLoggedIn={setLoggedIn} />
               <Link className="link" to="/newUser" onClick={() => setOpen(!open)}>
                 Sign-up
               </Link>
