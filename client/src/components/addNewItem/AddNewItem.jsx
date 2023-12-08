@@ -11,7 +11,7 @@ const AddNewItem = () => {
   const [notifyDate, setNotifyDate] = useState(new Date());
   const [imagePath, setImagePath] = useState(null);
   const [categories, setCategories] = useState([]);
-  const [categoryId, setCategoryId] = useState(0);
+  const [categoryId, setCategoryId] = useState("");
   const [errors, setErrors] = useState([]);
 
   const navigate = useNavigate();
@@ -97,10 +97,7 @@ const AddNewItem = () => {
               <option defaultValue>Select Category</option>
               {categories.map((category) => {
                 return (
-                  <option
-                    value={category._id}
-                    key={category._id}
-                  >
+                  <option value={category._id} key={category._id}>
                     {category.categoryName}
                   </option>
                 );
