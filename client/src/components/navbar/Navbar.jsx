@@ -16,9 +16,9 @@ const Navbar = ({loggedIn, setLoggedIn}) => {
   const navigate = useNavigate();
 
 
-  const logoutHandler = (e) => {
+  const logoutHandler = async (e) => {
     e.preventDefault();
-    axios
+    await axios
       .post(
         `${import.meta.env.VITE_REACT_APP_API_URL}/api/users/logout`,
         {},
@@ -88,7 +88,7 @@ const Navbar = ({loggedIn, setLoggedIn}) => {
             </Link>
           ) : (
             <div className="userForm">
-              <LoginForm setLoggedIn={setLoggedIn} />
+              <LoginForm setOpen={setOpen} />
               <Link className="link" to="/newUser" onClick={() => setOpen(!open)}>
                 Sign-up
               </Link>

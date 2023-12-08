@@ -16,18 +16,19 @@ const AddNewItem = () => {
 
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   axios
-  //     .get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/users/currentuser`, {
-  //       withCredentials: true,
-  //     })
-  //     .then((res) => {
-  //       setCategories(res.data.user.categories);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/users/currentuser`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setCategories(res.data.user.categories);
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const categoryHandler = (e) => {
     e.preventDefault();
@@ -97,8 +98,8 @@ const AddNewItem = () => {
               {categories.map((category) => {
                 return (
                   <option
-                    value={category.categories_id}
-                    key={category.categories_id}
+                    value={category._id}
+                    key={category._id}
                   >
                     {category.categoryName}
                   </option>

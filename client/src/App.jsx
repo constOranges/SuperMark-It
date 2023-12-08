@@ -1,5 +1,6 @@
 import "./App.scss";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Homepage from "./components/homepage/Homepage";
 import Navbar from "./components/navbar/Navbar";
@@ -8,10 +9,29 @@ import AddNewItem from "./components/addNewItem/AddNewItem";
 import NewUserForm from "./components/newUserForm/NewUserForm";
 import Category from "./components/category/Category";
 import List from "./components/list/List";
+import NewCategoryForm from "./components/newCategoryForm/NewCategoryForm";
 
 const Layout = () => {
 
   const [loggedIn, setLoggedIn] = useState(false);
+
+    useEffect(() => {
+      axios
+        .get(
+          `${import.meta.env.VITE_REACT_APP_API_URL}/api/users/currentuser`,
+          {
+            withCredentials: true,
+          }
+        )
+        .then((res) => {
+          setLoggedIn(true);
+        })
+        .catch((err) => {
+          setLoggedIn(false);
+          console.log(err);
+        });
+    }, []);
+
 
   return (
     <div className="app">
@@ -28,7 +48,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Homepage  />,
+        element: <Homepage />,
       },
       {
         path: "/category/:id",
@@ -48,7 +68,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/newUser",
-        element: <NewUserForm  />,
+        element: <NewUserForm />,
+      },
+      {
+        path: "/newCategory",
+        element: <NewCategoryForm />,
       },
     ],
   },
@@ -58,7 +82,7 @@ function App() {
   return (
     <>
       <div>
-        <RouterProvider router={router} />
+        <RouterProvider router={router} forceRefresh={true}/>
       </div>
     </>
   );

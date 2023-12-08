@@ -7,7 +7,8 @@ import BreakfastDiningOutlinedIcon from "@mui/icons-material/BreakfastDiningOutl
 import IcecreamRoundedIcon from "@mui/icons-material/IcecreamRounded";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 
-const Options = () => {
+const Options = ({ user }) => {
+  
   return (
     <div className="options">
       <div className="top">
@@ -21,9 +22,21 @@ const Options = () => {
       <div className="bottom">
         <div className="categories">
           <div className="cat">
+            <Link className="link">
+              <AddOutlinedIcon className="catIcon" />
+              <div className="catBody">
+                <Link to="/newCategory" className="link">
+                  NEW CATEGORY
+                </Link>
+              </div>
+            </Link>
+          </div>
+          <div className="cat">
             <FastfoodRoundedIcon className="catIcon" />
             <div className="catBody">
-              <Link className="link" to="/category/1">ALL</Link>
+              <Link className="link" to="/category/1">
+                ALL
+              </Link>
             </div>
           </div>
           <div className="cat">
@@ -44,14 +57,22 @@ const Options = () => {
               <Link className="link">PANTRY</Link>
             </div>
           </div>
-          <div className="cat">
-            <Link className="link">
-              <AddOutlinedIcon className="catIcon" />
-              <div className="catBody">
-                <Link className="link">NEW CATEGORY</Link>
-              </div>
-            </Link>
-          </div>
+
+          {user
+            ? user.categories.map((cat) => {
+                return (
+                  <div className="cat">
+                    <Link className="link">
+                      <div className="catBody">
+                        <Link to={`/categories/${cat._id}`} className="link">
+                          {cat.categoryName}
+                        </Link>
+                      </div>
+                    </Link>
+                  </div>
+                );
+              })
+            : null}
         </div>
       </div>
     </div>
