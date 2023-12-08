@@ -34,12 +34,16 @@ const NewCategoryForm = () => {
       });
   };
 
+  const resetHandler = (e) => {
+    e.preventDefault();
+    navigate("/");
+  };
 
   return (
     <div className="newCategoryPage">
       <div className="categoryForm">
         <h2>New Category</h2>
-        <form onSubmit={submitHandler} onReset={""}>
+        <form onSubmit={submitHandler} onReset={resetHandler}>
           <div className="form-group">
             <label htmlFor="categoryName">Category Name</label>
             <input
@@ -79,7 +83,6 @@ const NewCategoryForm = () => {
       ) : null}
     </div>
   );
-
 };
 
 export default NewCategoryForm;
