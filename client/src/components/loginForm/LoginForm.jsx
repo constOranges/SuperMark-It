@@ -4,16 +4,16 @@ import axios from "axios";
 import "./LoginForm.scss";
 
 const LoginForm = ({ setLoggedIn }) => {
-  
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginErrors, setLoginErrors] = useState("");
 
   const navigate = useNavigate();
 
-  const loginHandler = (e) => {
+  const loginHandler = async (e) => {
     e.preventDefault();
-    axios
+    await axios
       .post(
         `${import.meta.env.VITE_REACT_APP_API_URL}/api/users/login`,
         {
@@ -24,14 +24,13 @@ const LoginForm = ({ setLoggedIn }) => {
       )
       .then((res) => {
         console.log(res);
-        setLoggedIn(true);
         navigate("/");
       })
       .catch((err) => {
         console.log(err);
-        setLoggedIn(false);
         // setLoginErrors(err.response.data);
       });
+
   };
 
   return (
