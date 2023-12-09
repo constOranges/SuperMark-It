@@ -44,7 +44,7 @@ const AddNewItem = () => {
     e.preventDefault();
     axios
       .post(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/api/item/newItem/:id`,
+        `${import.meta.env.VITE_REACT_APP_API_URL}/api/items/newItemToCategory`,
         {
           itemName,
           brand,
@@ -52,6 +52,7 @@ const AddNewItem = () => {
           expDate,
           notifyDate,
           imagePath,
+          categoryId,
         },
         { withCredentials: true }
       )

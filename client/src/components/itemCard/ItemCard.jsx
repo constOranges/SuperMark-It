@@ -7,16 +7,18 @@ import ItemOptions from "../itemOptions/ItemOptions";
 
 const ItemCard = ({ item }) => {
     const [open, setOpen] = useState(false);
+    console.log(item);
+
 
     return (
       <div className="itemCard">
         <div className="left">
-          <img src={item.img} alt="Image of product" className="image" />
+          <img src={item.imagePath} alt="Image of product" className="image" />
         </div>
         <div className="middle">
-          <h3>{item.title}</h3>
+          <h3>{item.itemName}</h3>
           <p>{item.brand}</p>
-          <p>Expires: {item.exp}</p>
+          <p>Expires: {item.expDate}</p>
         </div>
         <div className="right">
           <div className="more" onClick={() => setOpen(!open)}>

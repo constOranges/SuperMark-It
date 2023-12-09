@@ -8,7 +8,7 @@ import IcecreamRoundedIcon from "@mui/icons-material/IcecreamRounded";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 
 const Options = ({ user }) => {
-  
+
   return (
     <div className="options">
       <div className="top">
@@ -64,7 +64,7 @@ const Options = ({ user }) => {
                   <div className="cat">
                     <Link className="link">
                       <div className="catBody">
-                        <Link to={`/categories/${cat._id}`} className="link">
+                        <Link to={`/category/${cat._id}`} className="link">
                           {cat.categoryName}
                         </Link>
                       </div>
