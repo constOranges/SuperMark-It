@@ -28,6 +28,7 @@ const Navbar = ({loggedIn, setLoggedIn}) => {
         setLoggedIn(false);
         console.log(res);
         navigate("/");
+        window.location.reload(false);
       })
       .catch((err) => console.log(err));
   };
@@ -81,7 +82,7 @@ const Navbar = ({loggedIn, setLoggedIn}) => {
         </div>
       </div>
       {open && (
-        <div className="">
+        <div>
           {loggedIn ? ( 
             <Link className="link" to="/" onClick={logoutHandler}>
               Logout
