@@ -21,55 +21,45 @@ const Options = ({ user }) => {
       </div>
       <div className="bottom">
         <div className="categories">
-          <div className="cat">
-            <Link className="link">
+          <Link to="/newCategory" className="link">
+            <div className="cat">
               <AddOutlinedIcon className="catIcon" />
-              <div className="catBody">
-                <Link to="/newCategory" className="link">
-                  NEW CATEGORY
-                </Link>
-              </div>
-            </Link>
-          </div>
-          <div className="cat">
-            <FastfoodRoundedIcon className="catIcon" />
-            <div className="catBody">
-              <Link className="link" to="/category/1">
-                ALL
-              </Link>
+              <div className="catBody">NEW CATEGORY</div>
             </div>
-          </div>
-          <div className="cat">
-            <KitchenRoundedIcon className="catIcon" />
-            <div className="catBody">
-              <Link className="link">FRIDGE</Link>
+          </Link>
+          <Link className="link" to="/category/1">
+            <div className="cat">
+              <FastfoodRoundedIcon className="catIcon" />
+              <div className="catBody">ALL</div>
             </div>
-          </div>
-          <div className="cat">
-            <IcecreamRoundedIcon className="catIcon" />
-            <div className="catBody">
-              <Link className="link">FREEZER</Link>
+          </Link>
+          <Link className="link">
+            <div className="cat">
+              <KitchenRoundedIcon className="catIcon" />
+              <div className="catBody">FRIDGE</div>
             </div>
-          </div>
-          <div className="cat">
-            <BreakfastDiningOutlinedIcon className="catIcon" />
-            <div className="catBody">
-              <Link className="link">PANTRY</Link>
+          </Link>
+          <Link className="link">
+            <div className="cat">
+              <IcecreamRoundedIcon className="catIcon" />
+              <div className="catBody">FREEZER</div>
             </div>
-          </div>
+          </Link>
+          <Link className="link">
+            <div className="cat">
+              <BreakfastDiningOutlinedIcon className="catIcon" />
+              <div className="catBody">PANTRY</div>
+            </div>
+          </Link>
 
           {user
             ? user.categories.map((cat) => {
                 return (
-                  <div className="cat">
-                    <Link className="link">
-                      <div className="catBody">
-                        <Link to={`/category/${cat._id}`} className="link">
-                          {cat.categoryName}
-                        </Link>
-                      </div>
-                    </Link>
-                  </div>
+                  <Link to={`/category/${cat._id}`} className="link">
+                    <div className="cat">
+                      <div className="catBody">{cat.categoryName}</div>
+                    </div>
+                  </Link>
                 );
               })
             : null}
