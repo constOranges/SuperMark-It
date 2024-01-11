@@ -8,13 +8,12 @@ import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import LoginForm from "../loginForm/LoginForm.jsx";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
 import "./Navbar.scss";
 
-const Navbar = ({loggedIn, setLoggedIn}) => {
-
+const Navbar = ({ loggedIn, setLoggedIn }) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-
 
   const logoutHandler = async (e) => {
     e.preventDefault();
@@ -31,6 +30,10 @@ const Navbar = ({loggedIn, setLoggedIn}) => {
         window.location.reload(false);
       })
       .catch((err) => console.log(err));
+  };
+
+  const handleClickAway = () => {
+    setOpen(false);
   };
 
   return (
@@ -70,6 +73,7 @@ const Navbar = ({loggedIn, setLoggedIn}) => {
             <div className="notifIcon">
               <NotificationsRoundedIcon className="navIcon" />
             </div>
+            <ClickAwayListener onClickAway={handleClickAway}>
             <div className="dropDown">
               <div className="profileIcon">
                 <PersonRoundedIcon
@@ -78,25 +82,36 @@ const Navbar = ({loggedIn, setLoggedIn}) => {
                 />
               </div>
             </div>
+            </ClickAwayListener>
           </div>
         </div>
       </div>
-      {open && (
+      
         <div>
-          {loggedIn ? ( 
-            <Link className="link" to="/" onClick={logoutHandler}>
-              Logout
-            </Link>
-          ) : (
-            <div className="userForm">
-              <LoginForm setOpen={setOpen} />
-              <Link className="link" to="/newUser" onClick={() => setOpen(!open)}>
-                Sign-up
-              </Link>
+          {open && (
+            <div className="formContainer">
+              {loggedIn ? (
+                <div className="logoutForm">
+                  <Link className="link" to="/" onClick={logoutHandler}>
+                    Logout
+                  </Link>
+                </div>
+              ) : (
+                <div className="userForm">
+                  <LoginForm setOpen={setOpen} />
+                  <Link
+                    className="link"
+                    to="/newUser"
+                    onClick={() => setOpen(!open)}
+                  >
+                    Sign-up
+                  </Link>
+                </div>
+              )}
             </div>
           )}
         </div>
-      )}
+
     </div>
   );
 };
