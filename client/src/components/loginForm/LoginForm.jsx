@@ -25,6 +25,7 @@ const LoginForm = ({ setLoggedIn }) => {
       .then((res) => {
         console.log(res);
         navigate("/");
+        window.location.reload(false);
       })
       .catch((err) => {
         console.log(err);
@@ -32,6 +33,7 @@ const LoginForm = ({ setLoggedIn }) => {
       });
 
   };
+
 
   return (
     <div className="loginForm">
