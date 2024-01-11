@@ -93,6 +93,44 @@
       }
     }
   }
+
+
+
+  .userForm {
+    animation: fadeIn 0.1s ease-in;
+    background-color: rgb(255, 249, 243);
+    border-style: solid;
+    border-radius: 0.3em;
+    position: absolute;
+    right: 0.033em;
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1em;
+    z-index: 5;
+  }
+
+  .logoutForm {
+    animation: fadeIn 0.1s ease-in;
+    background-color: rgb(255, 249, 243);
+    border-style: solid;
+    border-radius: 0.3em;
+    position: absolute;
+    right: 0.033em;
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: .5em;
+    z-index: 5;
+
+    .link:hover{
+      color: rgb(90, 89, 89);
+      text-decoration: underline;
+    }
+  }
+
 }
 
 @keyframes fadeIn {
@@ -103,19 +141,4 @@
   to {
     opacity: 1;
   }
-}
-
-.userForm {
-  animation: fadeIn 0.1s ease-in;
-  background-color: rgb(255, 249, 243);
-  border-style: solid;
-  border-radius: .3em;
-  position: absolute;
-  right: 0.033em;
-  width: 15%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1em;
-  z-index: 5;
 }
