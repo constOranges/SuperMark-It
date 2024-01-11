@@ -74,44 +74,42 @@ const Navbar = ({ loggedIn, setLoggedIn }) => {
               <NotificationsRoundedIcon className="navIcon" />
             </div>
             <ClickAwayListener onClickAway={handleClickAway}>
-            <div className="dropDown">
-              <div className="profileIcon">
-                <PersonRoundedIcon
-                  className="navIcon userIcon"
-                  onClick={() => setOpen(!open)}
-                />
+              <div className="dropDown">
+                <div className="profileIcon">
+                  <PersonRoundedIcon
+                    className="navIcon userIcon"
+                    onClick={() => setOpen(!open)}
+                  />
+                </div>
+             
+                  {open && (
+                    <div className="formContainer">
+                      {loggedIn ? (
+                        <div className="logoutForm">
+                          <Link className="link" to="/" onClick={logoutHandler}>
+                            Logout
+                          </Link>
+                        </div>
+                      ) : (
+                        <div className="userForm">
+                          <LoginForm setOpen={setOpen} />
+                          <Link
+                            className="link"
+                            to="/newUser"
+                            onClick={() => setOpen(!open)}
+                          >
+                            Sign-up
+                          </Link>
+                        </div>
+                      )}
+                    </div>
+                  )}
+               
               </div>
-            </div>
             </ClickAwayListener>
           </div>
         </div>
       </div>
-      
-        <div>
-          {open && (
-            <div className="formContainer">
-              {loggedIn ? (
-                <div className="logoutForm">
-                  <Link className="link" to="/" onClick={logoutHandler}>
-                    Logout
-                  </Link>
-                </div>
-              ) : (
-                <div className="userForm">
-                  <LoginForm setOpen={setOpen} />
-                  <Link
-                    className="link"
-                    to="/newUser"
-                    onClick={() => setOpen(!open)}
-                  >
-                    Sign-up
-                  </Link>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-
     </div>
   );
 };
