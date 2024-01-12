@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "../homepage/Homepage.scss";
 import axios from "axios";
 import Options from "../options/Options";
+import ListOptions from "../listOptions/ListOptions";
 
 const Homepage = () => {
 
     const [user, setUser] = useState(null);
+    const [kitchen, setKitchen] = useState(true);
 
     useEffect(() => {
         axios
@@ -26,7 +28,18 @@ const Homepage = () => {
 
   return (
     <div className="homepage">
-      <Options  user={user}/>
+      <div className="options">
+        <div className="top">
+          <div className="item">
+            <Link className="link" onClick={() => setKitchen(true)}>KITCHEN</Link>
+          </div>
+          <div className="item">
+            <Link className="link" onClick={() => setKitchen(false)}>LISTS</Link>
+          </div>
+        </div>
+      </div>
+      {kitchen ? <Options user={user} /> : <ListOptions user={user} />}
+      
     </div>
   );
 };

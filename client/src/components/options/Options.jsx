@@ -11,14 +11,6 @@ const Options = ({ user }) => {
 
   return (
     <div className="options">
-      <div className="top">
-        <div className="item">
-          <Link className="link">KITCHEN</Link>
-        </div>
-        <div className="item">
-          <Link className="link">LISTS</Link>
-        </div>
-      </div>
       <div className="bottom">
         <div className="categories">
           <Link to="/newCategory" className="link">
