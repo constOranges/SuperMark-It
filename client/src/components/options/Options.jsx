@@ -44,6 +44,7 @@ const Options = ({ user }) => {
             </div>
           </Link>
 
+          {/* User-created categories */}
           {user
             ? user.categories.map((cat) => {
                 return (

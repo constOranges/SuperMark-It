@@ -32,6 +32,7 @@ const Navbar = ({ loggedIn, setLoggedIn }) => {
       .catch((err) => console.log(err));
   };
 
+ 
   const handleClickAway = () => {
     setOpen(false);
   };
@@ -73,6 +74,8 @@ const Navbar = ({ loggedIn, setLoggedIn }) => {
             <div className="notifIcon">
               <NotificationsRoundedIcon className="navIcon" />
             </div>
+
+            {/* Handler that closes login form when clicking outside of container */}
             <ClickAwayListener onClickAway={handleClickAway}>
               <div className="dropDown">
                 <div className="profileIcon">
