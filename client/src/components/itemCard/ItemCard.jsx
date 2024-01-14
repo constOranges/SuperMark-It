@@ -4,6 +4,7 @@ import "./ItemCard.scss";
 import { Link } from "react-router-dom";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import ItemOptions from "../itemOptions/ItemOptions";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
 
 const ItemCard = ({ item }) => {
     const [open, setOpen] = useState(false);
@@ -12,6 +13,10 @@ const ItemCard = ({ item }) => {
     
     //Fix issue where option menus overlap each other
     // Can probably solve this using ClickAwayListener
+
+      const handleClickAway = () => {
+    setOpen(false);
+  };
 
 
     return (
@@ -24,12 +29,16 @@ const ItemCard = ({ item }) => {
           <p>{item.brand}</p>
           <p>Expires: {item.expDate}</p>
         </div>
-        <div className="right">
-          <div className="more" onClick={() => setOpen(!open)}>
-            <MoreHorizIcon className="moreIcon" />
+        <ClickAwayListener onClickAway={handleClickAway}>
+          <div>
+            <div className="right">
+              <div className="more" onClick={() => setOpen(!open)}>
+                <MoreHorizIcon className="moreIcon" />
+              </div>
+            </div>
+            {open && <ItemOptions />}
           </div>
-        </div>
-        {open && <ItemOptions />}
+        </ClickAwayListener>
       </div>
     );
 }
