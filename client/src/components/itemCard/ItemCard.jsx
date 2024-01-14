@@ -8,6 +8,10 @@ import ItemOptions from "../itemOptions/ItemOptions";
 const ItemCard = ({ item }) => {
     const [open, setOpen] = useState(false);
     console.log(item);
+    
+    
+    //Fix issue where option menus overlap each other
+    // Can probably solve this using ClickAwayListener
 
 
     return (

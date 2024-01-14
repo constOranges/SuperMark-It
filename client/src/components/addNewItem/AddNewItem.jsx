@@ -16,6 +16,7 @@ const AddNewItem = () => {
 
   const navigate = useNavigate();
 
+// Fetch current user data to access available categories
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/users/currentuser`, {
