@@ -10,6 +10,7 @@ import NewUserForm from "./components/newUserForm/NewUserForm";
 import Category from "./components/category/Category";
 import List from "./components/list/List";
 import NewCategoryForm from "./components/newCategoryForm/NewCategoryForm";
+import NewListForm from "./components/newListForm/NewListForm";
 
 const Layout = () => {
 
@@ -73,6 +74,10 @@ const router = createBrowserRouter([
       {
         path: "/newCategory",
         element: <NewCategoryForm />,
+      },
+      {
+        path: "/newList",
+        element: <NewListForm />,
       },
     ],
   },

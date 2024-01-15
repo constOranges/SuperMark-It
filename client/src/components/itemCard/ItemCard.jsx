@@ -7,40 +7,35 @@ import ItemOptions from "../itemOptions/ItemOptions";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 
 const ItemCard = ({ item }) => {
-    const [open, setOpen] = useState(false);
-    console.log(item);
-    
-    
-    //Fix issue where option menus overlap each other
-    // Can probably solve this using ClickAwayListener
+  const [open, setOpen] = useState(false);
+  console.log(item);
 
-      const handleClickAway = () => {
+  const handleClickAway = () => {
     setOpen(false);
   };
 
-
-    return (
-      <div className="itemCard">
-        <div className="left">
-          <img src={item.imagePath} alt="Image of product" className="image" />
-        </div>
-        <div className="middle">
-          <h3>{item.itemName}</h3>
-          <p>{item.brand}</p>
-          <p>Expires: {item.expDate}</p>
-        </div>
-        <ClickAwayListener onClickAway={handleClickAway}>
-          <div>
-            <div className="right">
-              <div className="more" onClick={() => setOpen(!open)}>
-                <MoreHorizIcon className="moreIcon" />
-              </div>
-            </div>
-            {open && <ItemOptions />}
-          </div>
-        </ClickAwayListener>
+  return (
+    <div className="itemCard">
+      <div className="left">
+        <img src={item.imagePath} alt="Image of product" className="image" />
       </div>
-    );
-}
+      <div className="middle">
+        <h3>{item.itemName}</h3>
+        <p>{item.brand}</p>
+        <p>Expires: {item.expDate}</p>
+      </div>
+      <ClickAwayListener onClickAway={handleClickAway}>
+        <div>
+          <div className="right">
+            <div className="more" onClick={() => setOpen(!open)}>
+              <MoreHorizIcon className="moreIcon" />
+            </div>
+          </div>
+          {open && <ItemOptions />}
+        </div>
+      </ClickAwayListener>
+    </div>
+  );
+};
 
 export default ItemCard;
