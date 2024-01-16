@@ -5,7 +5,9 @@ import "./ListOptions.scss";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
+
 const ListOptions = ({ user }) => {
+
   return (
     <div className="options">
       <div className="bottom">
