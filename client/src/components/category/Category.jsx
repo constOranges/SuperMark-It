@@ -25,10 +25,14 @@ const Category = () => {
 
 
   const products = category.map((items) => {
-    return items.items
+    if (`/category/${items._id}` == window.location.pathname) {
+      return items.items;
+    }
   });
   const catName = category.map((name) => {
-    return name.categoryName;
+    if(`/category/${name._id}` == window.location.pathname){
+      return name.categoryName;
+    }
   });
   // console.log(products)
 
