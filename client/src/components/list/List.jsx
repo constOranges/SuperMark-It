@@ -11,6 +11,7 @@ import ClickAwayListener from "@mui/material/ClickAwayListener";
 const List = () => {
   const [open, setOpen] = useState(false);
   const [list, setList] = useState([]);
+  const [listId, setListId] = useState(null);
 
 
     useEffect(() => {
@@ -36,12 +37,20 @@ const List = () => {
 
 
   const products = list.map((items) => {
-    return items.items
+    if (`/list/${items._id}` == window.location.pathname) {
+      return items.items;
+    }
+ 
   })
 
   const listName = list.map((name) => {
-    return name.listName
+    if(`/list/${name._id}` == window.location.pathname){
+      return name.listName;
+    }
+   
   })
+
+
 
 
 
