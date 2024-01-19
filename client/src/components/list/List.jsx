@@ -50,6 +50,11 @@ const List = () => {
             {open && <ListCatOptions />}
           </div>
         </ClickAwayListener>
+        <button>
+          <Link to="/addListItem" className="buttonLink">
+            + Add Item
+          </Link>
+        </button>
       </div>
 
       <div className="bottom">

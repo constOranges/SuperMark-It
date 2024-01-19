@@ -6,6 +6,7 @@ import Homepage from "./components/homepage/Homepage";
 import Navbar from "./components/navbar/Navbar";
 import Search from "./components/search/Search";
 import AddNewItem from "./components/addNewItem/AddNewItem";
+import AddListItem from "./components/addListItem/AddListItem";
 import NewUserForm from "./components/newUserForm/NewUserForm";
 import Category from "./components/category/Category";
 import List from "./components/list/List";
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
       {
         path: "/add",
         element: <AddNewItem />,
+      },
+      {
+        path: "/addListItem",
+        element: <AddListItem />,
       },
       {
         path: "/newUser",
