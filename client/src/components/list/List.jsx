@@ -35,10 +35,12 @@ const List = () => {
     setOpen(false);
   };
 
+  const prodList = []
 
-  const products = list.map((items) => {
+
+  const products = list.filter((items) => {
     if (`/list/${items._id}` == window.location.pathname) {
-      return items.items;
+      prodList.push(items.items)
     }
  
   })
@@ -49,6 +51,14 @@ const List = () => {
     }
    
   })
+
+  
+
+
+
+  console.log(prodList)
+
+
 
 
 
@@ -96,9 +106,8 @@ const List = () => {
           </Link>
         </button>
       </div>
-
       <div className="bottom">
-        {products? products[0]?.map((item) => (
+        {products? prodList[0]?.map((item) => (
           <ItemCard item={item} key={item.id} />
         )) : null}
       </div>
