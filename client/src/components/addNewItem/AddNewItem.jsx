@@ -38,7 +38,7 @@ const AddNewItem = () => {
 
   const resetHandler = (e) => {
     e.preventDefault();
-    navigate("/");
+    navigate(-1);
   };
 
   const submitHandler = (e) => {
