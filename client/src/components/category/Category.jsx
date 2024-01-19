@@ -30,7 +30,7 @@ const Category = () => {
   const catName = category.map((name) => {
     return name.categoryName;
   });
-  console.log(products)
+  // console.log(products)
 
 
   return (
