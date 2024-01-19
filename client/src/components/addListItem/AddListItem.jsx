@@ -55,7 +55,7 @@ const AddListItem = () => {
       )
       .then((res) => {
         console.log(res);
-        navigate("/");
+        navigate(-1);
       })
       .catch((err) => {
         console.log(err);
