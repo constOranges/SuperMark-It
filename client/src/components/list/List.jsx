@@ -100,16 +100,14 @@ const List = () => {
             {open && <ListCatOptions />}
           </div>
         </ClickAwayListener>
-        <button>
-          <Link to="/addListItem" className="buttonLink">
-            + Add Item
-          </Link>
-        </button>
+        <Link to="/addListItem" className="buttonLink">
+          <button>+ Add Item</button>
+        </Link>
       </div>
       <div className="bottom">
-        {products? prodList[0]?.map((item) => (
-          <ItemCard item={item} key={item.id} />
-        )) : null}
+        {products
+          ? prodList[0]?.map((item) => <ItemCard item={item} key={item.id} />)
+          : null}
       </div>
     </div>
   );

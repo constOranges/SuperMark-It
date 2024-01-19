@@ -41,9 +41,9 @@ const Category = () => {
     <div className="category">
       <div className="top">
         <h1>{catName}</h1>
-        <button>
-          <Link to="/add" className="buttonLink">+ Add Item</Link>
-        </button>
+        <Link to="/add" className="buttonLink">
+          <button>+ Add Item</button>
+        </Link>
       </div>
       <div className="bottom">
         {products ? products[0]?.map((item) => <ItemCard item={item} />) : null}
