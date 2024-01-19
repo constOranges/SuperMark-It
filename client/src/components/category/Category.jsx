@@ -67,11 +67,12 @@ const Category = () => {
     <div className="category">
       <div className="top">
         <h1>{catName}</h1>
+        <button>
+          <Link to="/add" className="buttonLink">+ Add Item</Link>
+        </button>
       </div>
       <div className="bottom">
-        {products ? products[0]?.map((item) => (
-          <ItemCard item={item} />
-        )) : null}
+        {products ? products[0]?.map((item) => <ItemCard item={item} />) : null}
         <p className="arrows">
           <Link>
             <ArrowBackIcon className="arrowBack" />

@@ -1,27 +1,42 @@
 .list {
-    margin-top: 40px;
+  margin-top: 40px;
 
-    .top {
-        display: flex;
-        align-items: center;
-        margin-bottom: 20px;
+  .top {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
 
-        h1 {
-            font-family: Verdana;
-            font-size: 25px;
-            color: rgb(59, 59, 59);
-            letter-spacing: 1.5px;
-        }
-
-        .moreIcon {
-            padding-top: 8px;
-            padding-left: 8px;
-            color: rgb(151, 150, 150);
-            font-size: 30px;
-        }
-
-        .more:hover{
-            cursor: pointer;
-        }
+    h1 {
+      font-family: Verdana;
+      font-size: 25px;
+      color: rgb(59, 59, 59);
+      letter-spacing: 1.5px;
     }
+
+    .moreIcon {
+      padding-top: 8px;
+      padding-left: 8px;
+      color: rgb(151, 150, 150);
+      font-size: 30px;
+    }
+
+    .more:hover {
+      cursor: pointer;
+    }
+
+    button {
+      margin-left: 1em;
+      margin-top: 0.4em;
+      border-radius: 0.4em;
+      padding: 0.5em;
+    }
+
+    button:hover {
+      background-color: rgb(226, 224, 224);
+    }
+
+    .buttonLink {
+      text-decoration: none;
+    }
+  }
 }
