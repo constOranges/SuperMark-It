@@ -11,7 +11,6 @@ import ClickAwayListener from "@mui/material/ClickAwayListener";
 const List = () => {
   const [open, setOpen] = useState(false);
   const [list, setList] = useState([]);
-  const [listId, setListId] = useState(null);
 
 
     useEffect(() => {
@@ -51,15 +50,6 @@ const List = () => {
     }
    
   })
-
-  
-
-
-
-  console.log(prodList)
-
-
-
 
 
 

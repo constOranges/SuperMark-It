@@ -34,7 +34,7 @@ const Category = () => {
       return name.categoryName;
     }
   });
-  // console.log(products)
+  // console.log(category[0]._id)
 
 
   return (
@@ -46,7 +46,7 @@ const Category = () => {
         </Link>
       </div>
       <div className="bottom">
-        {products ? products[0]?.map((item) => <ItemCard item={item} />) : null}
+        {products ? products[0]?.map((item) => <ItemCard item={item} categoryId={category[0]._id}/>) : null}
         <p className="arrows">
           <Link>
             <ArrowBackIcon className="arrowBack" />
