@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./Category.scss";
 import ItemCard from "../itemCard/ItemCard";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -8,6 +8,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 const Category = () => {
   const [category, setCategory] = useState([]);
+  const categoryId = useParams();
 
   useEffect(() => {
     axios
@@ -46,7 +47,7 @@ const Category = () => {
         </Link>
       </div>
       <div className="bottom">
-        {products ? products[0]?.map((item) => <ItemCard item={item} categoryId={category[0]._id}/>) : null}
+        {products ? products[0]?.map((item) => <ItemCard item={item} categoryId={categoryId}/>) : null}
         <p className="arrows">
           <Link>
             <ArrowBackIcon className="arrowBack" />
