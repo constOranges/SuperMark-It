@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./ItemOptions.scss";
 import axios from "axios";
@@ -11,38 +11,74 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 
 // DELETE: make sure to add options to delete from list, category, or all items
 
-const ItemOptions = ({ item, categoryId }) => {
+const ItemOptions = ({ item, categoryId, listId }) => {
   const [errors, setErrors] = useState([]);
 
   const itemId = item._id;
 
-  const deleteHandler = () => {
+
+  const deleteFromCatHandler = () => {
     if (window.confirm(`Are you sure you want to delete ${item.itemName}`))
-      axios
-        .patch(
-          `${
-            import.meta.env.VITE_REACT_APP_API_URL
-          }/api/items/removeItemFromCategory`,
-          {
-            itemId,
-            categoryId,
-          },
-          { withCredentials: true }
-        )
-        .then((res) => {
-          console.log(res);
-          console.log(itemId);
-          window.location.reload();
-        })
-        .catch((err) => {
-          console.log(err);
-          const errorResponse = err.response.data.errors;
-          const errorArray = [];
-          for (const key of Object.keys(errorResponse)) {
-            errorArray.push(errorResponse[key].message);
-          }
-          setErrors(errorArray);
-        });
+      if (categoryId) {
+        categoryId = categoryId.id;
+      }
+    axios
+      .patch(
+        `${
+          import.meta.env.VITE_REACT_APP_API_URL
+        }/api/items/removeItemFromCategory`,
+        {
+          itemId,
+          categoryId,
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        console.log(res);
+        console.log(itemId);
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+        const errorResponse = err.response.data.errors;
+        const errorArray = [];
+        for (const key of Object.keys(errorResponse)) {
+          errorArray.push(errorResponse[key].message);
+        }
+        setErrors(errorArray);
+      });
+  };
+
+  const deleteFromListHandler = () => {
+    if (window.confirm(`Are you sure you want to delete ${item.itemName}`))
+      if (listId) {
+         listId = listId.id;
+      }
+    axios
+      .patch(
+        `${
+          import.meta.env.VITE_REACT_APP_API_URL
+        }/api/items/removeItemFromList`,
+        {
+          itemId,
+          listId,
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        console.log(res);
+        console.log(itemId);
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+        const errorResponse = err.response.data.errors;
+        const errorArray = [];
+        for (const key of Object.keys(errorResponse)) {
+          errorArray.push(errorResponse[key].message);
+        }
+        setErrors(errorArray);
+      });
   };
 
   return (
@@ -71,13 +107,23 @@ const ItemOptions = ({ item, categoryId }) => {
         </Link>
         <Link className="link">Renew</Link>
       </div>
-      <Link className="deleteLink" onClick={() => deleteHandler()}>
-        <div className="item">
-          <DeleteOutlineOutlinedIcon className="icon" />
+      {categoryId ? (
+        <Link className="deleteLink" onClick={() => deleteFromCatHandler()}>
+          <div className="item">
+            <DeleteOutlineOutlinedIcon className="icon" />
 
-          <Link className="deleteLink">Delete</Link>
-        </div>
-      </Link>
+            <Link className="deleteLink">Delete</Link>
+          </div>
+        </Link>
+      ) : (
+        <Link className="deleteLink" onClick={() => deleteFromListHandler()}>
+          <div className="item">
+            <DeleteOutlineOutlinedIcon className="icon" />
+
+            <Link className="deleteLink">Delete</Link>
+          </div>
+        </Link>
+      )}
     </div>
   );
 };
