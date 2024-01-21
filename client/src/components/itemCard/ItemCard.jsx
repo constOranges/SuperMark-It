@@ -6,9 +6,9 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import ItemOptions from "../itemOptions/ItemOptions";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 
-const ItemCard = ({ item }) => {
+const ItemCard = ({ item, categoryId }) => {
   const [open, setOpen] = useState(false);
-  console.log(item);
+  
 
   const handleClickAway = () => {
     setOpen(false);
@@ -31,7 +31,7 @@ const ItemCard = ({ item }) => {
               <MoreHorizIcon className="moreIcon" />
             </div>
           </div>
-          {open && <ItemOptions />}
+          {open && <ItemOptions item={item} categoryId={categoryId}/>}
         </div>
       </ClickAwayListener>
     </div>
