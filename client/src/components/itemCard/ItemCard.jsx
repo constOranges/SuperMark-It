@@ -8,6 +8,8 @@ import ClickAwayListener from "@mui/material/ClickAwayListener";
 
 const ItemCard = ({ item, categoryId, listId }) => {
   const [open, setOpen] = useState(false);
+  let itemExpDate = new Date(item.expDate);
+  let dateWithoutTime = itemExpDate.toDateString();
   
 
   const handleClickAway = () => {
@@ -21,8 +23,9 @@ const ItemCard = ({ item, categoryId, listId }) => {
       </div>
       <div className="middle">
         <h3>{item.itemName}</h3>
+        <p>Quantity: {item.quantity}</p>
         <p>{item.brand}</p>
-        <p>Expires: {item.expDate}</p>
+        <p>Expires: {dateWithoutTime}</p>
       </div>
       <ClickAwayListener onClickAway={handleClickAway}>
         <div>
