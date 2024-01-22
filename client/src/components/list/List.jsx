@@ -64,7 +64,7 @@ const List = () => {
             <div className="more" onClick={() => setOpen(!open)}>
               <MoreHorizIcon className="moreIcon" />
             </div>
-            {open && <ListCatOptions />}
+            {open && <ListCatOptions listId = {listId} listName={listName}/>}
           </div>
         </ClickAwayListener>
         <Link to="/addListItem" className="buttonLink">

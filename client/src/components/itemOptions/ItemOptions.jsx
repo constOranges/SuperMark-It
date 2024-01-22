@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./ItemOptions.scss";
 import axios from "axios";
@@ -19,9 +19,11 @@ const ItemOptions = ({ item, categoryId, listId }) => {
 
   const deleteFromCatHandler = () => {
     if (window.confirm(`Are you sure you want to delete ${item.itemName}`))
+    
       if (categoryId) {
         categoryId = categoryId.id;
       }
+
     axios
       .patch(
         `${
