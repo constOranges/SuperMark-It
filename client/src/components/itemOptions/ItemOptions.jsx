@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./ItemOptions.scss";
 import axios from "axios";
@@ -8,18 +8,33 @@ import CreateNewFolderOutlinedIcon from "@mui/icons-material/CreateNewFolderOutl
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import AutorenewOutlinedIcon from "@mui/icons-material/AutorenewOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import MoveToList from "../moveToList/MoveToList";
 
 // DELETE: make sure to add options to delete from list, category, or all items
 
 const ItemOptions = ({ item, categoryId, listId }) => {
+  const [open, setOpen] = useState(false);
   const [errors, setErrors] = useState([]);
 
   const itemId = item._id;
 
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/users/currentuser`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setCategories(res.data.user.categories);
+        setLists(res.data.user.lists);
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const deleteFromCatHandler = () => {
     if (window.confirm(`Are you sure you want to delete ${item.itemName}`))
-    
       if (categoryId) {
         categoryId = categoryId.id;
       }
@@ -54,7 +69,7 @@ const ItemOptions = ({ item, categoryId, listId }) => {
   const deleteFromListHandler = () => {
     if (window.confirm(`Are you sure you want to delete ${item.itemName}`))
       if (listId) {
-         listId = listId.id;
+        listId = listId.id;
       }
     axios
       .patch(
@@ -85,30 +100,38 @@ const ItemOptions = ({ item, categoryId, listId }) => {
 
   return (
     <div className="itemOptions">
-      <div className="item">
-        <Link className="iconLink">
-          <PlaylistAddOutlinedIcon className="icon" />
+      {categoryId ? (
+        <Link className="iconLink" onClick={() => setOpen(true)}>
+          <div className="item">
+            <PlaylistAddOutlinedIcon className="icon" />
+            <Link className="link">Add To List</Link>
+          </div>
         </Link>
-        <Link className="link">Add To List</Link>
-      </div>
-      <div className="item">
+      ) : null}
+      {open ? <MoveToList itemId={itemId} /> : null}
+      {listId ? (
         <Link className="iconLink">
-          <CreateNewFolderOutlinedIcon className="icon" />
+          <div className="item">
+            <CreateNewFolderOutlinedIcon className="icon" />
+            <Link className="link">Add To Category</Link>
+          </div>
         </Link>
-        <Link className="link">Add To Category</Link>
-      </div>
-      <div className="item">
-        <Link className="iconLink">
+      ) : null}
+      <Link className="iconLink">
+        <div className="item">
           <CreateOutlinedIcon className="icon" />
-        </Link>
-        <Link className="link">Edit</Link>
-      </div>
-      <div className="item">
+          <Link className="link">Edit</Link>
+        </div>
+      </Link>
+      {categoryId ? (
         <Link className="iconLink">
-          <AutorenewOutlinedIcon className="icon" />
+          <div className="item">
+            <AutorenewOutlinedIcon className="icon" />
+            <Link className="link">Renew</Link>
+          </div>
         </Link>
-        <Link className="link">Renew</Link>
-      </div>
+      ) : null}
+
       {categoryId ? (
         <Link className="deleteLink" onClick={() => deleteFromCatHandler()}>
           <div className="item">
