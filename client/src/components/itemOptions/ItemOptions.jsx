@@ -8,7 +8,7 @@ import CreateNewFolderOutlinedIcon from "@mui/icons-material/CreateNewFolderOutl
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import AutorenewOutlinedIcon from "@mui/icons-material/AutorenewOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import MoveToList from "../moveToList/MoveToList";
+import MoveItem from "../moveItem/MoveItem";
 
 // DELETE: make sure to add options to delete from list, category, or all items
 
@@ -108,9 +108,9 @@ const ItemOptions = ({ item, categoryId, listId }) => {
           </div>
         </Link>
       ) : null}
-      {open ? <MoveToList itemId={itemId} /> : null}
+      {open ? <MoveItem itemId={itemId} currentCategory={categoryId}/> : null}
       {listId ? (
-        <Link className="iconLink">
+        <Link className="iconLink" onClick={() => setOpen(true)}>
           <div className="item">
             <CreateNewFolderOutlinedIcon className="icon" />
             <Link className="link">Add To Category</Link>
