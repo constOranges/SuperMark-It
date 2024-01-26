@@ -1,5 +1,20 @@
 .dropDownForm {
   margin-left: 2em;
+
+  .moveItemCatForm {
+
+    input {
+      z-index: 998;
+    }
+
+    select {
+      z-index: 999;
+    }
+
+    button {
+      margin-left: 1.8em;
+    }
+  }
   
   .moveItemForm {
     display: flex;
@@ -9,6 +24,7 @@
       width: 10em;
       height: 2em;
       text-align: center;
+      z-index: 999;
     }
 
     button {

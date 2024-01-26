@@ -30,11 +30,14 @@ const ItemSchema = new mongoose.Schema(
       // add default date for notifications or expirations
     },
     imagePath: {
-      data: Buffer,
-      contentType: {
+      public_id: {
         type: String,
       },
+      url: {
+        type: String,
+      }
     },
+
     inUseIDs: [],
   },
   { timestamps: true }

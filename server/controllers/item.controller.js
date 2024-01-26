@@ -1,46 +1,29 @@
 const mongoose = require("mongoose");
 const User = require("../models/user.model");
 const Item = require("../models/item.model");
-// const multer = require("multer");
-const path = require("path");
-
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, "../uploads");
-//   },
-//   filename: function (req, file, cb) {
-//     cb(
-//       null,
-//       file.fieldname + "_" + Date.now() + path.extname(file.originalname)
-//     );
-//   },
-// });
-
-// const upload = multer({
-//   storage: storage,
-//   limits: {
-//     fileSize: 1024 * 1024 * 5,
-//   },
-// });
+const cloudinary = require("../config/cloudinary");
 
 // CATEGORIES
 
-// app.post('/upload', upload.single('file'), (req, res) => {
-//   Item.create({ imagePath: req.file.filename })
-//     .then((res) => {
-//       res.json(res);
-//     })
-//     .catch((err) => console.log(err));
-// });
-
 module.exports.addItemToCategory = async (req, res) => {
+  const { imagePath } = req.body;
+
+  const result = await cloudinary.uploader.upload(imagePath, {
+    folder: "itemImages",
+    // width: 300,
+    // crop: "scale"
+  });
+
   const newItem = await Item.create({
     itemName: req.body.itemName,
     brand: req.body.brand,
     quantity: req.body.quantity,
     expDate: req.body.expDate,
     notifyDate: req.body.notifyDate,
-    imagePath: req.body.imagePath, // alter to use filepath
+    imagePath: {
+      public_id: result.public_id,
+      url: result.secure_url,
+    }, // alter to use filepath
     inUseIDs: [req.body.categoryId], // change this to accommodate multiple categories
   });
 
