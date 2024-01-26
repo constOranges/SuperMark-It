@@ -8,6 +8,10 @@ const MoveItem = ({ itemId, currentCategory }) => {
   const [listId, setListId] = useState("");
   const [categories, setCategories] = useState([]);
   const [categoryId, setCategoryId] = useState("");
+  const [quantity, setQuantity] = useState(0);
+  const [expDate, setExpDate] = useState(new Date());
+  const [notifyDate, setNotifyDate] = useState(new Date());
+  const [imagePath, setImagePath] = useState(null);
   const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState([]);
 
@@ -34,7 +38,7 @@ const MoveItem = ({ itemId, currentCategory }) => {
   const categoryHandler = (e) => {
     e.preventDefault();
     setCategoryId(e.target.value);
-  }
+  };
 
   const moveToListHandler = (e) => {
     e.preventDefault();
@@ -64,33 +68,33 @@ const MoveItem = ({ itemId, currentCategory }) => {
       });
   };
 
-    const moveToCatHandler = (e) => {
-      e.preventDefault();
-      axios
-        .patch(
-          `${
-            import.meta.env.VITE_REACT_APP_API_URL
-          }/api/items/existingItemToCategory`,
-          {
-            itemId,
-            categoryId,
-          },
-          { withCredentials: true }
-        )
-        .then((res) => {
-          console.log(res);
-          setSuccess(true);
-        })
-        .catch((err) => {
-          console.log(err);
-          const errorResponse = err.response.data.errors;
-          const errorArray = [];
-          for (const key of Object.keys(errorResponse)) {
-            errorArray.push(errorResponse[key].message);
-          }
-          setErrors(errorArray);
-        });
-    };
+  const moveToCatHandler = (e) => {
+    e.preventDefault();
+    axios
+      .patch(
+        `${
+          import.meta.env.VITE_REACT_APP_API_URL
+        }/api/items/existingItemToCategory`,
+        {
+          itemId,
+          categoryId,
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        console.log(res);
+        setSuccess(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        const errorResponse = err.response.data.errors;
+        const errorArray = [];
+        for (const key of Object.keys(errorResponse)) {
+          errorArray.push(errorResponse[key].message);
+        }
+        setErrors(errorArray);
+      });
+  };
 
   return (
     <div className="dropDownForm">
@@ -124,7 +128,7 @@ const MoveItem = ({ itemId, currentCategory }) => {
         </form>
       ) : (
         <form onSubmit={moveToCatHandler}>
-          <div className="moveItemForm">
+          <div className="moveItemCatForm">
             <div className="form-group">
               <select
                 name="categories_id"
@@ -142,6 +146,38 @@ const MoveItem = ({ itemId, currentCategory }) => {
                   );
                 })}
               </select>
+            </div>
+            <div className="form-group">
+              <label htmlFor="quantity">Quantity</label>
+              <input
+                type="number"
+                className="form-control"
+                name="quantity"
+                id="quantity"
+                onChange={(e) => setQuantity(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="expDate">Expiration Date</label>
+              <input
+                type="date"
+                className="form-control"
+                name="expDate"
+                id="expDate"
+                pattern="\d{4}-\d{2}-\d{2}"
+                onChange={(e) => setExpDate(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="notifyDate">Notify Date</label>
+              <input
+                type="date"
+                className="form-control"
+                name="notifyDate"
+                id="notifyDate"
+                pattern="\d{4}-\d{2}-\d{2}"
+                onChange={(e) => setNotifyDate(e.target.value)}
+              />
             </div>
             <div>
               <button className="addBtn" type="submit">

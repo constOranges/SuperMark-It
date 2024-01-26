@@ -17,12 +17,11 @@ const ItemCard = ({ item, categoryId, listId }) => {
     setOpen(false);
   };
 
-  console.log(item.imagePath)
 
   return (
     <div className="itemCard">
       <div className="left">
-        <img src={item.imagePath} alt="Image of product" className="image" />
+        <img src={item.imagePath?.url} alt="Image of product" className="image" />
       </div>
       <div className="middle">
         <h3>{item.itemName}</h3>

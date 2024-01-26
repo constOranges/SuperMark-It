@@ -18,20 +18,6 @@ const ItemOptions = ({ item, categoryId, listId }) => {
 
   const itemId = item._id;
 
-  useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/users/currentuser`, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        setCategories(res.data.user.categories);
-        setLists(res.data.user.lists);
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
 
   const deleteFromCatHandler = () => {
     if (window.confirm(`Are you sure you want to delete ${item.itemName}`))
@@ -101,22 +87,24 @@ const ItemOptions = ({ item, categoryId, listId }) => {
   return (
     <div className="itemOptions">
       {categoryId ? (
-        <Link className="iconLink" onClick={() => setOpen(true)}>
+        <Link className="iconLink" onClick={() => setOpen(!open)}>
           <div className="item">
             <PlaylistAddOutlinedIcon className="icon" />
             <Link className="link">Add To List</Link>
           </div>
         </Link>
       ) : null}
-      {open ? <MoveItem itemId={itemId} currentCategory={categoryId}/> : null}
       {listId ? (
-        <Link className="iconLink" onClick={() => setOpen(true)}>
+        <Link className="iconLink" onClick={() => setOpen(!open)}>
           <div className="item">
             <CreateNewFolderOutlinedIcon className="icon" />
             <Link className="link">Add To Category</Link>
           </div>
         </Link>
       ) : null}
+
+      {open ? <MoveItem itemId={itemId} currentCategory={categoryId} /> : null}
+
       <Link className="iconLink">
         <div className="item">
           <CreateOutlinedIcon className="icon" />

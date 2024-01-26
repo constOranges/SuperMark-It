@@ -16,7 +16,7 @@ const AddNewItem = () => {
 
   const navigate = useNavigate();
 
-// Fetch current user data to access available categories
+  // Fetch current user data to access available categories
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/users/currentuser`, {
@@ -40,6 +40,20 @@ const AddNewItem = () => {
     e.preventDefault();
     navigate(-1);
   };
+
+  const setFileToBase = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setImagePath(reader.result);
+    }
+  }
+
+  const imageHandler = (e) => {
+    e.preventDefault()
+    const file = e.target.files[0];
+    setFileToBase(file);
+  }
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -71,6 +85,8 @@ const AddNewItem = () => {
         setErrors(errorArray);
       });
   };
+
+
 
   return (
     <div className="newItemPage">
@@ -157,7 +173,8 @@ const AddNewItem = () => {
               capture="environment"
               name="image"
               id="image"
-              onChange={(e) => setImagePath(e.target.value)}
+              key="image"
+              onChange={imageHandler}
             />
           </div>
           <div className="btn">
