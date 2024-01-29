@@ -17,6 +17,8 @@ const ItemCard = ({ item, categoryId, listId }) => {
     setOpen(false);
   };
 
+  console.log(item);
+
 
   return (
     <div className="itemCard">

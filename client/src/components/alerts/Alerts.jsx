@@ -5,7 +5,8 @@ import "./Alerts.scss";
 
 const Alerts = ({categories}) => {
 
-    const notifyDateArr = [];
+    //forEach category
+    //run filter function thatll look at all items in category
 
 }
 
