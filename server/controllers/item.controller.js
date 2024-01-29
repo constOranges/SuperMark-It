@@ -23,7 +23,7 @@ module.exports.addItemToCategory = async (req, res) => {
     imagePath: {
       public_id: result.public_id,
       url: result.secure_url,
-    }, // alter to use filepath
+    }, 
     inUseIDs: [req.body.categoryId], // change this to accommodate multiple categories
   });
 

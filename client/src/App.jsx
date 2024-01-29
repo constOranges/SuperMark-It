@@ -16,6 +16,7 @@ import NewListForm from "./components/newListForm/NewListForm";
 const Layout = () => {
 
   const [loggedIn, setLoggedIn] = useState(false);
+  const [categories, setCategories] = useState([]);
 
     useEffect(() => {
       axios
@@ -27,6 +28,7 @@ const Layout = () => {
         )
         .then((res) => {
           setLoggedIn(true);
+          setCategories(res.data.user.categories);
         })
         .catch((err) => {
           setLoggedIn(false);
@@ -37,7 +39,7 @@ const Layout = () => {
 
   return (
     <div className="app">
-      <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+      <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} categories={categories}/>
       <Outlet />
     </div>
   );
