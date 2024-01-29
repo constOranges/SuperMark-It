@@ -32,9 +32,11 @@ const Category = () => {
     setOpen(false);
   };
 
+  const prodList = [];
+
   const products = category.map((items) => {
     if (`/category/${items._id}` == window.location.pathname) {
-      return items.items;
+      prodList.push(items.items);
     }
   });
   const catName = category.map((name) => {
@@ -61,7 +63,7 @@ const Category = () => {
       </div>
       <div className="bottom">
         {products
-          ? products[0]?.map((item) => (
+          ? prodList[0]?.map((item) => (
               <ItemCard item={item} categoryId={categoryId} />
             ))
           : null}

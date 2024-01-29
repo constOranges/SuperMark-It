@@ -8,11 +8,13 @@ import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import LoginForm from "../loginForm/LoginForm.jsx";
+import Alerts from "../alerts/Alerts.jsx";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import "./Navbar.scss";
 
-const Navbar = ({ loggedIn, setLoggedIn }) => {
+const Navbar = ({ loggedIn, setLoggedIn, categories }) => {
   const [open, setOpen] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
   const navigate = useNavigate();
 
   const logoutHandler = async (e) => {
@@ -32,10 +34,13 @@ const Navbar = ({ loggedIn, setLoggedIn }) => {
       .catch((err) => console.log(err));
   };
 
- 
   const handleClickAway = () => {
     setOpen(false);
   };
+
+  const alertClickAway = () => {
+    setOpenAlert(false);
+  }
 
   return (
     <div className="navbar">
@@ -71,9 +76,18 @@ const Navbar = ({ loggedIn, setLoggedIn }) => {
                 <FavoriteRoundedIcon className="navIcon" />
               </Link>
             </div>
-            <div className="notifIcon">
-              <NotificationsRoundedIcon className="navIcon" />
-            </div>
+            <ClickAwayListener onClickAway={alertClickAway}>
+              <div className="dropDown">
+                <div className="notifIcon">
+                  <NotificationsRoundedIcon
+                    className="navIcon"
+                    onClick={() => setOpenAlert(!openAlert)}
+                  />
+                </div>
+
+                {openAlert && <Alerts categories={categories}/>}
+              </div>
+            </ClickAwayListener>
 
             {/* Handler that closes login form when clicking outside of container */}
             <ClickAwayListener onClickAway={handleClickAway}>
@@ -84,30 +98,29 @@ const Navbar = ({ loggedIn, setLoggedIn }) => {
                     onClick={() => setOpen(!open)}
                   />
                 </div>
-             
-                  {open && (
-                    <div className="formContainer">
-                      {loggedIn ? (
-                        <div className="logoutForm">
-                          <Link className="link" to="/" onClick={logoutHandler}>
-                            Logout
-                          </Link>
-                        </div>
-                      ) : (
-                        <div className="userForm">
-                          <LoginForm setOpen={setOpen} />
-                          <Link
-                            className="link"
-                            to="/newUser"
-                            onClick={() => setOpen(!open)}
-                          >
-                            Sign-up
-                          </Link>
-                        </div>
-                      )}
-                    </div>
-                  )}
-               
+
+                {open && (
+                  <div className="formContainer">
+                    {loggedIn ? (
+                      <div className="logoutForm">
+                        <Link className="link" to="/" onClick={logoutHandler}>
+                          Logout
+                        </Link>
+                      </div>
+                    ) : (
+                      <div className="userForm">
+                        <LoginForm setOpen={setOpen} />
+                        <Link
+                          className="link"
+                          to="/newUser"
+                          onClick={() => setOpen(!open)}
+                        >
+                          Sign-up
+                        </Link>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             </ClickAwayListener>
           </div>
