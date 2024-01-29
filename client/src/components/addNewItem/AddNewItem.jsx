@@ -46,14 +46,14 @@ const AddNewItem = () => {
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       setImagePath(reader.result);
-    }
-  }
+    };
+  };
 
   const imageHandler = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const file = e.target.files[0];
     setFileToBase(file);
-  }
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -85,8 +85,6 @@ const AddNewItem = () => {
         setErrors(errorArray);
       });
   };
-
-
 
   return (
     <div className="newItemPage">

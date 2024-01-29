@@ -23,7 +23,7 @@ module.exports.addItemToCategory = async (req, res) => {
     imagePath: {
       public_id: result.public_id,
       url: result.secure_url,
-    }, 
+    },
     inUseIDs: [req.body.categoryId], // change this to accommodate multiple categories
   });
 
@@ -123,13 +123,24 @@ module.exports.removeItemFromCategory = async (req, res) => {
 // LISTS
 
 module.exports.addItemToList = async (req, res) => {
+  const { imagePath } = req.body;
+
+  const result = await cloudinary.uploader.upload(imagePath, {
+    folder: "itemImages",
+    // width: 300,
+    // crop: "scale"
+  });
+
   const newItem = await Item.create({
     itemName: req.body.itemName,
     brand: req.body.brand,
     quantity: req.body.quantity,
     expDate: req.body.expDate,
     notifyDate: req.body.notifyDate,
-    imagePath: req.body.imagePath, // alter to use filepath
+    imagePath: {
+      public_id: result.public_id,
+      url: result.secure_url,
+    },
     inUseIDs: [req.body.listId],
   });
 

@@ -39,7 +39,19 @@ const AddListItem = () => {
     navigate(-1);
   };
 
+  const setFileToBase = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setImagePath(reader.result);
+    };
+  };
 
+  const imageHandler = (e) => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    setFileToBase(file);
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -133,7 +145,7 @@ const AddListItem = () => {
               capture="environment"
               name="image"
               id="image"
-              onChange={(e) => setImagePath(e.target.value)}
+              onChange={imageHandler}
             />
           </div>
           <div className="btn">
