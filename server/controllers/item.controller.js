@@ -8,43 +8,73 @@ const cloudinary = require("../config/cloudinary");
 module.exports.addItemToCategory = async (req, res) => {
   const { imagePath } = req.body;
 
-  const result = await cloudinary.uploader.upload(imagePath, {
-    folder: "itemImages",
-    // width: 300,
-    // crop: "scale"
-  });
-
-  const newItem = await Item.create({
-    itemName: req.body.itemName,
-    brand: req.body.brand,
-    quantity: req.body.quantity,
-    expDate: req.body.expDate,
-    notifyDate: req.body.notifyDate,
-    imagePath: {
-      public_id: result.public_id,
-      url: result.secure_url,
-    },
-    inUseCategories: [req.body.categoryId],
-  });
-
-  User.updateOne(
-    {
-      _id: req.userId,
-      "categories._id": req.body.categoryId,
-    },
-    {
-      $push: {
-        "categories.$.items": newItem,
-      },
-    },
-    { new: true }
-  )
-    .then((user) => {
-      res.status(200).json({ message: "Item created succesfully." });
-    })
-    .catch((err) => {
-      res.status(400).json(err);
+  if (imagePath) {
+    const result = await cloudinary.uploader.upload(imagePath, {
+      folder: "itemImages",
+      width: 300,
+      crop: "scale",
     });
+    const newItem = await Item.create({
+      itemName: req.body.itemName,
+      brand: req.body.brand,
+      quantity: req.body.quantity,
+      expDate: req.body.expDate,
+      notifyDate: req.body.notifyDate,
+      imagePath: {
+        public_id: result.public_id,
+        url: result.secure_url,
+      },
+      inUseCategories: [req.body.categoryId],
+    });
+
+    User.updateOne(
+      {
+        _id: req.userId,
+        "categories._id": req.body.categoryId,
+      },
+      {
+        $push: {
+          "categories.$.items": newItem,
+        },
+      },
+      { new: true }
+    )
+      .then((user) => {
+        res.status(200).json({ message: "Item created succesfully." });
+      })
+      .catch((err) => {
+        res.status(400).json(err);
+      });
+  } else {
+    const newItem = await Item.create({
+      itemName: req.body.itemName,
+      brand: req.body.brand,
+      quantity: req.body.quantity,
+      expDate: req.body.expDate,
+      notifyDate: req.body.notifyDate,
+      imagePath: req.body.imagePath,
+      inUseCategories: [req.body.categoryId],
+    });
+
+    User.updateOne(
+      {
+        _id: req.userId,
+        "categories._id": req.body.categoryId,
+      },
+      {
+        $push: {
+          "categories.$.items": newItem,
+        },
+      },
+      { new: true }
+    )
+      .then((user) => {
+        res.status(200).json({ message: "Item created succesfully." });
+      })
+      .catch((err) => {
+        res.status(400).json(err);
+      });
+  }
 };
 
 module.exports.existingItemToCategory = async (req, res) => {
@@ -104,7 +134,10 @@ module.exports.removeItemFromCategory = async (req, res) => {
     );
 
     // deletes item permanently if no longer in use by any categories or lists
-    if (currentItem.inUseCategories.length === 0 && currentItem.inUseLists.length === 0) {
+    if (
+      currentItem.inUseCategories.length === 0 &&
+      currentItem.inUseLists.length === 0
+    ) {
       try {
         await Item.findByIdAndDelete(req.body.itemId);
         console.log("Item deleted permanently.");
@@ -125,43 +158,74 @@ module.exports.removeItemFromCategory = async (req, res) => {
 module.exports.addItemToList = async (req, res) => {
   const { imagePath } = req.body;
 
-  const result = await cloudinary.uploader.upload(imagePath, {
-    folder: "itemImages",
-    // width: 300,
-    // crop: "scale"
-  });
-
-  const newItem = await Item.create({
-    itemName: req.body.itemName,
-    brand: req.body.brand,
-    quantity: req.body.quantity,
-    expDate: req.body.expDate,
-    notifyDate: req.body.notifyDate,
-    imagePath: {
-      public_id: result.public_id,
-      url: result.secure_url,
-    },
-    inUseLists: [req.body.listId],
-  });
-
-  User.updateOne(
-    {
-      _id: req.userId,
-      "lists._id": req.body.listId,
-    },
-    {
-      $push: {
-        "lists.$.items": newItem,
-      },
-    },
-    { new: true }
-  )
-    .then((user) => {
-      res.status(200).json({ message: "Item created succesfully." });
-    })
-    .catch((err) => {
-      res.status(400).json(err);
+  if (imagePath) {
+    const result = await cloudinary.uploader.upload(imagePath, {
+      folder: "itemImages",
+      // width: 300,
+      // crop: "scale"
     });
+
+    const newItem = await Item.create({
+      itemName: req.body.itemName,
+      brand: req.body.brand,
+      quantity: req.body.quantity,
+      expDate: req.body.expDate,
+      notifyDate: req.body.notifyDate,
+      imagePath: {
+        public_id: result.public_id,
+        url: result.secure_url,
+      },
+      inUseLists: [req.body.listId],
+    });
+
+    User.updateOne(
+      {
+        _id: req.userId,
+        "lists._id": req.body.listId,
+      },
+      {
+        $push: {
+          "lists.$.items": newItem,
+        },
+      },
+      { new: true }
+    )
+      .then((user) => {
+        res.status(200).json({ message: "Item created succesfully." });
+      })
+      .catch((err) => {
+        res.status(400).json(err);
+      });
+  } else {
+    const newItem = await Item.create({
+      itemName: req.body.itemName,
+      brand: req.body.brand,
+      quantity: req.body.quantity,
+      expDate: req.body.expDate,
+      notifyDate: req.body.notifyDate,
+      imagePath: req.body.imagePath,
+      inUseLists: [req.body.listId],
+    });
+
+    User.updateOne(
+      {
+        _id: req.userId,
+        "lists._id": req.body.listId,
+      },
+      {
+        $push: {
+          "lists.$.items": newItem,
+        },
+      },
+      { new: true }
+    )
+      .then((user) => {
+        res.status(200).json({ message: "Item created succesfully." });
+      })
+      .catch((err) => {
+        res.status(400).json(err);
+      });
+  }
 };
 
 module.exports.existingItemToList = async (req, res) => {
@@ -221,7 +285,10 @@ module.exports.removeItemFromList = async (req, res) => {
     );
 
     // deletes item permanently if no longer in use by any categories or lists
-    if (currentItem.inUseCategories.length === 0 && currentItem.inUseLists.length === 0) {
+    if (
+      currentItem.inUseCategories.length === 0 &&
+      currentItem.inUseLists.length === 0
+    ) {
       try {
         await Item.findByIdAndDelete(req.body.itemId);
         console.log("Item deleted permanently.");

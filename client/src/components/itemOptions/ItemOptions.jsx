@@ -12,20 +12,21 @@ import MoveItem from "../moveItem/MoveItem";
 
 // DELETE: make sure to add options to delete from list, category, or all items
 
-const ItemOptions = ({ item, categoryId, listId }) => {
+const ItemOptions = ({ item, categoryId, listId, setCategory, category }) => {
   const [open, setOpen] = useState(false);
   const [errors, setErrors] = useState([]);
 
   const itemId = item._id;
 
 
-  const deleteFromCatHandler = () => {
+
+  const deleteFromCatHandler = async () => {
     if (window.confirm(`Are you sure you want to delete ${item.itemName}`))
       if (categoryId) {
         categoryId = categoryId.id;
       }
 
-    axios
+    await axios
       .patch(
         `${
           import.meta.env.VITE_REACT_APP_API_URL
@@ -38,8 +39,7 @@ const ItemOptions = ({ item, categoryId, listId }) => {
       )
       .then((res) => {
         console.log(res);
-        console.log(itemId);
-        window.location.reload();
+         window.location.reload(false);
       })
       .catch((err) => {
         console.log(err);
@@ -70,8 +70,7 @@ const ItemOptions = ({ item, categoryId, listId }) => {
       )
       .then((res) => {
         console.log(res);
-        console.log(itemId);
-        window.location.reload();
+        window.location.reload(false);
       })
       .catch((err) => {
         console.log(err);
