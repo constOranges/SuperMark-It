@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./NewUserForm.scss";
 
-const NewUserForm = () => {
+const NewUserForm = ({loggedIn, setLoggedIn}) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,6 +26,7 @@ const NewUserForm = () => {
       )
       .then((res) => {
         console.log("working");
+        setLoggedIn(true);
         navigate("/");
       })
       .catch((err) => {

@@ -13,88 +13,83 @@ import List from "./components/list/List";
 import NewCategoryForm from "./components/newCategoryForm/NewCategoryForm";
 import NewListForm from "./components/newListForm/NewListForm";
 
-const Layout = () => {
-
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [categories, setCategories] = useState([]);
-
-    useEffect(() => {
-      axios
-        .get(
-          `${import.meta.env.VITE_REACT_APP_API_URL}/api/users/currentuser`,
-          {
-            withCredentials: true,
-          }
-        )
-        .then((res) => {
-          setLoggedIn(true);
-          setCategories(res.data.user.categories);
-        })
-        .catch((err) => {
-          setLoggedIn(false);
-          console.log(err);
-        });
-    }, []);
-
-
-  return (
-    <div className="app">
-      <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} categories={categories}/>
-      <Outlet />
-    </div>
-  );
-};
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Layout />,
-    children: [
-      {
-        path: "/",
-        element: <Homepage />,
-      },
-      {
-        path: "/category/:id",
-        element: <Category />,
-      },
-      {
-        path: "/list/:id",
-        element: <List />,
-      },
-      {
-        path: "/search",
-        element: <Search />,
-      },
-      {
-        path: "/add",
-        element: <AddNewItem />,
-      },
-      {
-        path: "/addListItem",
-        element: <AddListItem />,
-      },
-      {
-        path: "/newUser",
-        element: <NewUserForm />,
-      },
-      {
-        path: "/newCategory",
-        element: <NewCategoryForm />,
-      },
-      {
-        path: "/newList",
-        element: <NewListForm />,
-      },
-    ],
-  },
-]);
-
 function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/users/currentuser`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setLoggedIn(true);
+      })
+      .catch((err) => {
+        setLoggedIn(false);
+        console.log(err);
+      });
+  }, []);
+
+  const Layout = () => {
+    return (
+      <div className="app">
+        <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+        <Outlet />
+      </div>
+    );
+  };
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Layout />,
+      children: [
+        {
+          path: "/",
+          element: <Homepage />,
+        },
+        {
+          path: "/category/:id",
+          element: <Category />,
+        },
+        {
+          path: "/list/:id",
+          element: <List />,
+        },
+        {
+          path: "/search",
+          element: <Search />,
+        },
+        {
+          path: "/add",
+          element: <AddNewItem />,
+        },
+        {
+          path: "/addListItem",
+          element: <AddListItem />,
+        },
+        {
+          path: "/newUser",
+          element: (
+            <NewUserForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+          ),
+        },
+        {
+          path: "/newCategory",
+          element: <NewCategoryForm />,
+        },
+        {
+          path: "/newList",
+          element: <NewListForm />,
+        },
+      ],
+    },
+  ]);
+
   return (
     <>
       <div>
-        <RouterProvider router={router} forceRefresh={true}/>
+        <RouterProvider router={router} forceRefresh={true} />
       </div>
     </>
   );
