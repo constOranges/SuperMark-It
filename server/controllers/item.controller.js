@@ -24,7 +24,7 @@ module.exports.addItemToCategory = async (req, res) => {
       public_id: result.public_id,
       url: result.secure_url,
     },
-    inUseIDs: [req.body.categoryId], // change this to accommodate multiple categories
+    inUseCategories: [req.body.categoryId],
   });
 
   User.updateOne(
@@ -52,7 +52,7 @@ module.exports.existingItemToCategory = async (req, res) => {
     req.body.itemId,
     {
       $push: {
-        inUseIDs: req.body.categoryId,
+        inUseCategories: req.body.categoryId,
       },
     },
     { new: true }
@@ -85,7 +85,7 @@ module.exports.removeItemFromCategory = async (req, res) => {
       req.body.itemId,
       {
         $pull: {
-          inUseIDs: req.body.categoryId,
+          inUseCategories: req.body.categoryId,
         },
       },
       { new: true }
@@ -104,7 +104,7 @@ module.exports.removeItemFromCategory = async (req, res) => {
     );
 
     // deletes item permanently if no longer in use by any categories or lists
-    if (currentItem.inUseIDs.length === 0) {
+    if (currentItem.inUseCategories.length === 0 && currentItem.inUseLists.length === 0) {
       try {
         await Item.findByIdAndDelete(req.body.itemId);
         console.log("Item deleted permanently.");
@@ -141,7 +141,7 @@ module.exports.addItemToList = async (req, res) => {
       public_id: result.public_id,
       url: result.secure_url,
     },
-    inUseIDs: [req.body.listId],
+    inUseLists: [req.body.listId],
   });
 
   User.updateOne(
@@ -169,7 +169,7 @@ module.exports.existingItemToList = async (req, res) => {
     req.body.itemId,
     {
       $push: {
-        inUseIDs: req.body.listId,
+        inUseLists: req.body.listId,
       },
     },
     { new: true }
@@ -202,7 +202,7 @@ module.exports.removeItemFromList = async (req, res) => {
       req.body.itemId,
       {
         $pull: {
-          inUseIDs: req.body.listId,
+          inUseLists: req.body.listId,
         },
       },
       { new: true }
@@ -221,7 +221,7 @@ module.exports.removeItemFromList = async (req, res) => {
     );
 
     // deletes item permanently if no longer in use by any categories or lists
-    if (currentItem.inUseIDs.length === 0) {
+    if (currentItem.inUseCategories.length === 0 && currentItem.inUseLists.length === 0) {
       try {
         await Item.findByIdAndDelete(req.body.itemId);
         console.log("Item deleted permanently.");

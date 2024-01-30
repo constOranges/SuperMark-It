@@ -5,7 +5,7 @@ const Item = require('../models/item.model');
 module.exports.addCategory = (req, res) => {
     const newCategory = {
         categoryName: req.body.categoryName,
-        iconPath: req.body.iconPath, // adjust for filepath later
+        iconPath: req.body.iconPath,
         items: []
     }
     User.findByIdAndUpdate(req.userId,

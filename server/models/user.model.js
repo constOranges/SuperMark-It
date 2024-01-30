@@ -28,12 +28,12 @@ const UserSchema = new mongoose.Schema({
         iconPath: String,
         // Consider changing items to references instead of embedded documents to save space
         items: [Item.schema]
-    }],
+    }], // Must add default categories (Fridge, Freezer, Pantry)
     lists: [{
         listName: String,
         iconPath: String,
         items: [Item.schema]
-    }]
+    }] // Add default list for favorites, make sure it cannot be deleted
 }, {timestamps: true});
 
 UserSchema.virtual('confirmPassword')

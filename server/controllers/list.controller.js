@@ -5,7 +5,7 @@ const Item = require('../models/item.model');
 module.exports.addList = (req, res) => {
     const newList = {
         listName: req.body.listName,
-        iconPath: req.body.iconPath, // adjust for filepath later
+        iconPath: req.body.iconPath,
         items: []
     }
     User.findByIdAndUpdate(req.userId,
