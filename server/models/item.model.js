@@ -38,7 +38,8 @@ const ItemSchema = new mongoose.Schema(
       }
     },
 
-    inUseIDs: [],
+    inUseCategories: [],
+    inUseLists: [],
   },
   { timestamps: true }
 );
