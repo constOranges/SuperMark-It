@@ -3,7 +3,7 @@ import axios from "axios";
 import "./Alerts.scss";
 
 
-const Alerts = ({categories}) => {
+const Alerts = ({}) => {
 
     //forEach category
     //run filter function thatll look at all items in category

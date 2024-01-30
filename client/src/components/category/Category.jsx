@@ -4,8 +4,6 @@ import { Link, useParams } from "react-router-dom";
 import "./Category.scss";
 import ItemCard from "../itemCard/ItemCard";
 import ListCatOptions from "../listCatOptions/ListCatOptions";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 
@@ -14,8 +12,8 @@ const Category = () => {
   const [open, setOpen] = useState(false);
   const categoryId = useParams();
 
-  useEffect(() => {
-    axios
+  const getCategory = async () => {
+    await axios
       .get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/users/currentuser`, {
         withCredentials: true,
       })
@@ -26,6 +24,10 @@ const Category = () => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  useEffect(() => {
+    getCategory();
   }, []);
 
   const handleClickAway = () => {
@@ -54,7 +56,14 @@ const Category = () => {
             <div className="more" onClick={() => setOpen(!open)}>
               <MoreHorizIcon className="moreIcon" />
             </div>
-            {open && <ListCatOptions categoryId={categoryId} catName={catName} />}
+            {open && (
+              <ListCatOptions
+                category={category}
+                setCategory={setCategory}
+                categoryId={categoryId}
+                catName={catName}
+              />
+            )}
           </div>
         </ClickAwayListener>
         <Link to="/add" className="buttonLink">
@@ -67,14 +76,6 @@ const Category = () => {
               <ItemCard item={item} categoryId={categoryId} />
             ))
           : null}
-        <p className="arrows">
-          <Link>
-            <ArrowBackIcon className="arrowBack" />
-          </Link>
-          <Link>
-            <ArrowForwardIcon className="arrowForward" />
-          </Link>
-        </p>
       </div>
     </div>
   );

@@ -24,8 +24,8 @@ const LoginForm = ({ setLoggedIn }) => {
       )
       .then((res) => {
         console.log(res);
+        setLoggedIn(true);
         navigate("/");
-        window.location.reload(false);
       })
       .catch((err) => {
         console.log(err);

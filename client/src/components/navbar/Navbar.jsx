@@ -12,7 +12,7 @@ import Alerts from "../alerts/Alerts.jsx";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import "./Navbar.scss";
 
-const Navbar = ({ loggedIn, setLoggedIn, categories }) => {
+const Navbar = ({ loggedIn, setLoggedIn }) => {
   const [open, setOpen] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
   const navigate = useNavigate();
@@ -85,7 +85,7 @@ const Navbar = ({ loggedIn, setLoggedIn, categories }) => {
                   />
                 </div>
 
-                {openAlert && <Alerts categories={categories}/>}
+                {openAlert && <Alerts />}
               </div>
             </ClickAwayListener>
 
@@ -109,7 +109,7 @@ const Navbar = ({ loggedIn, setLoggedIn, categories }) => {
                       </div>
                     ) : (
                       <div className="userForm">
-                        <LoginForm setOpen={setOpen} />
+                        <LoginForm setOpen={setOpen} setLoggedIn={setLoggedIn}/>
                         <Link
                           className="link"
                           to="/newUser"
