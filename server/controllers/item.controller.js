@@ -14,6 +14,7 @@ module.exports.addItemToCategory = async (req, res) => {
       width: 300,
       crop: "scale",
     });
+
     const newItem = await Item.create({
       itemName: req.body.itemName,
       brand: req.body.brand,
@@ -52,7 +53,7 @@ module.exports.addItemToCategory = async (req, res) => {
       quantity: req.body.quantity,
       expDate: req.body.expDate,
       notifyDate: req.body.notifyDate,
-      imagePath: req.body.imagePath,
+      // imagePath: req.body.imagePath, change this to be a default icon?
       inUseCategories: [req.body.categoryId],
     });
 
@@ -107,6 +108,46 @@ module.exports.existingItemToCategory = async (req, res) => {
       res.status(400).json(err);
     });
 };
+
+// Must discuss design choice of whether we want to keep items unique across categories and lists or 
+// duplicate items for the sake of easier updating and deleting. For example, we may run into an issue
+// where we want to update an item in one category but since it's being used by multiple categories,
+// do we want it to get updated everywhere? Likely not, although there may be certain beneficial cases.
+module.exports.updateItemInCategory = async (req, res) => {
+  const { imagePath } = req.body;
+
+  if (imagePath) {
+    const result = await cloudinary.uploader.upload(imagePath, {
+      folder: "itemImages",
+      width: 300,
+      crop: "scale",
+    });
+
+    const currentItem = await Item.findByIdAndUpdate(
+      req.body.itemId,
+      {
+        itemName: req.body.itemName,
+        brand: req.body.brand,
+        quantity: req.body.quantity,
+        expDate: req.body.expDate,
+        notifyDate: req.body.notifyDate,
+        imagePath: {
+          public_id: result.public_id,
+          url: result.secure_url,
+        },
+      },
+      { new: true }
+    );
+
+    User.findByIdAndUpdate(
+      req.userId,
+      {
+
+      }
+    )
+  }
+
+}
 
 // Consider adding more error handling
 module.exports.removeItemFromCategory = async (req, res) => {
