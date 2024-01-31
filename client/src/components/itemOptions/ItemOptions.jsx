@@ -12,13 +12,19 @@ import MoveItem from "../moveItem/MoveItem";
 
 // DELETE: make sure to add options to delete from list, category, or all items
 
-const ItemOptions = ({ item, categoryId, listId, setCategory, category }) => {
-  const [open, setOpen] = useState(false);
+const ItemOptions = ({
+  item,
+  categoryId,
+  listId,
+  getCategory,
+  getList,
+  setOpen,
+}) => {
+
+  const [toggle, setToggle] = useState(false);
   const [errors, setErrors] = useState([]);
 
   const itemId = item._id;
-
-
 
   const deleteFromCatHandler = async () => {
     if (window.confirm(`Are you sure you want to delete ${item.itemName}`))
@@ -39,7 +45,8 @@ const ItemOptions = ({ item, categoryId, listId, setCategory, category }) => {
       )
       .then((res) => {
         console.log(res);
-         window.location.reload(false);
+        setOpen(false);
+        getCategory();
       })
       .catch((err) => {
         console.log(err);
@@ -70,7 +77,8 @@ const ItemOptions = ({ item, categoryId, listId, setCategory, category }) => {
       )
       .then((res) => {
         console.log(res);
-        window.location.reload(false);
+        setOpen(false);
+        getList();
       })
       .catch((err) => {
         console.log(err);
@@ -86,7 +94,7 @@ const ItemOptions = ({ item, categoryId, listId, setCategory, category }) => {
   return (
     <div className="itemOptions">
       {categoryId ? (
-        <Link className="iconLink" onClick={() => setOpen(!open)}>
+        <Link className="iconLink" onClick={() => setToggle(!toggle)}>
           <div className="item">
             <PlaylistAddOutlinedIcon className="icon" />
             <Link className="link">Add To List</Link>
@@ -94,7 +102,7 @@ const ItemOptions = ({ item, categoryId, listId, setCategory, category }) => {
         </Link>
       ) : null}
       {listId ? (
-        <Link className="iconLink" onClick={() => setOpen(!open)}>
+        <Link className="iconLink" onClick={() => setToggle(!toggle)}>
           <div className="item">
             <CreateNewFolderOutlinedIcon className="icon" />
             <Link className="link">Add To Category</Link>
@@ -102,7 +110,9 @@ const ItemOptions = ({ item, categoryId, listId, setCategory, category }) => {
         </Link>
       ) : null}
 
-      {open ? <MoveItem itemId={itemId} currentCategory={categoryId} /> : null}
+      {toggle ? (
+        <MoveItem itemId={itemId} currentCategory={categoryId} />
+      ) : null}
 
       <Link className="iconLink">
         <div className="item">

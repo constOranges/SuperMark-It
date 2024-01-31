@@ -57,12 +57,7 @@ const Category = () => {
               <MoreHorizIcon className="moreIcon" />
             </div>
             {open && (
-              <ListCatOptions
-                category={category}
-                setCategory={setCategory}
-                categoryId={categoryId}
-                catName={catName}
-              />
+              <ListCatOptions categoryId={categoryId} catName={catName} />
             )}
           </div>
         </ClickAwayListener>
@@ -73,7 +68,11 @@ const Category = () => {
       <div className="bottom">
         {products
           ? prodList[0]?.map((item) => (
-              <ItemCard item={item} categoryId={categoryId} />
+              <ItemCard
+                item={item}
+                categoryId={categoryId}
+                getCategory={getCategory}
+              />
             ))
           : null}
       </div>

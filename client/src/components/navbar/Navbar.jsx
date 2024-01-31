@@ -29,7 +29,6 @@ const Navbar = ({ loggedIn, setLoggedIn }) => {
         setLoggedIn(false);
         console.log(res);
         navigate("/");
-        window.location.reload(false);
       })
       .catch((err) => console.log(err));
   };

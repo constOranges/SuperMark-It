@@ -11,49 +11,43 @@ import ClickAwayListener from "@mui/material/ClickAwayListener";
 const List = () => {
   const [open, setOpen] = useState(false);
   const [list, setList] = useState([]);
-  const listId = useParams()
-  
+  const listId = useParams();
 
-    useEffect(() => {
-      axios
-        .get(
-          `${import.meta.env.VITE_REACT_APP_API_URL}/api/users/currentuser`,
-          {
-            withCredentials: true,
-          }
-        )
-        .then((res) => {
-          setList(res.data.user.lists);
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }, []);
+  const getList = async () => {
+    await axios
+      .get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/users/currentuser`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setList(res.data.user.lists);
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getList();
+  }, []);
 
   const handleClickAway = () => {
     setOpen(false);
   };
 
-  const prodList = []
-
+  const prodList = [];
 
   const products = list.filter((items) => {
     if (`/list/${items._id}` == window.location.pathname) {
-      prodList.push(items.items)
+      prodList.push(items.items);
     }
- 
-  })
+  });
 
   const listName = list.map((name) => {
-    if(`/list/${name._id}` == window.location.pathname){
+    if (`/list/${name._id}` == window.location.pathname) {
       return name.listName;
     }
-   
-  })
-
-
-
+  });
 
   return (
     <div className="list">
@@ -64,7 +58,7 @@ const List = () => {
             <div className="more" onClick={() => setOpen(!open)}>
               <MoreHorizIcon className="moreIcon" />
             </div>
-            {open && <ListCatOptions listId = {listId} listName={listName}/>}
+            {open && <ListCatOptions listId={listId} listName={listName} />}
           </div>
         </ClickAwayListener>
         <Link to="/addListItem" className="buttonLink">
@@ -73,7 +67,9 @@ const List = () => {
       </div>
       <div className="bottom">
         {products
-          ? prodList[0]?.map((item) => <ItemCard item={item} key={item.id} listId={listId}/>)
+          ? prodList[0]?.map((item) => (
+              <ItemCard item={item} key={item.id} listId={listId} getList={getList}/>
+            ))
           : null}
       </div>
     </div>
