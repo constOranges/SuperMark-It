@@ -6,7 +6,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import ItemOptions from "../itemOptions/ItemOptions";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 
-const ItemCard = ({ item, categoryId, listId }) => {
+const ItemCard = ({ item, categoryId, listId, getCategory, getList }) => {
   const [open, setOpen] = useState(false);
 
   // Date input displays time by default so use .toDateString() to display the date only
@@ -19,16 +19,19 @@ const ItemCard = ({ item, categoryId, listId }) => {
 
   console.log(item);
 
-
   return (
     <div className="itemCard">
       <div className="left">
-        <img src={item.imagePath?.url} alt="Image of product" className="image" />
+        <img
+          src={item.imagePath?.url}
+          alt="Image of product"
+          className="image"
+        />
       </div>
       <div className="middle">
         <h3>{item.itemName}</h3>
         <p>{item.brand}</p>
-        {categoryId ? <p>Quantity: {item.quantity}</p> : null}
+        {item.quantity > 0 ? <p>Quantity: {item.quantity}</p> : null}
         {categoryId ? <p>Expires: {dateWithoutTime}</p> : null}
       </div>
       <ClickAwayListener onClickAway={handleClickAway}>
@@ -39,7 +42,14 @@ const ItemCard = ({ item, categoryId, listId }) => {
             </div>
           </div>
           {open && (
-            <ItemOptions item={item} categoryId={categoryId} listId={listId} />
+            <ItemOptions
+              item={item}
+              categoryId={categoryId}
+              listId={listId}
+              getCategory={getCategory}
+              getList={getList}
+              setOpen={setOpen}
+            />
           )}
         </div>
       </ClickAwayListener>

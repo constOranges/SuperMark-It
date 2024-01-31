@@ -161,8 +161,8 @@ module.exports.addItemToList = async (req, res) => {
   if (imagePath) {
     const result = await cloudinary.uploader.upload(imagePath, {
       folder: "itemImages",
-      // width: 300,
-      // crop: "scale"
+      width: 300,
+      crop: "scale"
     });
 
     const newItem = await Item.create({
