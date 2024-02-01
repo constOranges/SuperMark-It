@@ -18,4 +18,5 @@ module.exports = app => {
     app.patch('/api/items/existingItemToList', authenticate, getIdFromCookie, ItemController.existingItemToList);
     app.patch('/api/items/removeItemFromCategory', authenticate, getIdFromCookie, ItemController.removeItemFromCategory);
     app.patch('/api/items/removeItemFromList', authenticate, getIdFromCookie, ItemController.removeItemFromList);
+    app.patch('/api/items/updateItemInCategory', authenticate, getIdFromCookie, ItemController.updateItemInCategory);
 }

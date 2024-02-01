@@ -250,7 +250,6 @@ module.exports.addItemToList = async (req, res) => {
         public_id: result.public_id,
         url: result.secure_url,
       },
-      inUseLists: [req.body.listId],
     });
 
     User.updateOne(
@@ -278,8 +277,7 @@ module.exports.addItemToList = async (req, res) => {
       quantity: req.body.quantity,
       expDate: req.body.expDate,
       notifyDate: req.body.notifyDate,
-      imagePath: req.body.imagePath,
-      inUseLists: [req.body.listId],
+      // imagePath: req.body.imagePath,
     });
 
     User.updateOne(
@@ -304,14 +302,8 @@ module.exports.addItemToList = async (req, res) => {
 };
 
 module.exports.existingItemToList = async (req, res) => {
-  const currentItem = await Item.findByIdAndUpdate(
-    req.body.itemId,
-    {
-      $push: {
-        inUseLists: req.body.listId,
-      },
-    },
-    { new: true }
+  const currentItem = await Item.findById(
+    req.body.itemId
   );
 
   User.updateOne(
@@ -337,14 +329,8 @@ module.exports.existingItemToList = async (req, res) => {
 // Consider adding more error handling
 module.exports.removeItemFromList = async (req, res) => {
   try {
-    const currentItem = await Item.findByIdAndUpdate(
-      req.body.itemId,
-      {
-        $pull: {
-          inUseLists: req.body.listId,
-        },
-      },
-      { new: true }
+    const currentItem = await Item.findByIdAndDelete(
+      req.body.itemId
     );
 
     await User.updateOne(
@@ -358,19 +344,6 @@ module.exports.removeItemFromList = async (req, res) => {
         },
       }
     );
-
-    // deletes item permanently if no longer in use by any categories or lists
-    if (
-      currentItem.inUseCategories.length === 0 &&
-      currentItem.inUseLists.length === 0
-    ) {
-      try {
-        await Item.findByIdAndDelete(req.body.itemId);
-        console.log("Item deleted permanently.");
-      } catch (error) {
-        console.error("Error deleting item permanently:", error.message);
-      }
-    }
 
     res.status(200).json({ message: "Item removed successfully." });
   } catch (error) {
