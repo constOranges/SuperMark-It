@@ -1,40 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
-import "./AddNewItem.scss";
 
-const AddNewItem = () => {
-  const [itemName, setItemName] = useState("");
-  const [brand, setBrand] = useState("");
-  const [quantity, setQuantity] = useState(0);
-  const [expDate, setExpDate] = useState(new Date());
-  const [notifyDate, setNotifyDate] = useState(new Date());
-  const [imagePath, setImagePath] = useState(null);
-  const [categories, setCategories] = useState([]);
-  const [categoryId, setCategoryId] = useState("");
+const UpdateItemForm = () => {
+  const location = useLocation();
+  let { item, categoryId } = location.state;
+  const itemExpDate = item.expDate.slice(0, 10);
+  const itemNotifyDate = item.notifyDate.slice(0, 10);
+  const [itemName, setItemName] = useState(item.itemName);
+  const [brand, setBrand] = useState(item.brand);
+  const [quantity, setQuantity] = useState(item.quantity);
+  const [expDate, setExpDate] = useState(itemExpDate);
+  const [notifyDate, setNotifyDate] = useState(itemNotifyDate);
+  const [imagePath, setImagePath] = useState("");
   const [errors, setErrors] = useState([]);
 
+  const itemId = item._id;
+  categoryId = categoryId.id;
+
   const navigate = useNavigate();
-
-  // Fetch current user data to access available categories
-  useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/users/currentuser`, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        setCategories(res.data.user.categories);
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  const categoryHandler = (e) => {
-    e.preventDefault();
-    setCategoryId(e.target.value);
-  };
 
   const setFileToBase = (file) => {
     const reader = new FileReader();
@@ -58,8 +42,10 @@ const AddNewItem = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     axios
-      .post(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/api/items/newItemToCategory`,
+      .patch(
+        `${
+          import.meta.env.VITE_REACT_APP_API_URL
+        }/api/items/updateItemInCategory`,
         {
           itemName,
           brand,
@@ -68,6 +54,7 @@ const AddNewItem = () => {
           notifyDate,
           imagePath,
           categoryId,
+          itemId,
         },
         { withCredentials: true }
       )
@@ -87,9 +74,9 @@ const AddNewItem = () => {
   };
 
   return (
-    <div className="newItemPage">
+    <div>
       <div className="itemForm">
-        <h2>Add an Item</h2>
+        <h2>Edit Item</h2>
         <form onSubmit={submitHandler} onReset={resetHandler}>
           <div className="form-group">
             <label htmlFor="name">Item Name</label>
@@ -98,27 +85,9 @@ const AddNewItem = () => {
               className="form-control"
               name="itemName"
               id="itemName"
+              value={itemName}
               onChange={(e) => setItemName(e.target.value)}
             />
-          </div>
-          <div className="form-group">
-            <label htmlFor="category">Category</label>
-            <select
-              name="categories_id"
-              className="categorySelect"
-              aria-label="Select Category"
-              id="categories_id"
-              onChange={categoryHandler}
-            >
-              <option defaultValue>Select Category</option>
-              {categories.map((category) => {
-                return (
-                  <option value={category._id} key={category._id}>
-                    {category.categoryName}
-                  </option>
-                );
-              })}
-            </select>
           </div>
           <div className="form-group">
             <label htmlFor="brand">Brand</label>
@@ -127,6 +96,7 @@ const AddNewItem = () => {
               className="form-control"
               name="brand"
               id="brand"
+              value={brand}
               onChange={(e) => setBrand(e.target.value)}
             />
           </div>
@@ -137,6 +107,7 @@ const AddNewItem = () => {
               className="form-control"
               name="quantity"
               id="quantity"
+              value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
             />
           </div>
@@ -148,6 +119,7 @@ const AddNewItem = () => {
               name="expDate"
               id="expDate"
               pattern="\d{4}-\d{2}-\d{2}"
+              value={expDate}
               onChange={(e) => setExpDate(e.target.value)}
             />
           </div>
@@ -159,11 +131,12 @@ const AddNewItem = () => {
               name="notifyDate"
               id="notifyDate"
               pattern="\d{4}-\d{2}-\d{2}"
+              value={notifyDate}
               onChange={(e) => setNotifyDate(e.target.value)}
             />
           </div>
           <div className="form-group">
-            <label htmlFor="image">Image</label>
+            <label htmlFor="image">Change Image</label>
             <input
               type="file"
               className="form-control"
@@ -177,7 +150,7 @@ const AddNewItem = () => {
           </div>
           <div className="btn">
             <button className="submitBtn" type="submit">
-              Add Item
+              Update Item
             </button>
             <button className="cancelBtn" type="reset">
               Cancel
@@ -196,4 +169,4 @@ const AddNewItem = () => {
   );
 };
 
-export default AddNewItem;
+export default UpdateItemForm;

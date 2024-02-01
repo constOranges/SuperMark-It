@@ -91,6 +91,8 @@ const ItemOptions = ({
       });
   };
 
+
+
   return (
     <div className="itemOptions">
       {categoryId ? (
@@ -114,10 +116,10 @@ const ItemOptions = ({
         <MoveItem itemId={itemId} currentCategory={categoryId} />
       ) : null}
 
-      <Link className="iconLink">
+      <Link className="iconLink" to={`/updateItem/${itemId}`} state={{ item: item, categoryId: categoryId }}>
         <div className="item">
           <CreateOutlinedIcon className="icon" />
-          <Link className="link">Edit</Link>
+          Edit
         </div>
       </Link>
       {categoryId ? (
