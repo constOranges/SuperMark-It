@@ -37,9 +37,6 @@ const ItemSchema = new mongoose.Schema(
         type: String,
       }
     },
-
-    inUseCategories: [],
-    inUseLists: [],
   },
   { timestamps: true }
 );
