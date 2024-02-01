@@ -111,6 +111,8 @@ module.exports.existingItemToCategory = async (req, res) => {
     });
 };
 
+// Editing specifically within category. Moving to list or category, we can run
+// an ID check to see if able to move, if not we can give option to add to new category/list
 module.exports.updateItemInCategory = async (req, res) => {
   const { imagePath } = req.body;
 
