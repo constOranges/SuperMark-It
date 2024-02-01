@@ -11,6 +11,7 @@ module.exports = app => {
         );
         next();
     })
+    app.get('/api/items/findItemById', authenticate, getIdFromCookie, ItemController.findItemById);
     app.post('/api/items/newItemToCategory', authenticate, getIdFromCookie, ItemController.addItemToCategory);
     app.post('/api/items/newItemToList', authenticate, getIdFromCookie, ItemController.addItemToList);
     app.patch('/api/items/existingItemToCategory', authenticate, getIdFromCookie, ItemController.existingItemToCategory);

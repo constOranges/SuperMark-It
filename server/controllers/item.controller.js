@@ -3,6 +3,16 @@ const User = require("../models/user.model");
 const Item = require("../models/item.model");
 const cloudinary = require("../config/cloudinary");
 
+// GENERAL ITEMS
+
+module.exports.findItemById = (req, res) => {
+  Item.findById(req.body.itemId)
+    .then(currentItem => {
+      res.json(currentItem);
+    })
+    .catch(err => res.status(400).json(err));
+}
+
 // CATEGORIES
 
 module.exports.addItemToCategory = async (req, res) => {
