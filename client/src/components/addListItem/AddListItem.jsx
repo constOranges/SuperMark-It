@@ -83,7 +83,7 @@ const AddListItem = () => {
   };
 
   return (
-    <div className="newItemPage">
+    <div className="newListItemPage">
       <div className="itemForm">
         <h2>Add an Item</h2>
         <form onSubmit={submitHandler} onReset={resetHandler}>

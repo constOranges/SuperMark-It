@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "./NewListForm.scss";
 
 const NewListForm = () => {
   const [listName, setListName] = useState("");
@@ -40,7 +41,7 @@ const NewListForm = () => {
   };
 
   return (
-    <div className="newCategoryPage">
+    <div className="newListPage">
       <div className="categoryForm">
         <h2>New List</h2>
         <form onSubmit={submitHandler} onReset={resetHandler}>
