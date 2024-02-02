@@ -86,34 +86,79 @@ module.exports.addItemToCategory = async (req, res) => {
   }
 };
 
-module.exports.existingItemToCategory = async (req, res) => {
-  const currentItem = await Item.findById(
-    req.body.itemId
-  );
+module.exports.existingItemToCategories = async (req, res) => {
+  try {
+    const { imagePath } = req.body;
 
-  User.updateOne(
-    {
-      _id: req.userId,
-      "categories._id": req.body.categoryId,
-    },
-    {
-      $push: {
-        "categories.$.items": currentItem,
-      },
-    },
-    { new: true }
-  )
-    .then((user) => {
-      res.status(200).json({ message: "Item added successfully." });
-    })
-    .catch((err) => {
-      res.status(400).json(err);
-    });
+    if (imagePath) {
+      const result = await cloudinary.uploader.upload(imagePath, {
+        folder: "itemImages",
+        width: 300,
+        crop: "scale",
+      });
+
+      for (let categoryId of req.body.categories) {
+        const duplicateItemWithNewId = await Item.create({
+          itemName: req.body.itemName,
+          brand: req.body.brand,
+          quantity: req.body.quantity,
+          expDate: req.body.expDate,
+          notifyDate: req.body.notifyDate,
+          imagePath: {
+            public_id: result.public_id,
+            url: result.secure_url,
+          },
+        });
+
+        await User.updateOne(
+          {
+            _id: req.userId,
+            "categories._id": categoryId,
+          },
+          {
+            $push: {
+              "categories.$.items": duplicateItemWithNewId,
+            },
+          },
+          { new: true }
+        )
+      }
+    } else {
+      const currentItem = await Item.findById(req.body.itemId);
+
+      for (let categoryId of req.body.categories) {
+        const duplicateItemWithNewId = await Item.create({
+          itemName: req.body.itemName,
+          brand: req.body.brand,
+          quantity: req.body.quantity,
+          expDate: req.body.expDate,
+          notifyDate: req.body.notifyDate,
+          imagePath: currentItem.imagePath,
+        });
+
+        await User.updateOne(
+          {
+            _id: req.userId,
+            "categories._id": categoryId,
+          },
+          {
+            $push: {
+              "categories.$.items": duplicateItemWithNewId,
+            },
+          },
+          { new: true }
+        )
+      }
+    }
+    res.status(200).json({ message: "Item(s) moved successfully." })
+  } catch {
+    res.status(400).json({ error: "There was an error moving all items." })
+  }
 };
 
 // Editing specifically within category. Moving to list or category, we can run
 // an ID check to see if able to move, if not we can give option to add to new category/list
-module.exports.updateItemInCategory = async (req, res) => {
+module.exports.updateItemInCategory = async (req, res, next) => {
   const { imagePath } = req.body;
 
   if (imagePath) {
@@ -152,7 +197,7 @@ module.exports.updateItemInCategory = async (req, res) => {
       { upsert: true }
     )
       .then((user) => {
-        res.status(200).json({ message: "Item updated successfully." });
+        res.status(200).json({ message: "Item updated succesfully." });
       })
       .catch((err) => {
         res.status(400).json(err);
@@ -183,7 +228,7 @@ module.exports.updateItemInCategory = async (req, res) => {
       { upsert: true }
     )
       .then((user) => {
-        res.status(200).json({ message: "Item updated successfully." });
+        res.status(200).json({ message: "Item updated succesfully." });
       })
       .catch((err) => {
         res.status(400).json(err);
