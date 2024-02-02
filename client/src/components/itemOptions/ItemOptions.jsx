@@ -107,11 +107,12 @@ const ItemOptions = ({
   return (
     <div className="itemOptions">
       <Link className="iconLink" onClick={toggleCatHandler}>
-        <div className="item">
+        <div className="item slideAnimation">
           <CreateNewFolderOutlinedIcon className="icon" />
           <Link className="link">Add To Category</Link>
         </div>
       </Link>
+
       {toggleCat ? <MoveItemToCat item={item} /> : null}
 
       <Link className="iconLink" onClick={toggleListHandler}>

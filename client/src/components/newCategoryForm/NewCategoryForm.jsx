@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "./NewCategoryForm.scss";
 
 const NewCategoryForm = () => {
   const [categoryName, setCategoryName] = useState("");

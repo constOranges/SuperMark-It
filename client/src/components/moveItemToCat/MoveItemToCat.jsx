@@ -95,22 +95,20 @@ const MoveItemToCat = ({ item }) => {
   };
 
   return (
-    <div className="dropDownForm">
+    <div className="dropDownForm" >
       <form onSubmit={moveToCatHandler}>
         <div className="moveItemCatForm">
           <div className="form-group">
             <label htmlFor="categories">Categories</label>
-            <div className="card flex just-content-center">
-              <MultiSelect
-                className="multiselect"
-                value={selectedCategories}
-                onChange={(e) => setSelectedCategories(e.target.value)}
-                options={categoryList}
-                optionLabel="categoryName"
-                display="chip"
-                placeholder="Select Categories"
-              />
-            </div>
+            <MultiSelect
+              className="multiselect"
+              value={selectedCategories}
+              onChange={(e) => setSelectedCategories(e.target.value)}
+              options={categoryList}
+              optionLabel="categoryName"
+              display="chip"
+              placeholder="Select Categories"
+            />
           </div>
           <div className="form-group">
             <label htmlFor="brand">Brand</label>
