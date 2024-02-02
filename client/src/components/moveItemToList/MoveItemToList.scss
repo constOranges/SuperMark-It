@@ -1,0 +1,15 @@
+  .moveItemToListForm {
+    display: flex;
+    flex-direction: row;
+
+    select {
+      width: 10em;
+      height: 2em;
+      text-align: center;
+      z-index: 999;
+    }
+
+    button {
+      margin-top: 2em;
+    }
+  }

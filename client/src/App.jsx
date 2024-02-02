@@ -66,8 +66,8 @@ function App() {
           element: <AddNewItem />,
         },
         {
-          path: "/add",
-          element: <AddNewItem />,
+          path: "/addListItem",
+          element: <AddListItem />,
         },
         {
           path: "/updateItem/:id",
