@@ -1,0 +1,41 @@
+.dropDownForm {
+  margin-left: 2em;
+
+  .moveItemCatForm {
+    height: 15em;
+    overflow-y: scroll;
+
+    input {
+      z-index: 998;
+    }
+
+    select {
+      z-index: 999;
+    }
+
+    button {
+      margin-left: 1.8em;
+    }
+
+    .multiselect {
+      width: 25.85em;
+      height: 2em;
+      text-align: center;
+      border-style: solid;
+    }
+  }
+}
+
+.p-multiselect-items-wrapper{
+  border-left: solid;
+  border-right: solid;
+  border-width: .1em;
+}
+
+.p-multiselect-item {
+  border-bottom: solid;
+  border-width: .1em;
+  height: 4em;
+  z-index: 999;
+  background-color: white;
+}

@@ -1,0 +1,31 @@
+
+.updateItemPage {
+  opacity: 1;
+  animation: fadeIn 0.5s ease-in;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 1.8em;
+  text-decoration: underline;
+}
+
+label {
+  margin-bottom: 0.5em;
+}
+
+form {
+  margin-bottom: 6em;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

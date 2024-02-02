@@ -1,25 +1,45 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { MultiSelect } from "primereact/multiselect";
 import axios from "axios";
-import "./UpdateItemForm.scss";
+import "./MoveItemToCat.scss";
 
-const UpdateItemForm = () => {
-  const location = useLocation();
-  let { item, categoryId } = location.state;
-  const itemExpDate = item.expDate.slice(0, 10);
-  const itemNotifyDate = item.notifyDate.slice(0, 10);
-  const [itemName, setItemName] = useState(item.itemName);
-  const [brand, setBrand] = useState(item.brand);
-  const [quantity, setQuantity] = useState(item.quantity);
-  const [expDate, setExpDate] = useState(itemExpDate);
-  const [notifyDate, setNotifyDate] = useState(itemNotifyDate);
+const MoveItemToCat = ({ item }) => {
+  if (item.expDate && item.notifyDate) {
+    var itemExpDate = item.expDate.slice(0, 10);
+    var itemNotifyDate = item.notifyDate.slice(0, 10);
+  }
+  const [categoryList, setCategoryList] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [itemName] = useState(item.itemName);
+  const [brand, setBrand] = useState(item.brand ? item.brand : "")
+  const [quantity, setQuantity] = useState(item.quantity ? item.quantity : 0);
+  const [expDate, setExpDate] = useState(
+    itemExpDate ? itemExpDate : new Date()
+  );
+  const [notifyDate, setNotifyDate] = useState(
+    itemNotifyDate ? itemNotifyDate : new Date()
+  );
   const [imagePath, setImagePath] = useState("");
+  const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState([]);
 
   const itemId = item._id;
-  categoryId = categoryId.id;
+  const categories = [];
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/users/currentuser`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setCategoryList(res.data.user.categories);
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const setFileToBase = (file) => {
     const reader = new FileReader();
@@ -35,33 +55,33 @@ const UpdateItemForm = () => {
     setFileToBase(file);
   };
 
-  const resetHandler = (e) => {
+  const moveToCatHandler = (e) => {
     e.preventDefault();
-    navigate(-1);
-  };
 
-  const submitHandler = (e) => {
-    e.preventDefault();
+    selectedCategories.forEach((category) => {
+      categories.push(category._id);
+    });
+
     axios
       .patch(
         `${
           import.meta.env.VITE_REACT_APP_API_URL
-        }/api/items/updateItemInCategory`,
+        }/api/items/existingItemToCategories`,
         {
+          itemId,
           itemName,
           brand,
           quantity,
           expDate,
           notifyDate,
           imagePath,
-          categoryId,
-          itemId,
+          categories,
         },
         { withCredentials: true }
       )
       .then((res) => {
         console.log(res);
-        navigate(-1);
+        setSuccess(true);
       })
       .catch((err) => {
         console.log(err);
@@ -75,20 +95,22 @@ const UpdateItemForm = () => {
   };
 
   return (
-    <div className="updateItemPage">
-      <div className="itemForm">
-        <h2>Edit Item</h2>
-        <form onSubmit={submitHandler} onReset={resetHandler}>
+    <div className="dropDownForm">
+      <form onSubmit={moveToCatHandler}>
+        <div className="moveItemCatForm">
           <div className="form-group">
-            <label htmlFor="name">Item Name</label>
-            <input
-              type="text"
-              className="form-control"
-              name="itemName"
-              id="itemName"
-              value={itemName}
-              onChange={(e) => setItemName(e.target.value)}
-            />
+            <label htmlFor="categories">Categories</label>
+            <div className="card flex just-content-center">
+              <MultiSelect
+                className="multiselect"
+                value={selectedCategories}
+                onChange={(e) => setSelectedCategories(e.target.value)}
+                options={categoryList}
+                optionLabel="categoryName"
+                display="chip"
+                placeholder="Select Categories"
+              />
+            </div>
           </div>
           <div className="form-group">
             <label htmlFor="brand">Brand</label>
@@ -149,16 +171,15 @@ const UpdateItemForm = () => {
               onChange={imageHandler}
             />
           </div>
-          <div className="btn">
-            <button className="submitBtn" type="submit">
-              Update Item
-            </button>
-            <button className="cancelBtn" type="reset">
-              Cancel
+          <div>
+            <button className="addBtn" type="submit">
+              Add Item
             </button>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
+
+      {success ? <p>Item added succesfully!</p> : null}
       {errors ? (
         <div className="errorMessage">
           {errors.map((err) => (
@@ -170,4 +191,4 @@ const UpdateItemForm = () => {
   );
 };
 
-export default UpdateItemForm;
+export default MoveItemToCat;

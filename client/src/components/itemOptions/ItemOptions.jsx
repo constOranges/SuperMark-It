@@ -8,7 +8,8 @@ import CreateNewFolderOutlinedIcon from "@mui/icons-material/CreateNewFolderOutl
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import AutorenewOutlinedIcon from "@mui/icons-material/AutorenewOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import MoveItem from "../moveItem/MoveItem";
+import MoveItemToCat from "../moveItemToCat/MoveItemToCat";
+import MoveItemToList from "../moveItemToList/MoveItemToList";
 
 // DELETE: make sure to add options to delete from list, category, or all items
 
@@ -20,8 +21,8 @@ const ItemOptions = ({
   getList,
   setOpen,
 }) => {
-
-  const [toggle, setToggle] = useState(false);
+  const [toggleCat, setToggleCat] = useState(false);
+  const [toggleList, setToggleList] = useState(false);
   const [errors, setErrors] = useState([]);
 
   const itemId = item._id;
@@ -91,32 +92,42 @@ const ItemOptions = ({
       });
   };
 
+  const toggleListHandler = (e) => {
+    e.preventDefault();
+    setToggleList(!toggleList);
+    setToggleCat(false);
+  };
 
+  const toggleCatHandler = (e) => {
+    e.preventDefault();
+    setToggleCat(!toggleCat);
+    setToggleList(false);
+  };
 
   return (
     <div className="itemOptions">
-      {categoryId ? (
-        <Link className="iconLink" onClick={() => setToggle(!toggle)}>
-          <div className="item">
-            <PlaylistAddOutlinedIcon className="icon" />
-            <Link className="link">Add To List</Link>
-          </div>
-        </Link>
-      ) : null}
-      {listId ? (
-        <Link className="iconLink" onClick={() => setToggle(!toggle)}>
-          <div className="item">
-            <CreateNewFolderOutlinedIcon className="icon" />
-            <Link className="link">Add To Category</Link>
-          </div>
-        </Link>
-      ) : null}
+      <Link className="iconLink" onClick={toggleCatHandler}>
+        <div className="item">
+          <CreateNewFolderOutlinedIcon className="icon" />
+          <Link className="link">Add To Category</Link>
+        </div>
+      </Link>
+      {toggleCat ? <MoveItemToCat item={item} /> : null}
 
-      {toggle ? (
-        <MoveItem itemId={itemId} currentCategory={categoryId} />
-      ) : null}
+      <Link className="iconLink" onClick={toggleListHandler}>
+        <div className="item">
+          <PlaylistAddOutlinedIcon className="icon" />
+          <Link className="link">Add To List</Link>
+        </div>
+      </Link>
 
-      <Link className="iconLink" to={`/updateItem/${itemId}`} state={{ item: item, categoryId: categoryId }}>
+      {toggleList ? <MoveItemToList itemId={itemId} /> : null}
+
+      <Link
+        className="iconLink"
+        to={`/updateItem/${itemId}`}
+        state={{ item: item, categoryId: categoryId }}
+      >
         <div className="item">
           <CreateOutlinedIcon className="icon" />
           Edit
