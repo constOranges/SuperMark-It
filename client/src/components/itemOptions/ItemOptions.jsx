@@ -124,16 +124,30 @@ const ItemOptions = ({
 
       {toggleList ? <MoveItemToList itemId={itemId} /> : null}
 
-      <Link
-        className="iconLink"
-        to={`/updateItem/${itemId}`}
-        state={{ item: item, categoryId: categoryId }}
-      >
-        <div className="item">
-          <CreateOutlinedIcon className="icon" />
-          Edit
-        </div>
-      </Link>
+      {categoryId ? (
+        <Link
+          className="iconLink"
+          to={`/updateCatItem/${itemId}`}
+          state={{ item: item, categoryId: categoryId }}
+        >
+          <div className="item">
+            <CreateOutlinedIcon className="icon" />
+            Edit
+          </div>
+        </Link>
+      ) : (
+        <Link
+          className="iconLink"
+          to={`/updateListItem/${itemId}`}
+          state={{ item: item, listId: listId }}
+        >
+          <div className="item">
+            <CreateOutlinedIcon className="icon" />
+            Edit
+          </div>
+        </Link>
+      )}
+
       {categoryId ? (
         <Link className="iconLink">
           <div className="item">
