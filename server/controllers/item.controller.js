@@ -236,6 +236,81 @@ module.exports.updateItemInCategory = async (req, res, next) => {
   }
 }
 
+
+module.exports.updateItemInList = async (req, res, next) => {
+  const { imagePath } = req.body;
+
+  if (imagePath) {
+    const result = await cloudinary.uploader.upload(imagePath, {
+      folder: "itemImages",
+      width: 300,
+      crop: "scale",
+    });
+
+    const currentItem = await Item.findByIdAndUpdate(
+      req.body.itemId,
+      {
+        itemName: req.body.itemName,
+        brand: req.body.brand,
+        quantity: req.body.quantity,
+        imagePath: {
+          public_id: result.public_id,
+          url: result.secure_url,
+        },
+      },
+      { new: true }
+    );
+
+    User.updateOne(
+      {
+        _id: req.userId,
+        "lists._id": req.body.listId,
+      },
+      {
+        $set: {
+          "lists.$.items": currentItem,
+        },
+      },
+      { upsert: true }
+    )
+      .then((user) => {
+        res.status(200).json({ message: "Item updated succesfully." });
+      })
+      .catch((err) => {
+        res.status(400).json(err);
+      });
+  } else {
+    const currentItem = await Item.findByIdAndUpdate(
+      req.body.itemId,
+      {
+        itemName: req.body.itemName,
+        brand: req.body.brand,
+        quantity: req.body.quantity,
+      },
+      { new: true }
+    );
+
+    User.updateOne(
+      {
+        _id: req.userId,
+        "lists._id": req.body.listId,
+      },
+      {
+        $set: {
+          "lists.$.items": currentItem,
+        },
+      },
+      { upsert: true }
+    )
+      .then((user) => {
+        res.status(200).json({ message: "Item updated succesfully." });
+      })
+      .catch((err) => {
+        res.status(400).json(err);
+      });
+  }
+};
+
 // Consider adding more error handling
 module.exports.removeItemFromCategory = async (req, res) => {
   try {
