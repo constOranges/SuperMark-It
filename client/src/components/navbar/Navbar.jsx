@@ -44,9 +44,9 @@ const Navbar = ({ loggedIn, setLoggedIn }) => {
   return (
     <div className="navbar">
       <div className="wrapper">
-        <div className="left">
+        <div className="left itim-regular">
           <Link className="link" to="/">
-            SUPER MARK-IT
+            super mark-it
           </Link>
           <div className="mobileNotifIcon">
             <NotificationsRoundedIcon className="navIcon" />

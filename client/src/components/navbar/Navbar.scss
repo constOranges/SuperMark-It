@@ -12,10 +12,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 8vw;
-    font-family: Verdana;
-    font-weight: bold;
+    font-family: Alexandria;
+    font-size: 30px;
+    font-weight: 700;
     letter-spacing: 2px;
+    color: rgb(96, 192, 255);
+    text-transform: uppercase;
     padding: 0.05em;
     text-overflow: shrink;
   }
@@ -69,10 +71,12 @@
       .left {
         display: flex;
         align-items: center;
-        font-size: 23px;
-        font-family: Verdana;
-        font-weight: bold;
+        font-size: 27px;
+        font-family: Alexandria;
+        font-weight: 700;
         letter-spacing: 2px;
+        text-transform: uppercase;
+        color: rgb(96, 192, 255);
 
         .mobileNotifIcon {
           display: none;
