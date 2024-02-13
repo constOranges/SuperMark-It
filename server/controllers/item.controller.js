@@ -423,29 +423,70 @@ module.exports.addItemToList = async (req, res) => {
   }
 };
 
-module.exports.existingItemToList = async (req, res) => {
-  const currentItem = await Item.findById(
-    req.body.itemId
-  );
+module.exports.existingItemToLists = async (req, res) => {
+  try {
+    const { imagePath } = req.body;
 
-  User.updateOne(
-    {
-      _id: req.userId,
-      "lists._id": req.body.listId,
-    },
-    {
-      $push: {
-        "lists.$.items": currentItem,
-      },
-    },
-    { new: true }
-  )
-    .then((user) => {
-      res.status(200).json({ message: "Item added successfully." });
-    })
-    .catch((err) => {
-      res.status(400).json(err);
-    });
+    if (imagePath) {
+      const result = await cloudinary.uploader.upload(imagePath, {
+        folder: "itemImages",
+        width: 300,
+        crop: "scale",
+      });
+
+      for (let listId of req.body.lists) {
+        const duplicateItemWithNewId = await Item.create({
+          itemName: req.body.itemName,
+          brand: req.body.brand,
+          quantity: req.body.quantity,
+          imagePath: {
+            public_id: result.public_id,
+            url: result.secure_url,
+          },
+        });
+
+        await User.updateOne(
+          {
+            _id: req.userId,
+            "lists._id": listId,
+          },
+          {
+            $push: {
+              "lists.$.items": duplicateItemWithNewId,
+            },
+          },
+          { new: true }
+        );
+      }
+    } else {
+      const currentItem = await Item.findById(req.body.itemId);
+
+      for (let listId of req.body.lists) {
+        const duplicateItemWithNewId = await Item.create({
+          itemName: req.body.itemName,
+          brand: req.body.brand,
+          quantity: req.body.quantity,
+          imagePath: currentItem.imagePath,
+        });
+
+        await User.updateOne(
+          {
+            _id: req.userId,
+            "lists._id": listId,
+          },
+          {
+            $push: {
+              "lists.$.items": duplicateItemWithNewId,
+            },
+          },
+          { new: true }
+        );
+      }
+    }
+    res.status(200).json({ message: "Item(s) moved successfully." });
+  } catch {
+    res.status(400).json({ error: "There was an error moving all items." });
+  }
 };
 
 // Consider adding more error handling

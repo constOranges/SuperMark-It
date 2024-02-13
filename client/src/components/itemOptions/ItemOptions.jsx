@@ -122,7 +122,7 @@ const ItemOptions = ({
         </div>
       </Link>
 
-      {toggleList ? <MoveItemToList itemId={itemId} /> : null}
+      {toggleList ? <MoveItemToList item={item} /> : null}
 
       {categoryId ? (
         <Link

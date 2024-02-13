@@ -27,6 +27,7 @@ const Homepage = () => {
       });
   }, []);
 
+
   //jquery that highlights whether Kitchen or List is selected
   $(function () {
     $(".hLink").on("click", function () {

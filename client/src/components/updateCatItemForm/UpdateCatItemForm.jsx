@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
-import "./UpdateItemForm.scss";
+import "./UpdateCatItemForm.scss";
 
-const UpdateItemForm = () => {
+const UpdateCatItemForm = () => {
   const location = useLocation();
   let { item, categoryId } = location.state;
   const itemExpDate = item.expDate.slice(0, 10);
@@ -170,4 +170,4 @@ const UpdateItemForm = () => {
   );
 };
 
-export default UpdateItemForm;
+export default UpdateCatItemForm;

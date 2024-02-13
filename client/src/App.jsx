@@ -12,7 +12,7 @@ import Category from "./components/category/Category";
 import List from "./components/list/List";
 import NewCategoryForm from "./components/newCategoryForm/NewCategoryForm";
 import NewListForm from "./components/newListForm/NewListForm";
-import UpdateItemForm from "./components/updateItemForm/UpdateItemForm";
+import UpdateCatItemForm from "./components/updateCatItemForm/UpdateCatItemForm";
 import UpdateListItemForm from "./components/updateListItemForm/UpdateListItemForm";
 
 function App() {
@@ -72,7 +72,7 @@ function App() {
         },
         {
           path: "/updateCatItem/:id",
-          element: <UpdateItemForm />,
+          element: <UpdateCatItemForm />,
         },
         {
           path: "/updateListItem/:id",

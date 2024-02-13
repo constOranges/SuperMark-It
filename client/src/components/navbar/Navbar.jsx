@@ -39,7 +39,7 @@ const Navbar = ({ loggedIn, setLoggedIn }) => {
 
   const alertClickAway = () => {
     setOpenAlert(false);
-  }
+  };
 
   return (
     <div className="navbar">
@@ -75,19 +75,6 @@ const Navbar = ({ loggedIn, setLoggedIn }) => {
                 <FavoriteRoundedIcon className="navIcon" />
               </Link>
             </div>
-            <ClickAwayListener onClickAway={alertClickAway}>
-              <div className="dropDown">
-                <div className="notifIcon">
-                  <NotificationsRoundedIcon
-                    className="navIcon"
-                    onClick={() => setOpenAlert(!openAlert)}
-                  />
-                </div>
-
-                {openAlert && <Alerts />}
-              </div>
-            </ClickAwayListener>
-
             {/* Handler that closes login form when clicking outside of container */}
             <ClickAwayListener onClickAway={handleClickAway}>
               <div className="dropDown">
@@ -108,7 +95,10 @@ const Navbar = ({ loggedIn, setLoggedIn }) => {
                       </div>
                     ) : (
                       <div className="userForm">
-                        <LoginForm setOpen={setOpen} setLoggedIn={setLoggedIn}/>
+                        <LoginForm
+                          setOpen={setOpen}
+                          setLoggedIn={setLoggedIn}
+                        />
                         <Link
                           className="link"
                           to="/newUser"
@@ -120,6 +110,19 @@ const Navbar = ({ loggedIn, setLoggedIn }) => {
                     )}
                   </div>
                 )}
+              </div>
+            </ClickAwayListener>
+            
+            <ClickAwayListener onClickAway={alertClickAway}>
+              <div className="dropDown">
+                <div className="notifIcon">
+                  <NotificationsRoundedIcon
+                    className="navIcon"
+                    onClick={() => setOpenAlert(!openAlert)}
+                  />
+                </div>
+
+                {openAlert && <Alerts />}
               </div>
             </ClickAwayListener>
           </div>

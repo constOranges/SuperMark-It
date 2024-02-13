@@ -31,10 +31,10 @@ module.exports = (app) => {
     ItemController.existingItemToCategories
   );
   app.patch(
-    "/api/items/existingItemToList",
+    "/api/items/existingItemToLists",
     authenticate,
     getIdFromCookie,
-    ItemController.existingItemToList
+    ItemController.existingItemToLists
   );
   app.patch(
     "/api/items/removeItemFromCategory",
