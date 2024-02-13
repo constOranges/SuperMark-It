@@ -1,15 +1,78 @@
+.dropDownForm {
+  margin-left: 2em;
+  margin-top: -1.5em;
+  margin-bottom: -1.5em;
+  animation: slide-up 0.3s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+
   .moveItemToListForm {
-    display: flex;
-    flex-direction: row;
+    height: 20em;
+    overflow-y: scroll;
+
+    input {
+      z-index: 998;
+    }
 
     select {
-      width: 10em;
-      height: 2em;
-      text-align: center;
       z-index: 999;
     }
 
     button {
-      margin-top: 2em;
+      margin-left: 1.8em;
+    }
+
+    .multiselect {
+      width: 25.85em;
+      height: 2em;
+      text-align: center;
+      border-style: solid;
+      border-width: 0.1em;
     }
   }
+}
+
+.p-placeholder {
+  margin-top: 0.3em;
+}
+
+.p-multiselect-header {
+  display: none;
+}
+
+.p-mulstiselect-label {
+  margin-top: 0.3em;
+}
+
+span {
+  margin-top: 0.3em;
+  margin-right: 0.3em;
+}
+
+.p-multiselect-token-icon {
+  margin-right: 1.5em;
+}
+
+.p-multiselect-trigger-icon {
+  margin-right: 0.5em;
+}
+
+.p-multiselect-items-wrapper {
+  border-left: solid;
+  border-right: solid;
+  border-width: 0.1em;
+}
+
+.p-multiselect-item {
+  border-bottom: solid;
+  border-width: 0.1em;
+  height: 4em;
+  z-index: 999;
+  background-color: white;
+}
+
+.p-multiselect-item:hover {
+  background-color: rgb(214, 214, 214);
+}
+
+.p-multiselect-item:active {
+  background-color: rgb(216, 228, 230);
+}
