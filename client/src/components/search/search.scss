@@ -8,24 +8,34 @@
   }
 }
 
-.search{
-    opacity: 1;
-    animation: fadeIn 0.5s ease-in;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
+.search {
+  opacity: 1;
+  animation: fadeIn 0.5s ease-in;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
 
-    .input-group {
-        width: auto;
-    }
+  .input-group {
+    width: auto;
+  }
 
-    table {
-        border-spacing: 0px;
-    }
+  table {
+    border-spacing: 0px;
+    margin-bottom: 10em;
+  }
 
-    th {
-        border-style: solid;
-        border-width: .1em;
-    }
+  th {
+    border-style: solid;
+    border-width: 0.1em;
+  }
+
+  td{
+    padding: .4em;
+    border-right: solid;
+    border-bottom: solid;
+    border-left: solid;
+    border-width: 0.1em;
+  }
+
 }

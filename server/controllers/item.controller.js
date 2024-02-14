@@ -7,11 +7,11 @@ const cloudinary = require("../config/cloudinary");
 
 module.exports.findItemById = (req, res) => {
   Item.findById(req.body.itemId)
-    .then(currentItem => {
+    .then((currentItem) => {
       res.json(currentItem);
     })
-    .catch(err => res.status(400).json(err));
-}
+    .catch((err) => res.status(400).json(err));
+};
 
 // CATEGORIES
 
@@ -121,7 +121,7 @@ module.exports.existingItemToCategories = async (req, res) => {
             },
           },
           { new: true }
-        )
+        );
       }
     } else {
       const currentItem = await Item.findById(req.body.itemId);
@@ -147,12 +147,12 @@ module.exports.existingItemToCategories = async (req, res) => {
             },
           },
           { new: true }
-        )
+        );
       }
     }
-    res.status(200).json({ message: "Item(s) moved successfully." })
+    res.status(200).json({ message: "Item(s) moved successfully." });
   } catch {
-    res.status(400).json({ error: "There was an error moving all items." })
+    res.status(400).json({ error: "There was an error moving all items." });
   }
 };
 
@@ -192,7 +192,7 @@ module.exports.updateItemInCategory = async (req, res, next) => {
       {
         $set: {
           "categories.$.items": currentItem,
-        }
+        },
       },
       { upsert: true }
     )
@@ -201,7 +201,7 @@ module.exports.updateItemInCategory = async (req, res, next) => {
       })
       .catch((err) => {
         res.status(400).json(err);
-      })
+      });
   } else {
     const currentItem = await Item.findByIdAndUpdate(
       req.body.itemId,
@@ -223,7 +223,7 @@ module.exports.updateItemInCategory = async (req, res, next) => {
       {
         $set: {
           "categories.$.items": currentItem,
-        }
+        },
       },
       { upsert: true }
     )
@@ -232,10 +232,9 @@ module.exports.updateItemInCategory = async (req, res, next) => {
       })
       .catch((err) => {
         res.status(400).json(err);
-      })
+      });
   }
-}
-
+};
 
 module.exports.updateItemInList = async (req, res, next) => {
   const { imagePath } = req.body;
@@ -314,9 +313,7 @@ module.exports.updateItemInList = async (req, res, next) => {
 // Consider adding more error handling
 module.exports.removeItemFromCategory = async (req, res) => {
   try {
-    const currentItem = await Item.findByIdAndDelete(
-      req.body.itemId
-    );
+    const currentItem = await Item.findByIdAndDelete(req.body.itemId);
 
     await User.updateOne(
       {
@@ -359,15 +356,13 @@ module.exports.addItemToList = async (req, res) => {
     const result = await cloudinary.uploader.upload(imagePath, {
       folder: "itemImages",
       width: 300,
-      crop: "scale"
+      crop: "scale",
     });
 
     const newItem = await Item.create({
       itemName: req.body.itemName,
       brand: req.body.brand,
       quantity: req.body.quantity,
-      expDate: req.body.expDate,
-      notifyDate: req.body.notifyDate,
       imagePath: {
         public_id: result.public_id,
         url: result.secure_url,
@@ -397,8 +392,7 @@ module.exports.addItemToList = async (req, res) => {
       itemName: req.body.itemName,
       brand: req.body.brand,
       quantity: req.body.quantity,
-      expDate: req.body.expDate,
-      notifyDate: req.body.notifyDate,
+
       // imagePath: req.body.imagePath,
     });
 
@@ -492,9 +486,7 @@ module.exports.existingItemToLists = async (req, res) => {
 // Consider adding more error handling
 module.exports.removeItemFromList = async (req, res) => {
   try {
-    const currentItem = await Item.findByIdAndDelete(
-      req.body.itemId
-    );
+    const currentItem = await Item.findByIdAndDelete(req.body.itemId);
 
     await User.updateOne(
       {
