@@ -7,10 +7,13 @@ import ListCatOptions from "../listCatOptions/ListCatOptions";
 import ItemCard from "../itemCard/ItemCard";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
 
 const List = () => {
   const [open, setOpen] = useState(false);
   const [list, setList] = useState([]);
+  const [search, setSearch] = useState("");
   const listId = useParams();
 
   const getList = async () => {
@@ -64,12 +67,31 @@ const List = () => {
         <Link to="/addListItem" className="buttonLink">
           <button>+ Add Item</button>
         </Link>
+        <Form>
+          <InputGroup>
+            <Form.Control
+              onChange={(e) => setSearch(e.target.value.toLowerCase())}
+              placeholder="Search Items"
+            />
+          </InputGroup>
+        </Form>
       </div>
       <div className="bottom">
         {products
-          ? prodList[0]?.map((item) => (
-              <ItemCard item={item} key={item.id} listId={listId} getList={getList}/>
-            ))
+          ? prodList[0]
+              ?.filter((item) => {
+                return search.toLowerCase() === ""
+                  ? item
+                  : item.itemName.toLowerCase().includes(search);
+              })
+              .map((item) => (
+                <ItemCard
+                  item={item}
+                  key={item.id}
+                  listId={listId}
+                  getList={getList}
+                />
+              ))
           : null}
       </div>
     </div>

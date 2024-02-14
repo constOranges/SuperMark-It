@@ -58,6 +58,7 @@ const Search = () => {
       <Table>
         <thead>
           <tr>
+            <th>Image</th>
             <th>Name</th>
             <th>Brand</th>
             <th>Quantity</th>
@@ -74,6 +75,9 @@ const Search = () => {
             .map((item) => {
               return (
                 <tr key={item._id}>
+                  <td>
+                    <img src={item.imagePath?.url}></img>
+                  </td>
                   <td>{item.itemName}</td>
                   <td>{item.brand}</td>
                   <td>{item.quantity}</td>
@@ -88,6 +92,7 @@ const Search = () => {
       <Table>
         <thead>
           <tr>
+            <th>Image</th>
             <th>Name</th>
             <th>Brand</th>
             <th>Quantity</th>
@@ -103,6 +108,9 @@ const Search = () => {
             .map((item) => {
               return (
                 <tr key={item._id}>
+                  <td>
+                    <img src={item.imagePath?.url}></img>
+                  </td>
                   <td>{item.itemName}</td>
                   <td>{item.brand}</td>
                   <td>{item.quantity}</td>
