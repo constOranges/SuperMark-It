@@ -44,7 +44,7 @@ const Navbar = ({ loggedIn, setLoggedIn }) => {
   return (
     <div className="navbar">
       <div className="wrapper">
-        <div className="left itim-regular">
+        <div className="left">
           <Link className="link" to="/">
             super mark-it
           </Link>
