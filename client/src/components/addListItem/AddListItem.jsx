@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./AddListItem.scss";
+import $ from "jquery";
 
 const AddListItem = () => {
   const [itemName, setItemName] = useState("");
@@ -10,6 +11,7 @@ const AddListItem = () => {
   const [imagePath, setImagePath] = useState(null);
   const [lists, setLists] = useState([]);
   const [listId, setListId] = useState("");
+  const [listName, setListName] = useState("");
   const [errors, setErrors] = useState([]);
 
   const navigate = useNavigate();

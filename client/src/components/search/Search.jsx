@@ -9,7 +9,8 @@ const Search = () => {
   const [search, setSearch] = useState("");
   const [userData, setUserData] = useState(null);
 
-  const itemsArr = [];
+  const categoryArr = [];
+  const listArr = [];
 
   useEffect(() => {
     axios
@@ -25,13 +26,21 @@ const Search = () => {
       });
   }, []);
 
-//   userData?.categories.forEach((category) => {
-//     category?.items.forEach((item) => {
-//         itemsArr.push(item)
-//     })
-//   });
+  const itemData = () => {
+    userData?.categories.forEach((category) => {
+      category?.items.forEach((item) => {
+        categoryArr.push(item);
+      });
+    });
 
-//   console.log(itemsArr);
+    userData?.lists.forEach((list) => {
+      list?.items.forEach((item) => {
+        listArr.push(item);
+      });
+    });
+  };
+
+  itemData();
 
   return (
     <div className="search">
@@ -39,11 +48,13 @@ const Search = () => {
       <Form>
         <InputGroup>
           <Form.Control
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => setSearch(e.target.value.toLowerCase())}
             placeholder="Search Items"
           />
         </InputGroup>
       </Form>
+
+      <h1>Category Items</h1>
       <Table>
         <thead>
           <tr>
@@ -51,11 +62,54 @@ const Search = () => {
             <th>Brand</th>
             <th>Quantity</th>
             <th>Expiration Date</th>
-            <th>Categories</th>
-            <th>Lists</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+          {categoryArr
+            .filter((item) => {
+              return search.toLowerCase() === ""
+                ? item
+                : item.itemName.toLowerCase().includes(search);
+            })
+            .map((item) => {
+              return (
+                <tr key={item._id}>
+                  <td>{item.itemName}</td>
+                  <td>{item.brand}</td>
+                  <td>{item.quantity}</td>
+                  <td>{item.expDate?.slice(0, 10)}</td>
+                </tr>
+              );
+            })}
+        </tbody>
+      </Table>
+
+      <h1>List Items</h1>
+      <Table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Brand</th>
+            <th>Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          {listArr
+            .filter((item) => {
+              return search.toLowerCase() === ""
+                ? item
+                : item.itemName.toLowerCase().includes(search);
+            })
+            .map((item) => {
+              return (
+                <tr key={item._id}>
+                  <td>{item.itemName}</td>
+                  <td>{item.brand}</td>
+                  <td>{item.quantity}</td>
+                </tr>
+              );
+            })}
+        </tbody>
       </Table>
     </div>
   );
