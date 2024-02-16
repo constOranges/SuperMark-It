@@ -1,6 +1,11 @@
 .newCategoryPage {
   opacity: 1;
   animation: fadeIn 0.5s ease-in;
+  font-family: Verdana;
+
+  h2 {
+    color: rgb(75, 75, 75);
+  }
 }
 
 .selected {

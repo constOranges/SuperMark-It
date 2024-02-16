@@ -17,5 +17,14 @@
         font-size: 15px;
         width: 100%;
         height: 2.5em;
+        background-color: #47B6FE;
+        color: white;
+        border-style: none;
+        text-transform: capitalize;
+    }
+
+    .loginBtn:hover {
+        opacity: 70%;
+        cursor: pointer;
     }
 }

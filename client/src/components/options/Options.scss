@@ -56,6 +56,8 @@
           height: 200px;
           width: 200px;
           background-color: rgb(255, 255, 255);
+          margin-left: 5px;
+          margin-right: 5px;
 
           .catIcon {
             margin-top: 30px;
@@ -70,13 +72,13 @@
 
 @media only screen and (max-width: 1600px) and (min-width: 701px) {
   .options {
-    margin: 100px 250px;
+    margin: 120px 250px;
 
     .top {
       display: flex;
       align-items: center;
-      margin-bottom: 50px;
       gap: 25px;
+      margin-bottom: -3em;
 
       .item {
         font-size: 19px;
@@ -107,6 +109,8 @@
           height: 200px;
           width: 200px;
           margin-bottom: 3.5em;
+          margin-left: 5px;
+          margin-right: 5px;
 
           .catIcon {
             margin-top: 30px;
@@ -121,13 +125,13 @@
 
 @media (min-width: 1601px) {
   .options {
-    margin: 100px 250px;
+    margin: 120px 250px;
 
     .top {
       display: flex;
       align-items: center;
-      margin-bottom: 50px;
       gap: 25px;
+      margin-bottom: -3em;
 
       .item {
         font-size: 19px;
