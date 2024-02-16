@@ -1,5 +1,4 @@
 .list {
-  margin-top: 40px;
 
   .top {
     display: flex;
@@ -25,14 +24,21 @@
     }
 
     button {
-      margin-left: 1em;
+      margin-left: 2em;
       margin-top: 0.4em;
-      border-radius: 0.4em;
-      padding: 0.5em;
+      border-style: none;
+      border-radius: 8px;
+      padding: 1em;
+      background-color: #47B6FE;
+      color: white;
+      font-family: Arial;
+      font-weight: bold;
+      font-size: 15px;
+      letter-spacing: 0.5px;
     }
 
     button:hover {
-      background-color: rgb(226, 224, 224);
+      opacity: 70%;
       cursor: pointer;
     }
 

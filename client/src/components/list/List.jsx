@@ -65,7 +65,7 @@ const List = () => {
           </div>
         </ClickAwayListener>
         <Link to="/addListItem" className="buttonLink">
-          <button>+ Add Item</button>
+          <button>Add Item</button>
         </Link>
         <Form>
           <InputGroup>

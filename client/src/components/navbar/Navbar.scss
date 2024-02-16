@@ -12,16 +12,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-family: Alexandria;
     font-size: 34px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
     padding: 0.05em;
     text-overflow: shrink;
 
-    .link {
-      color: rgb(96, 192, 255);
+    .logo {
+      margin-top: 10px;
+      width: 250px;
     }
   }
 
@@ -39,6 +36,7 @@
     position: fixed;
     bottom: 0;
     left: 0;
+    color: rgb(170, 170, 170);
 
     .navIcon {
       font-size: 50px;
@@ -50,6 +48,7 @@
 
     .navIcon {
       font-size: 7.5vw;
+      color: rgb(170, 170, 170);
     }
   }
 
@@ -74,12 +73,10 @@
       .left {
         display: flex;
         align-items: center;
-        font-size: 27px;
-        font-family: Alexandria;
-        font-weight: 700;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        color: rgb(96, 192, 255);
+        
+        .logo {
+          width: 250px;
+        }
 
         .mobileNotifIcon {
           display: none;
@@ -103,25 +100,25 @@
 
   .userForm {
     animation: fadeIn 0.1s ease-in;
-    background-color: rgb(255, 249, 243);
-    border-style: solid;
-    border-radius: 0.3em;
+    background-color: rgb(255, 255, 255);
     position: absolute;
-    top: 4.7em;
-    right: 0.033em;
-    width: 15%;
+    top: 5.7em;
+    right: 0.05em;
+    width: 20%;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 1em;
     z-index: 5;
+    font-family: Verdana;
+    text-transform: capitalize;
+    -webkit-box-shadow: 0px 0px 7px -5px black;
+    box-shadow: 0px 0px 7px -5px black;
   }
 
   .logoutForm {
     animation: fadeIn 0.1s ease-in;
-    background-color: rgb(255, 249, 243);
-    border-style: solid;
-    border-radius: 0.3em;
+    background-color: rgb(255, 255, 255);
     position: absolute;
     right: 0.033em;
     top: 4.7em;
@@ -131,10 +128,11 @@
     align-items: center;
     padding: 0.5em;
     z-index: 5;
+    -webkit-box-shadow: 0px 0px 7px -5px black;
+    box-shadow: 0px 0px 7px -5px black;
 
     .link:hover {
       color: rgb(90, 89, 89);
-      text-decoration: underline;
     }
   }
 }

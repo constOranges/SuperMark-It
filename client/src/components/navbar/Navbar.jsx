@@ -46,7 +46,7 @@ const Navbar = ({ loggedIn, setLoggedIn }) => {
       <div className="wrapper">
         <div className="left">
           <Link className="link" to="/">
-            super mark-it
+            <img className="logo" src="/images/logo.jpg" alt="Blue background with white text" />
           </Link>
           <div className="mobileNotifIcon">
             <NotificationsRoundedIcon className="navIcon" />
@@ -78,7 +78,7 @@ const Navbar = ({ loggedIn, setLoggedIn }) => {
             {/* Handler that closes login form when clicking outside of container */}
             <ClickAwayListener onClickAway={handleClickAway}>
               <div className="dropDown">
-                <div className="profileIcon">
+                <div className="profileIcon link">
                   <PersonRoundedIcon
                     className="navIcon userIcon"
                     onClick={() => setOpen(!open)}
