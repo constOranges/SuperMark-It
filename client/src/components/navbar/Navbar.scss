@@ -37,6 +37,7 @@
     bottom: 0;
     left: 0;
     color: rgb(128, 128, 128);
+    cursor: pointer;
 
     .navIcon {
       font-size: 50px;
@@ -92,7 +93,11 @@
           display: flex;
           gap: 25px;
           cursor: pointer;
-          color: rgb(59, 59, 59);
+          color: rgb(128, 128, 128);
+
+          .navIcon {
+            font-size: 30px;
+          }
         }
       }
     }
