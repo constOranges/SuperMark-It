@@ -81,51 +81,41 @@ const Search = () => {
           </div>
         </div>
       </div>
-      {toggle ? (
+      {toggle ?
         <div className="catItems">
-          {categoryArr.forEach((category) => {
-            category.items
-              .filter((item) => {
+          {categoryArr.map((category) => {
+            return (
+              category.items?.filter((item) => {
                 return search.toLowerCase() === ""
                   ? item
                   : item.itemName.toLowerCase().includes(search);
-              })
-              .map((item) => {
+              }).map((item) => (
                 <ItemCard
                   item={item}
                   categoryName={category.categoryName}
                   categoryId={category._id}
-                />;
-              });
+                />
+              )))
           })}
         </div>
-      ) : (
+        :
         <div className="listItems">
-          {listArr
-            .filter((list) => {
-              return search.toLowerCase() === ""
-                ? list
-                : list.items.every((item) => {
-                    return item.itemName.toLowerCase().includes(search);
-                  });
-            })
-            .map((list) => {
-              return (
-                <div>
-                  {list.items.map((item) => {
-                    return (
-                      <ItemCard
-                        item={item}
-                        listName={list.listName}
-                        listId={list._id}
-                      />
-                    );
-                  })}
-                </div>
-              );
-            })}
+          {listArr.map((list) => {
+            return (
+              list.items?.filter((item) => {
+                return search.toLowerCase() === ""
+                  ? item
+                  : item.itemName.toLowerCase().includes(search);
+              }).map((item) => (
+                <ItemCard
+                  item={item}
+                  listName={list.listName}
+                  listId={list._id}
+                />
+              )))
+          })}
         </div>
-      )}
+      }
     </div>
   );
 };

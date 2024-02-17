@@ -43,6 +43,7 @@ const Category = () => {
   const products = category.map((items) => {
     if (`/category/${items._id}` == window.location.pathname) {
       prodList.push(items.items);
+      console.log(prodList);
     }
   });
   const catName = category.map((name) => {
