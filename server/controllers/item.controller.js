@@ -186,15 +186,27 @@ module.exports.updateItemInCategory = async (req, res, next) => {
 
     User.updateOne(
       {
-        _id: req.userId,
-        "categories._id": req.body.categoryId,
+        _id: req.userId
       },
       {
         $set: {
-          "categories.$.items": currentItem,
+          "categories.$[category].items.$[item].itemName": req.body.itemName,
+          "categories.$[category].items.$[item].brand": req.body.brand,
+          "categories.$[category].items.$[item].quantity": req.body.quantity,
+          "categories.$[category].items.$[item].expDate": req.body.expDate,
+          "categories.$[category].items.$[item].notifyDate": req.body.notifyDate,
+          "categories.$[category].items.$[item].imagePath": {
+            public_id: result.public_id,
+            url: result.secure_url
+          }
         },
       },
-      { upsert: true }
+      {
+        arrayFilters: [
+          { "category._id": req.body.categoryId },
+          { "item._id": req.body.itemId }
+        ]
+      }
     )
       .then((user) => {
         res.status(200).json({ message: "Item updated succesfully." });
@@ -215,27 +227,38 @@ module.exports.updateItemInCategory = async (req, res, next) => {
       { new: true }
     );
 
+    // adjust query to update entire item once item collection refactoring is complete
     User.updateOne(
       {
-        _id: req.userId,
-        "categories._id": req.body.categoryId,
+        _id: req.userId
       },
       {
         $set: {
-          "categories.$.items": currentItem,
+          "categories.$[category].items.$[item].itemName": req.body.itemName,
+          "categories.$[category].items.$[item].brand": req.body.brand,
+          "categories.$[category].items.$[item].quantity": req.body.quantity,
+          "categories.$[category].items.$[item].expDate": req.body.expDate,
+          "categories.$[category].items.$[item].notifyDate": req.body.notifyDate
         },
       },
-      { upsert: true }
+      {
+        arrayFilters: [
+          { "category._id": req.body.categoryId },
+          { "item._id": req.body.itemId }
+        ]
+      }
     )
       .then((user) => {
         res.status(200).json({ message: "Item updated succesfully." });
       })
       .catch((err) => {
+        console.log(err);
         res.status(400).json(err);
       });
   }
 };
 
+// not yet up to date
 module.exports.updateItemInList = async (req, res, next) => {
   const { imagePath } = req.body;
 
