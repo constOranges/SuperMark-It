@@ -29,7 +29,6 @@ const Category = () => {
       });
   };
 
-
   useEffect(() => {
     getCategory();
   }, []);
@@ -40,15 +39,16 @@ const Category = () => {
 
   const prodList = [];
 
-  const products = category.map((items) => {
-    if (`/category/${items._id}` == window.location.pathname) {
-      prodList.push(items.items);
-      console.log(prodList);
+  const products = category.map((cat) => {
+    if (`/category/${cat._id}` == window.location.pathname) {
+      cat.items.forEach((item) => {
+        prodList.push(item);
+      });
     }
   });
-  const catName = category.map((name) => {
-    if (`/category/${name._id}` == window.location.pathname) {
-      return name.categoryName;
+  const catName = category.map((cat) => {
+    if (`/category/${cat._id}` == window.location.pathname) {
+      return cat.categoryName;
     }
   });
 
@@ -80,17 +80,19 @@ const Category = () => {
       </div>
       <div className="bottom">
         {products
-          ? prodList[0]?.filter((item) => {
-              return search.toLowerCase() === ""
-                ? item
-                : item.itemName.toLowerCase().includes(search);
-            }).map((item) => (
-              <ItemCard
-                item={item}
-                categoryId={categoryId}
-                getCategory={getCategory}
-              />
-            ))
+          ? prodList
+              ?.filter((item) => {
+                return search.toLowerCase() === ""
+                  ? item
+                  : item.itemName.toLowerCase().includes(search);
+              })
+              .map((item) => (
+                <ItemCard
+                  item={item}
+                  categoryId={categoryId}
+                  getCategory={getCategory}
+                />
+              ))
           : null}
       </div>
     </div>

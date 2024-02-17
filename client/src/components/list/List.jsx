@@ -12,7 +12,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 
 const List = () => {
   const [open, setOpen] = useState(false);
-  const [list, setList] = useState([]);
+  const [lists, setLists] = useState([]);
   const [search, setSearch] = useState("");
   const listId = useParams();
 
@@ -22,7 +22,7 @@ const List = () => {
         withCredentials: true,
       })
       .then((res) => {
-        setList(res.data.user.lists);
+        setLists(res.data.user.lists);
         console.log(res);
       })
       .catch((err) => {
@@ -40,15 +40,17 @@ const List = () => {
 
   const prodList = [];
 
-  const products = list.filter((items) => {
-    if (`/list/${items._id}` == window.location.pathname) {
-      prodList.push(items.items);
+  const products = lists.filter((list) => {
+    if (`/list/${list._id}` == window.location.pathname) {
+      list.items.forEach((item) => {
+        prodList.push(item);
+      });
     }
   });
 
-  const listName = list.map((name) => {
-    if (`/list/${name._id}` == window.location.pathname) {
-      return name.listName;
+  const listName = lists.map((list) => {
+    if (`/list/${list._id}` == window.location.pathname) {
+      return list.listName;
     }
   });
 
@@ -78,7 +80,7 @@ const List = () => {
       </div>
       <div className="bottom">
         {products
-          ? prodList[0]
+          ? prodList
               ?.filter((item) => {
                 return search.toLowerCase() === ""
                   ? item
