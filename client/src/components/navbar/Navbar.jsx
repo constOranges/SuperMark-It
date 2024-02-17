@@ -14,6 +14,7 @@ import "./Navbar.scss";
 
 const Navbar = ({ loggedIn, setLoggedIn }) => {
   const [open, setOpen] = useState(false);
+  const [addDropDown, setAddDropDown] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
   const navigate = useNavigate();
 
@@ -37,6 +38,10 @@ const Navbar = ({ loggedIn, setLoggedIn }) => {
     setOpen(false);
   };
 
+  const addItemClickAway = () => {
+    setAddDropDown(false);
+  };
+
   const alertClickAway = () => {
     setOpenAlert(false);
   };
@@ -46,7 +51,11 @@ const Navbar = ({ loggedIn, setLoggedIn }) => {
       <div className="wrapper">
         <div className="left">
           <Link className="link" to="/">
-            <img className="logo" src="/images/logo.jpg" alt="Blue background with white text" />
+            <img
+              className="logo"
+              src="/images/logo.jpg"
+              alt="Blue background with white text"
+            />
           </Link>
           <div className="mobileNotifIcon">
             <NotificationsRoundedIcon className="navIcon" />
@@ -64,11 +73,32 @@ const Navbar = ({ loggedIn, setLoggedIn }) => {
                 <SearchRoundedIcon className="navIcon" />
               </Link>
             </div>
-            <div className="addIcon">
-              <Link className="link" to="/add">
-                <AddBoxRoundedIcon className="navIcon" />
-              </Link>
-            </div>
+            <ClickAwayListener onClickAway={addItemClickAway}>
+              <div className="addIcon">
+                <AddBoxRoundedIcon
+                  className="navIcon"
+                  onClick={() => setAddDropDown(!addDropDown)}
+                />
+                {addDropDown && (
+                  <div className="addItemDropDown">
+                    <Link
+                      className="link addLink"
+                      to="/add"
+                      onClick={() => setAddDropDown(!addDropDown)}
+                    >
+                      Add To Category
+                    </Link>
+                    <Link
+                      className="link addLink"
+                      to="/addListItem"
+                      onClick={() => setAddDropDown(!addDropDown)}
+                    >
+                      Add To List
+                    </Link>
+                  </div>
+                )}
+              </div>
+            </ClickAwayListener>
 
             <div className="favIcon">
               <Link className="link" to="/list/1">
@@ -112,7 +142,7 @@ const Navbar = ({ loggedIn, setLoggedIn }) => {
                 )}
               </div>
             </ClickAwayListener>
-            
+
             <ClickAwayListener onClickAway={alertClickAway}>
               <div className="dropDown">
                 <div className="notifIcon">

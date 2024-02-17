@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { DateTime } from "luxon";
 import "./ItemCard.scss";
 import { Link } from "react-router-dom";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
@@ -17,14 +18,9 @@ const ItemCard = ({
 }) => {
   const [open, setOpen] = useState(false);
 
-  // Date input displays time by default so use .toDateString() to display the date only
-  let itemExpDate = new Date(item.expDate);
-  let dateWithoutTime = itemExpDate.toDateString();
-
   const handleClickAway = () => {
     setOpen(false);
   };
-
 
   return (
     <div className="itemCard">
@@ -39,7 +35,12 @@ const ItemCard = ({
         <h3>{item.itemName}</h3>
         <p>{item.brand}</p>
         {item.quantity > 0 ? <p>Quantity: {item.quantity}</p> : null}
-        {categoryId ? <p>Expires: {dateWithoutTime}</p> : null}
+        {categoryId ? (
+          <p>
+            Expires:{" "}
+            {DateTime.fromISO(item.expDate).toUTC().toFormat("LL/dd/yyyy")}
+          </p>
+        ) : null}
         {categoryName ? (
           <p>
             <strong>Category: </strong>

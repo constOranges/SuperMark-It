@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./AddNewItem.scss";
-import $ from "jquery";
 
 const AddNewItem = () => {
   const [itemName, setItemName] = useState("");
@@ -13,7 +12,6 @@ const AddNewItem = () => {
   const [imagePath, setImagePath] = useState(null);
   const [categories, setCategories] = useState([]);
   const [categoryId, setCategoryId] = useState("");
-  const [categoryName, setCategoryName] = useState(null);
   const [errors, setErrors] = useState([]);
 
   const navigate = useNavigate();
