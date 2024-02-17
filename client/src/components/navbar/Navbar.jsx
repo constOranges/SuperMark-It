@@ -76,7 +76,7 @@ const Navbar = ({ loggedIn, setLoggedIn }) => {
             <ClickAwayListener onClickAway={addItemClickAway}>
               <div className="addIcon">
                 <AddBoxRoundedIcon
-                  className="navIcon"
+                  className="navIcon link"
                   onClick={() => setAddDropDown(!addDropDown)}
                 />
                 {addDropDown && (
@@ -145,7 +145,7 @@ const Navbar = ({ loggedIn, setLoggedIn }) => {
 
             <ClickAwayListener onClickAway={alertClickAway}>
               <div className="dropDown">
-                <div className="notifIcon">
+                <div className="notifIcon link">
                   <NotificationsRoundedIcon
                     className="navIcon"
                     onClick={() => setOpenAlert(!openAlert)}
