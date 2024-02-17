@@ -1,23 +1,26 @@
 import React from "react";
 import { useState } from "react";
+import { DateTime } from "luxon";
 import "./ItemCard.scss";
 import { Link } from "react-router-dom";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import ItemOptions from "../itemOptions/ItemOptions";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 
-const ItemCard = ({ item, categoryId, listId, getCategory, getList }) => {
+const ItemCard = ({
+  item,
+  categoryId,
+  listId,
+  getCategory,
+  getList,
+  categoryName,
+  listName,
+}) => {
   const [open, setOpen] = useState(false);
-
-  // Date input displays time by default so use .toDateString() to display the date only
-  let itemExpDate = new Date(item.expDate);
-  let dateWithoutTime = itemExpDate.toDateString();
 
   const handleClickAway = () => {
     setOpen(false);
   };
-
-  console.log(item);
 
   return (
     <div className="itemCard">
@@ -32,7 +35,24 @@ const ItemCard = ({ item, categoryId, listId, getCategory, getList }) => {
         <h3>{item.itemName}</h3>
         <p>{item.brand}</p>
         {item.quantity > 0 ? <p>Quantity: {item.quantity}</p> : null}
-        {categoryId ? <p>Expires: {dateWithoutTime}</p> : null}
+        {categoryId ? (
+          <p>
+            Expires:{" "}
+            {DateTime.fromISO(item.expDate).toUTC().toFormat("LL/dd/yyyy")}
+          </p>
+        ) : null}
+        {categoryName ? (
+          <p>
+            <strong>Category: </strong>
+            {categoryName}
+          </p>
+        ) : null}
+        {listName ? (
+          <p>
+            <strong>List: </strong>
+            {listName}
+          </p>
+        ) : null}
       </div>
       <ClickAwayListener onClickAway={handleClickAway}>
         <div>
