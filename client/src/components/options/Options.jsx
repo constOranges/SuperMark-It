@@ -18,12 +18,10 @@ import LunchDiningRoundedIcon from "@mui/icons-material/LunchDining";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 
 const Options = ({ user }) => {
-  //Create an array/object of all available icons
-  //When user chooses icon, store string value in db
-  //When string value is returned from db, run a function that matches string value with specified icon
+
 
   function UserIcon(iconPath) {
-    const value = JSON.stringify(iconPath)
+    const value = JSON.stringify(iconPath);
     if (value.includes("kitchen")) {
       return <KitchenRoundedIcon className="catIcon" />;
     } else if (value.includes("fastfood")) {
@@ -56,7 +54,6 @@ const Options = ({ user }) => {
       return null;
     }
   }
-
 
 
   return (

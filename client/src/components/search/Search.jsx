@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from "react";
-import Table from "react-bootstrap/Table";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
+import ItemCard from "../itemCard/ItemCard";
+import $ from "jquery";
 import "./Search.scss";
 
 const Search = () => {
   const [search, setSearch] = useState("");
   const [userData, setUserData] = useState(null);
+  const [toggle, setToggle] = useState(true);
 
   const categoryArr = [];
   const listArr = [];
 
-  useEffect(() => {
-    axios
+  const getUserData = async () => {
+    await axios
       .get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/users/currentuser`, {
         withCredentials: true,
       })
@@ -24,23 +27,30 @@ const Search = () => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  useEffect(() => {
+    getUserData();
   }, []);
 
   const itemData = () => {
     userData?.categories.forEach((category) => {
-      category?.items.forEach((item) => {
-        categoryArr.push(item);
-      });
+      categoryArr.push(category);
     });
 
     userData?.lists.forEach((list) => {
-      list?.items.forEach((item) => {
-        listArr.push(item);
-      });
+      listArr.push(list);
     });
   };
 
   itemData();
+
+  $(function () {
+    $(".hLink").on("click", function () {
+      $(".hLink").removeClass("selected");
+      $(this).addClass("selected");
+    });
+  });
 
   return (
     <div className="search">
@@ -54,71 +64,68 @@ const Search = () => {
         </InputGroup>
       </Form>
 
-      <h1>Category Items</h1>
-      <Table>
-        <thead>
-          <tr>
-            <th>Image</th>
-            <th>Name</th>
-            <th>Brand</th>
-            <th>Quantity</th>
-            <th>Expiration Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          {categoryArr
-            .filter((item) => {
-              return search.toLowerCase() === ""
-                ? item
-                : item.itemName.toLowerCase().includes(search);
-            })
-            .map((item) => {
-              return (
-                <tr key={item._id}>
-                  <td>
-                    <img src={item.imagePath?.url}></img>
-                  </td>
-                  <td>{item.itemName}</td>
-                  <td>{item.brand}</td>
-                  <td>{item.quantity}</td>
-                  <td>{item.expDate?.slice(0, 10)}</td>
-                </tr>
-              );
-            })}
-        </tbody>
-      </Table>
-
-      <h1>List Items</h1>
-      <Table>
-        <thead>
-          <tr>
-            <th>Image</th>
-            <th>Name</th>
-            <th>Brand</th>
-            <th>Quantity</th>
-          </tr>
-        </thead>
-        <tbody>
+      <div className="searchOptions">
+        <div className="top">
+          <div className="item">
+            <Link
+              className="link hLink selected"
+              onClick={() => setToggle(true)}
+            >
+              <div>Categories</div>
+            </Link>
+          </div>
+          <div className="item">
+            <Link className="link hLink" onClick={() => setToggle(false)}>
+              <div>Lists</div>
+            </Link>
+          </div>
+        </div>
+      </div>
+      {toggle ? (
+        <div className="catItems">
+          {categoryArr.forEach((category) => {
+            category.items
+              .filter((item) => {
+                return search.toLowerCase() === ""
+                  ? item
+                  : item.itemName.toLowerCase().includes(search);
+              })
+              .map((item) => {
+                <ItemCard
+                  item={item}
+                  categoryName={category.categoryName}
+                  categoryId={category._id}
+                />;
+              });
+          })}
+        </div>
+      ) : (
+        <div className="listItems">
           {listArr
-            .filter((item) => {
+            .filter((list) => {
               return search.toLowerCase() === ""
-                ? item
-                : item.itemName.toLowerCase().includes(search);
+                ? list
+                : list.items.every((item) => {
+                    return item.itemName.toLowerCase().includes(search);
+                  });
             })
-            .map((item) => {
+            .map((list) => {
               return (
-                <tr key={item._id}>
-                  <td>
-                    <img src={item.imagePath?.url}></img>
-                  </td>
-                  <td>{item.itemName}</td>
-                  <td>{item.brand}</td>
-                  <td>{item.quantity}</td>
-                </tr>
+                <div>
+                  {list.items.map((item) => {
+                    return (
+                      <ItemCard
+                        item={item}
+                        listName={list.listName}
+                        listId={list._id}
+                      />
+                    );
+                  })}
+                </div>
               );
             })}
-        </tbody>
-      </Table>
+        </div>
+      )}
     </div>
   );
 };

@@ -32,11 +32,10 @@ const ItemOptions = ({
       if (categoryId) {
         categoryId = categoryId.id;
       }
-
     await axios
       .patch(
         `${
-          import.meta.env.VITE_REACT_APP_API_URL
+        import.meta.env.VITE_REACT_APP_API_URL
         }/api/items/removeItemFromCategory`,
         {
           itemId,

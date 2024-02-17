@@ -13,34 +13,38 @@
   animation: fadeIn 0.5s ease-in;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  text-align: center;
   font-family: Verdana;
 
-  .input-group {
-    width: auto;
+  h1 {
+    text-align: center;
+    margin-top: 2em;
   }
 
-  table {
-    border-spacing: 0px;
-    margin-bottom: 10em;
+  form {
+    margin-bottom: 2em;
   }
+  .searchOptions {
+    display: flex;
+    margin-bottom: 5em;
+    justify-content: center;
 
-  th {
-    border-style: solid;
-    border-width: 0.1em;
-  }
+    .top {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      margin-bottom: -3em;
 
-  td{
-    padding: .4em;
-    border-right: solid;
-    border-bottom: solid;
-    border-left: solid;
-    border-width: 0.1em;
-
-    img {
-      width: 60px;
+      .item {
+        font-size: 19px;
+        font-family: Verdana;
+        letter-spacing: 1.5px;
+      }
     }
   }
 
+
+  .input-group {
+    width: auto;
+    text-align: center;
+  }
 }
