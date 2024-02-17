@@ -120,7 +120,7 @@ const NewListForm = () => {
   };
 
   return (
-    <div className="newListPage">
+    <div className="newCategoryPage">
       <div className="categoryForm">
         <h2>New List</h2>
         <form onSubmit={submitHandler} onReset={resetHandler}>
