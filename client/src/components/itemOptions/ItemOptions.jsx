@@ -10,6 +10,7 @@ import AutorenewOutlinedIcon from "@mui/icons-material/AutorenewOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import MoveItemToCat from "../moveItemToCat/MoveItemToCat";
 import MoveItemToList from "../moveItemToList/MoveItemToList";
+import RenewItem from "../renewItem/RenewItem";
 
 // DELETE: make sure to add options to delete from list, category, or all items
 
@@ -23,6 +24,7 @@ const ItemOptions = ({
 }) => {
   const [toggleCat, setToggleCat] = useState(false);
   const [toggleList, setToggleList] = useState(false);
+  const [toggleRenew, setToggleRenew] = useState(false);
   const [errors, setErrors] = useState([]);
 
   const itemId = item._id;
@@ -35,7 +37,7 @@ const ItemOptions = ({
     await axios
       .patch(
         `${
-        import.meta.env.VITE_REACT_APP_API_URL
+          import.meta.env.VITE_REACT_APP_API_URL
         }/api/items/removeItemFromCategory`,
         {
           itemId,
@@ -95,12 +97,21 @@ const ItemOptions = ({
     e.preventDefault();
     setToggleList(!toggleList);
     setToggleCat(false);
+    setToggleRenew(false);
   };
 
   const toggleCatHandler = (e) => {
     e.preventDefault();
     setToggleCat(!toggleCat);
     setToggleList(false);
+    setToggleRenew(false);
+  };
+
+  const toggleRenewHandler = (e) => {
+    e.preventDefault();
+    setToggleRenew(!toggleRenew);
+    setToggleList(false);
+    setToggleCat(false);
   };
 
   return (
@@ -148,12 +159,20 @@ const ItemOptions = ({
       )}
 
       {categoryId ? (
-        <Link className="iconLink">
+        <Link className="iconLink" onClick={toggleRenewHandler}>
           <div className="item">
             <AutorenewOutlinedIcon className="icon" />
             <Link className="link">Renew</Link>
           </div>
         </Link>
+      ) : null}
+
+      {toggleRenew ? (
+        <RenewItem
+          item={item}
+          categoryId={categoryId}
+          getCategory={getCategory}
+        />
       ) : null}
 
       {categoryId ? (
