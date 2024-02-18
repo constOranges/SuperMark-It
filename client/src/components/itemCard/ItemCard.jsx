@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DateTime } from "luxon";
 import "./ItemCard.scss";
 import { Link } from "react-router-dom";
@@ -17,6 +17,16 @@ const ItemCard = ({
   listName,
 }) => {
   const [open, setOpen] = useState(false);
+  const [expired, setExpired] = useState(null);
+  const currentDate = new Date().getTime();
+
+  const expDateInt = new Date(item.expDate).getTime();
+
+  useEffect(() => {
+    if (expDateInt < currentDate) {
+      setExpired("EXPIRED");
+    }
+  });
 
   const handleClickAway = () => {
     setOpen(false);
@@ -36,11 +46,21 @@ const ItemCard = ({
         <p>{item.brand}</p>
         {item.quantity > 0 ? <p>Quantity: {item.quantity}</p> : null}
         {categoryId ? (
-          <p>
-            Expires:{" "}
-            {DateTime.fromISO(item.expDate).toUTC().toFormat("LL/dd/yyyy")}
-          </p>
+          expired ? (
+            <div className="expiredText">
+              <span>
+                Expired:{" "}
+                {DateTime.fromISO(item.expDate).toUTC().toFormat("LL/dd/yyyy")}
+              </span>
+            </div>
+          ) : (
+            <p>
+              Expires:{" "}
+              {DateTime.fromISO(item.expDate).toUTC().toFormat("LL/dd/yyyy")}
+            </p>
+          )
         ) : null}
+
         {categoryName ? (
           <p>
             <strong>Category: </strong>
