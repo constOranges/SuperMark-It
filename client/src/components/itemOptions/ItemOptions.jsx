@@ -20,6 +20,7 @@ const ItemOptions = ({
   listId,
   getCategory,
   getList,
+  getUserData,
   setOpen,
 }) => {
   const [toggleCat, setToggleCat] = useState(false);
@@ -30,35 +31,40 @@ const ItemOptions = ({
   const itemId = item._id;
 
   const deleteFromCatHandler = async () => {
-    if (window.confirm(`Are you sure you want to delete ${item.itemName}`))
-      if (categoryId) {
+    if (window.confirm(`Are you sure you want to delete ${item.itemName}`)) {
+      if (categoryId && typeof categoryId === "object") {
         categoryId = categoryId.id;
       }
-    await axios
-      .patch(
-        `${
-          import.meta.env.VITE_REACT_APP_API_URL
-        }/api/items/removeItemFromCategory`,
-        {
-          itemId,
-          categoryId,
-        },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        console.log(res);
-        setOpen(false);
-        getCategory();
-      })
-      .catch((err) => {
-        console.log(err);
-        const errorResponse = err.response.data.errors;
-        const errorArray = [];
-        for (const key of Object.keys(errorResponse)) {
-          errorArray.push(errorResponse[key].message);
-        }
-        setErrors(errorArray);
-      });
+      await axios
+        .patch(
+          `${
+            import.meta.env.VITE_REACT_APP_API_URL
+          }/api/items/removeItemFromCategory`,
+          {
+            itemId,
+            categoryId,
+          },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          console.log(res);
+          setOpen(false);
+          if (typeof getCategory === "function") {
+            getCategory();
+          } else {
+            getUserData();
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          const errorResponse = err.response.data.errors;
+          const errorArray = [];
+          for (const key of Object.keys(errorResponse)) {
+            errorArray.push(errorResponse[key].message);
+          }
+          setErrors(errorArray);
+        });
+    }
   };
 
   const deleteFromListHandler = () => {

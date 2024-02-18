@@ -10,6 +10,7 @@ import AddListItem from "./components/addListItem/AddListItem";
 import NewUserForm from "./components/newUserForm/NewUserForm";
 import Category from "./components/category/Category";
 import List from "./components/list/List";
+import AllCategory from "./components/allCategory/AllCategory";
 import NewCategoryForm from "./components/newCategoryForm/NewCategoryForm";
 import NewListForm from "./components/newListForm/NewListForm";
 import UpdateCatItemForm from "./components/updateCatItemForm/UpdateCatItemForm";
@@ -54,6 +55,10 @@ function App() {
         {
           path: "/category/:id",
           element: <Category />,
+        },
+        {
+          path: "/category/all",
+          element: <AllCategory />,
         },
         {
           path: "/list/:id",
