@@ -15,12 +15,8 @@
   flex-direction: column;
   font-family: Verdana;
 
-  h1 {
-    text-align: center;
-    margin-top: 2em;
-  }
-
   form {
+    margin-top: 5em;
     margin-bottom: 2em;
   }
   .searchOptions {
@@ -38,6 +34,7 @@
         font-size: 19px;
         font-family: Verdana;
         letter-spacing: 1.5px;
+        text-transform: uppercase;
       }
     }
   }
