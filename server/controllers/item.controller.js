@@ -83,7 +83,7 @@ module.exports.existingItemToCategories = async (req, res) => {
   try {
     const { imagePath } = req.body;
 
-    if (imagePath) {
+    if (imagePath && !imagePath.public_id && !imagePath.url) {
       const result = await cloudinary.uploader.upload(imagePath, {
         folder: "itemImages",
         width: 300,
@@ -118,13 +118,7 @@ module.exports.existingItemToCategories = async (req, res) => {
           { new: true }
         );
       }
-
-      res.status(200).json({ message: "Item(s) updated successfully." });
     } else {
-      const currentItem = User.findById(req.userId).categories.id(req.body.itemId);
-
-      console.log(currentItem);
-
       for (let categoryId of req.body.categories) {
         const duplicateItemWithNewId = new Item({
           itemName: req.body.itemName,
@@ -132,7 +126,7 @@ module.exports.existingItemToCategories = async (req, res) => {
           quantity: req.body.quantity,
           expDate: req.body.expDate,
           notifyDate: req.body.notifyDate,
-          imagePath: currentItem.imagePath,
+          imagePath: req.body.imagePath,
         });
 
         await duplicateItemWithNewId.validate();
@@ -151,15 +145,12 @@ module.exports.existingItemToCategories = async (req, res) => {
         );
       }
     }
-
-    res.status(200).json({ message: "Item(s) moved successfully." });
+    res.status(200).json({ message: "Item(s) updated successfully." });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 };
 
-// Editing specifically within category. Moving to list or category, we can run
-// an ID check to see if able to move, if not we can give option to add to new category/list
 module.exports.updateItemInCategory = async (req, res, next) => {
   const { imagePath } = req.body;
 
@@ -169,22 +160,6 @@ module.exports.updateItemInCategory = async (req, res, next) => {
       width: 300,
       crop: "scale",
     });
-
-    const currentItem = await Item.findByIdAndUpdate(
-      req.body.itemId,
-      {
-        itemName: req.body.itemName,
-        brand: req.body.brand,
-        quantity: req.body.quantity,
-        expDate: req.body.expDate,
-        notifyDate: req.body.notifyDate,
-        imagePath: {
-          public_id: result.public_id,
-          url: result.secure_url,
-        },
-      },
-      { new: true }
-    );
 
     User.updateOne(
       {
@@ -196,8 +171,7 @@ module.exports.updateItemInCategory = async (req, res, next) => {
           "categories.$[category].items.$[item].brand": req.body.brand,
           "categories.$[category].items.$[item].quantity": req.body.quantity,
           "categories.$[category].items.$[item].expDate": req.body.expDate,
-          "categories.$[category].items.$[item].notifyDate":
-            req.body.notifyDate,
+          "categories.$[category].items.$[item].notifyDate": req.body.notifyDate,
           "categories.$[category].items.$[item].imagePath": {
             public_id: result.public_id,
             url: result.secure_url,
@@ -218,19 +192,7 @@ module.exports.updateItemInCategory = async (req, res, next) => {
         res.status(400).json(err);
       });
   } else {
-    const currentItem = await Item.findByIdAndUpdate(
-      req.body.itemId,
-      {
-        itemName: req.body.itemName,
-        brand: req.body.brand,
-        quantity: req.body.quantity,
-        expDate: req.body.expDate,
-        notifyDate: req.body.notifyDate,
-      },
-      { new: true }
-    );
-
-    // adjust query to update entire item once item collection refactoring is complete
+    // adjust query to update entire item once item collection refactoring is complete (on hold, could be unnecessary)
     User.updateOne(
       {
         _id: req.userId,
@@ -241,8 +203,7 @@ module.exports.updateItemInCategory = async (req, res, next) => {
           "categories.$[category].items.$[item].brand": req.body.brand,
           "categories.$[category].items.$[item].quantity": req.body.quantity,
           "categories.$[category].items.$[item].expDate": req.body.expDate,
-          "categories.$[category].items.$[item].notifyDate":
-            req.body.notifyDate,
+          "categories.$[category].items.$[item].notifyDate": req.body.notifyDate,
         },
       },
       {
@@ -256,82 +217,6 @@ module.exports.updateItemInCategory = async (req, res, next) => {
         res.status(200).json({ message: "Item updated succesfully." });
       })
       .catch((err) => {
-        console.log(err);
-        res.status(400).json(err);
-      });
-  }
-};
-
-// not yet up to date
-module.exports.updateItemInList = async (req, res, next) => {
-  const { imagePath } = req.body;
-
-  if (imagePath) {
-    const result = await cloudinary.uploader.upload(imagePath, {
-      folder: "itemImages",
-      width: 300,
-      crop: "scale",
-    });
-
-    const currentItem = await Item.findByIdAndUpdate(
-      req.body.itemId,
-      {
-        itemName: req.body.itemName,
-        brand: req.body.brand,
-        quantity: req.body.quantity,
-        imagePath: {
-          public_id: result.public_id,
-          url: result.secure_url,
-        },
-      },
-      { new: true }
-    );
-
-    User.updateOne(
-      {
-        _id: req.userId,
-        "lists._id": req.body.listId,
-      },
-      {
-        $set: {
-          "lists.$.items": currentItem,
-        },
-      },
-      { upsert: true }
-    )
-      .then((user) => {
-        res.status(200).json({ message: "Item updated succesfully." });
-      })
-      .catch((err) => {
-        res.status(400).json(err);
-      });
-  } else {
-    const currentItem = await Item.findByIdAndUpdate(
-      req.body.itemId,
-      {
-        itemName: req.body.itemName,
-        brand: req.body.brand,
-        quantity: req.body.quantity,
-      },
-      { new: true }
-    );
-
-    User.updateOne(
-      {
-        _id: req.userId,
-        "lists._id": req.body.listId,
-      },
-      {
-        $set: {
-          "lists.$.items": currentItem,
-        },
-      },
-      { upsert: true }
-    )
-      .then((user) => {
-        res.status(200).json({ message: "Item updated succesfully." });
-      })
-      .catch((err) => {
         res.status(400).json(err);
       });
   }
@@ -340,8 +225,6 @@ module.exports.updateItemInList = async (req, res, next) => {
 // Consider adding more error handling
 module.exports.removeItemFromCategory = async (req, res) => {
   try {
-    const currentItem = await Item.findByIdAndDelete(req.body.itemId);
-
     await User.updateOne(
       {
         _id: req.userId,
@@ -349,180 +232,7 @@ module.exports.removeItemFromCategory = async (req, res) => {
       },
       {
         $pull: {
-          "categories.$.items": { _id: currentItem._id },
-        },
-      }
-    );
-
-    // deletes item permanently if no longer in use by any categories or lists
-    // if (
-    //   currentItem.inUseCategories.length === 0 &&
-    //   currentItem.inUseLists.length === 0
-    // ) {
-    //   try {
-    //     await Item.findByIdAndDelete(req.body.itemId);
-    //     console.log("Item deleted permanently.");
-    //   } catch (error) {
-    //     console.error("Error deleting item permanently:", error.message);
-    //   }
-    // }
-
-    res.status(200).json({ message: "Item removed successfully." });
-  } catch (error) {
-    console.error("Error:", error.message);
-    res.status(400).json({ error: error.message });
-  }
-};
-
-// LISTS
-
-module.exports.addItemToList = async (req, res) => {
-  const { imagePath } = req.body;
-
-  if (imagePath) {
-    const result = await cloudinary.uploader.upload(imagePath, {
-      folder: "itemImages",
-      width: 300,
-      crop: "scale",
-    });
-
-    const newItem = await Item.create({
-      itemName: req.body.itemName,
-      brand: req.body.brand,
-      quantity: req.body.quantity,
-      imagePath: {
-        public_id: result.public_id,
-        url: result.secure_url,
-      },
-    });
-
-    User.updateOne(
-      {
-        _id: req.userId,
-        "lists._id": req.body.listId,
-      },
-      {
-        $push: {
-          "lists.$.items": newItem,
-        },
-      },
-      { new: true }
-    )
-      .then((user) => {
-        res.status(200).json({ message: "Item created succesfully." });
-      })
-      .catch((err) => {
-        res.status(400).json(err);
-      });
-  } else {
-    const newItem = await Item.create({
-      itemName: req.body.itemName,
-      brand: req.body.brand,
-      quantity: req.body.quantity,
-
-      // imagePath: req.body.imagePath,
-    });
-
-    User.updateOne(
-      {
-        _id: req.userId,
-        "lists._id": req.body.listId,
-      },
-      {
-        $push: {
-          "lists.$.items": newItem,
-        },
-      },
-      { new: true }
-    )
-      .then((user) => {
-        res.status(200).json({ message: "Item created succesfully." });
-      })
-      .catch((err) => {
-        res.status(400).json(err);
-      });
-  }
-};
-
-module.exports.existingItemToLists = async (req, res) => {
-  try {
-    const { imagePath } = req.body;
-
-    if (imagePath) {
-      const result = await cloudinary.uploader.upload(imagePath, {
-        folder: "itemImages",
-        width: 300,
-        crop: "scale",
-      });
-
-      for (let listId of req.body.lists) {
-        const duplicateItemWithNewId = await Item.create({
-          itemName: req.body.itemName,
-          brand: req.body.brand,
-          quantity: req.body.quantity,
-          imagePath: {
-            public_id: result.public_id,
-            url: result.secure_url,
-          },
-        });
-
-        await User.updateOne(
-          {
-            _id: req.userId,
-            "lists._id": listId,
-          },
-          {
-            $push: {
-              "lists.$.items": duplicateItemWithNewId,
-            },
-          },
-          { new: true }
-        );
-      }
-    } else {
-      const currentItem = await Item.findById(req.body.itemId);
-
-      for (let listId of req.body.lists) {
-        const duplicateItemWithNewId = await Item.create({
-          itemName: req.body.itemName,
-          brand: req.body.brand,
-          quantity: req.body.quantity,
-          imagePath: currentItem.imagePath,
-        });
-
-        await User.updateOne(
-          {
-            _id: req.userId,
-            "lists._id": listId,
-          },
-          {
-            $push: {
-              "lists.$.items": duplicateItemWithNewId,
-            },
-          },
-          { new: true }
-        );
-      }
-    }
-    res.status(200).json({ message: "Item(s) moved successfully." });
-  } catch {
-    res.status(400).json({ error: "There was an error moving all items." });
-  }
-};
-
-// Consider adding more error handling
-module.exports.removeItemFromList = async (req, res) => {
-  try {
-    const currentItem = await Item.findByIdAndDelete(req.body.itemId);
-
-    await User.updateOne(
-      {
-        _id: req.userId,
-        "lists._id": req.body.listId,
-      },
-      {
-        $pull: {
-          "lists.$.items": { _id: currentItem._id },
+          "categories.$.items": { _id: req.body.itemId },
         },
       }
     );
@@ -535,16 +245,6 @@ module.exports.removeItemFromList = async (req, res) => {
 };
 
 module.exports.renewItem = async (req, res) => {
-  
-  const currentItem = await Item.findByIdAndUpdate(
-    req.body.itemId,
-    {
-      expDate: req.body.expDate,
-      notifyDate: req.body.notifyDate,
-    },
-    { new: true }
-  );
-
   User.updateOne(
     {
       _id: req.userId,
@@ -563,9 +263,237 @@ module.exports.renewItem = async (req, res) => {
     }
   )
     .then((user) => {
-      res.status(200).json({ message: "Item updated succesfully." });
+      res.status(200).json({ message: "Item renewed succesfully." });
     })
     .catch((err) => {
       res.status(400).json(err);
     });
+};
+
+// LISTS
+
+module.exports.addItemToList = async (req, res) => {
+  const { imagePath } = req.body;
+
+  if (imagePath) {
+    const result = await cloudinary.uploader.upload(imagePath, {
+      folder: "itemImages",
+      width: 300,
+      crop: "scale",
+    });
+
+    const newItem = new Item({
+      itemName: req.body.itemName,
+      brand: req.body.brand,
+      quantity: req.body.quantity,
+      imagePath: {
+        public_id: result.public_id,
+        url: result.secure_url,
+      },
+    });
+
+    try {
+      await newItem.validate();
+
+      await User.updateOne(
+        {
+          _id: req.userId,
+          "lists._id": req.body.listId,
+        },
+        {
+          $push: {
+            "lists.$.items": newItem,
+          },
+        },
+        { new: true }
+      );
+
+      res.status(200).json({ message: "Item created succesfully." });
+    } catch (err) {
+      res.status(400).json({ error: err.message });
+    }
+  } else {
+    const newItem = new Item({
+      itemName: req.body.itemName,
+      brand: req.body.brand,
+      quantity: req.body.quantity,
+    });
+
+    try {
+      await newItem.validate();
+
+      await User.updateOne(
+        {
+          _id: req.userId,
+          "lists._id": req.body.listId,
+        },
+        {
+          $push: {
+            "lists.$.items": newItem,
+          },
+        },
+        { new: true }
+      );
+
+      res.status(200).json({ message: "Item created succesfully." });
+    } catch (err) {
+      res.status(400).json({ error: err.message });
+    }
+  }
+};
+
+module.exports.existingItemToLists = async (req, res) => {
+  try {
+    const { imagePath } = req.body;
+
+    if (imagePath && !imagePath.public_id && !imagePath.url) {
+      const result = await cloudinary.uploader.upload(imagePath, {
+        folder: "itemImages",
+        width: 300,
+        crop: "scale",
+      });
+
+      for (let listId of req.body.lists) {
+        const duplicateItemWithNewId = new Item({
+          itemName: req.body.itemName,
+          brand: req.body.brand,
+          quantity: req.body.quantity,
+          imagePath: {
+            public_id: result.public_id,
+            url: result.secure_url,
+          },
+        });
+
+        await duplicateItemWithNewId.validate();
+
+        await User.updateOne(
+          {
+            _id: req.userId,
+            "lists._id": listId,
+          },
+          {
+            $push: {
+              "lists.$.items": duplicateItemWithNewId,
+            },
+          },
+          { new: true }
+        );
+      }
+    } else {
+      for (let listId of req.body.lists) {
+        const duplicateItemWithNewId = new Item({
+          itemName: req.body.itemName,
+          brand: req.body.brand,
+          quantity: req.body.quantity,
+          imagePath: req.body.imagePath,
+        });
+
+        await duplicateItemWithNewId.validate();
+
+        await User.updateOne(
+          {
+            _id: req.userId,
+            "lists._id": listId,
+          },
+          {
+            $push: {
+              "lists.$.items": duplicateItemWithNewId,
+            },
+          },
+          { new: true }
+        );
+      }
+    }
+    res.status(200).json({ message: "Item(s) updated successfully." });
+  } catch {
+    res.status(400).json({ error: "There was an error moving all items." });
+  }
+};
+
+module.exports.updateItemInList = async (req, res, next) => {
+  const { imagePath } = req.body;
+
+  if (imagePath) {
+    const result = await cloudinary.uploader.upload(imagePath, {
+      folder: "itemImages",
+      width: 300,
+      crop: "scale",
+    });
+
+    User.updateOne(
+      {
+        _id: req.userId,
+      },
+      {
+        $set: {
+          "lists.$[list].items.$[item].itemName": req.body.itemName,
+          "lists.$[list].items.$[item].brand": req.body.brand,
+          "lists.$[list].items.$[item].quantity": req.body.quantity,
+          "lists.$[list].items.$[item].imagePath": {
+            public_id: result.public_id,
+            url: result.secure_url,
+          },
+        },
+      },
+      {
+        arrayFilters: [
+          { "list._id": req.body.listId },
+          { "item._id": req.body.itemId },
+        ],
+      }
+    )
+      .then((user) => {
+        res.status(200).json({ message: "Item updated succesfully." });
+      })
+      .catch((err) => {
+        res.status(400).json(err);
+      });
+  } else {
+    User.updateOne(
+      {
+        _id: req.userId,
+      },
+      {
+        $set: {
+          "lists.$[list].items.$[item].itemName": req.body.itemName,
+          "lists.$[list].items.$[item].brand": req.body.brand,
+          "lists.$[list].items.$[item].quantity": req.body.quantity,
+        },
+      },
+      {
+        arrayFilters: [
+          { "list._id": req.body.listId },
+          { "item._id": req.body.itemId },
+        ],
+      }
+    )
+      .then((user) => {
+        res.status(200).json({ message: "Item updated succesfully." });
+      })
+      .catch((err) => {
+        res.status(400).json(err);
+      });
+  }
+};
+
+// Consider adding more error handling
+module.exports.removeItemFromList = async (req, res) => {
+  try {
+    await User.updateOne(
+      {
+        _id: req.userId,
+        "lists._id": req.body.listId,
+      },
+      {
+        $pull: {
+          "lists.$.items": { _id: req.body.itemId },
+        },
+      }
+    );
+
+    res.status(200).json({ message: "Item removed successfully." });
+  } catch (error) {
+    console.error("Error:", error.message);
+    res.status(400).json({ error: error.message });
+  }
 };
