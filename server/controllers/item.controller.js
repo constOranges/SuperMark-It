@@ -186,7 +186,7 @@ module.exports.updateItemInCategory = async (req, res, next) => {
 
     User.updateOne(
       {
-        _id: req.userId
+        _id: req.userId,
       },
       {
         $set: {
@@ -194,18 +194,19 @@ module.exports.updateItemInCategory = async (req, res, next) => {
           "categories.$[category].items.$[item].brand": req.body.brand,
           "categories.$[category].items.$[item].quantity": req.body.quantity,
           "categories.$[category].items.$[item].expDate": req.body.expDate,
-          "categories.$[category].items.$[item].notifyDate": req.body.notifyDate,
+          "categories.$[category].items.$[item].notifyDate":
+            req.body.notifyDate,
           "categories.$[category].items.$[item].imagePath": {
             public_id: result.public_id,
-            url: result.secure_url
-          }
+            url: result.secure_url,
+          },
         },
       },
       {
         arrayFilters: [
           { "category._id": req.body.categoryId },
-          { "item._id": req.body.itemId }
-        ]
+          { "item._id": req.body.itemId },
+        ],
       }
     )
       .then((user) => {
@@ -230,7 +231,7 @@ module.exports.updateItemInCategory = async (req, res, next) => {
     // adjust query to update entire item once item collection refactoring is complete
     User.updateOne(
       {
-        _id: req.userId
+        _id: req.userId,
       },
       {
         $set: {
@@ -238,14 +239,15 @@ module.exports.updateItemInCategory = async (req, res, next) => {
           "categories.$[category].items.$[item].brand": req.body.brand,
           "categories.$[category].items.$[item].quantity": req.body.quantity,
           "categories.$[category].items.$[item].expDate": req.body.expDate,
-          "categories.$[category].items.$[item].notifyDate": req.body.notifyDate
+          "categories.$[category].items.$[item].notifyDate":
+            req.body.notifyDate,
         },
       },
       {
         arrayFilters: [
           { "category._id": req.body.categoryId },
-          { "item._id": req.body.itemId }
-        ]
+          { "item._id": req.body.itemId },
+        ],
       }
     )
       .then((user) => {
@@ -528,4 +530,40 @@ module.exports.removeItemFromList = async (req, res) => {
     console.error("Error:", error.message);
     res.status(400).json({ error: error.message });
   }
+};
+
+module.exports.renewItem = async (req, res) => {
+  
+  const currentItem = await Item.findByIdAndUpdate(
+    req.body.itemId,
+    {
+      expDate: req.body.expDate,
+      notifyDate: req.body.notifyDate,
+    },
+    { new: true }
+  );
+
+  User.updateOne(
+    {
+      _id: req.userId,
+    },
+    {
+      $set: {
+        "categories.$[category].items.$[item].expDate": req.body.expDate,
+        "categories.$[category].items.$[item].notifyDate": req.body.notifyDate,
+      },
+    },
+    {
+      arrayFilters: [
+        { category_id: req.body.categoryId },
+        { "item._id": req.body.itemId },
+      ],
+    }
+  )
+    .then((user) => {
+      res.status(200).json({ message: "Item updated succesfully." });
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
 };

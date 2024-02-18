@@ -19,14 +19,13 @@ const ItemCard = ({
   const [open, setOpen] = useState(false);
   const [expired, setExpired] = useState(null);
   const currentDate = new Date().getTime();
-
   const expDateInt = new Date(item.expDate).getTime();
 
   useEffect(() => {
     if (expDateInt < currentDate) {
       setExpired("EXPIRED");
     }
-  });
+  }, []);
 
   const handleClickAway = () => {
     setOpen(false);
