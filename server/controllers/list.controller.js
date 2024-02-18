@@ -67,3 +67,27 @@ module.exports.removeList = async (req, res) => {
         res.status(400).json(err);
     }
 }
+
+module.exports.editList = (req, res) => {
+  User.updateOne(
+    {
+      _id: req.userId,
+    },
+    {
+      $set: {
+        "lists.$[list].listName": req.body.listName,
+        "lists.$[list].iconPath": req.body.iconPath,
+      },
+    },
+    {
+      arrayFilters: [{ "list._id": req.body.listId }],
+      new: true,
+    }
+  )
+    .then((user) => {
+      res.status(200).json({ message: "List updated succesfully." });
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+};

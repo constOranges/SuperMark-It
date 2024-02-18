@@ -21,7 +21,6 @@ import "./UpdateCatForm.scss";
 const UpdateCatForm = () => {
   const location = useLocation();
   let { categoryId, listId, category, list } = location.state;
-  console.log(list);
   const [categoryName, setCategoryName] = useState(
     category ? category[0].categoryName : null
   );
@@ -43,8 +42,6 @@ const UpdateCatForm = () => {
       $(this).addClass("selected");
     });
   });
-
-  
 
   //ICON HANDLERS
   const kitchenHandler = () => {
@@ -103,12 +100,68 @@ const UpdateCatForm = () => {
     setIconPath("tapas");
   };
 
+  const catSubmitHandler = (e) => {
+    e.preventDefault();
+    categoryId = categoryId.id;
+    axios
+      .patch(
+        `${import.meta.env.VITE_REACT_APP_API_URL}/api/categories/edit`,
+        {
+          categoryName,
+          iconPath,
+          categoryId,
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        console.log(res);
+        navigate(-1);
+      })
+      .catch((err) => {
+        console.log(err);
+        const errorResponse = err.response.data.errors;
+        const errorArray = [];
+        for (const key of Object.keys(errorResponse)) {
+          errorArray.push(errorResponse[key].message);
+        }
+        setErrors(errorArray);
+      });
+  };
+
+  const listSubmitHandler = (e) => {
+    e.preventDefault();
+    listId = listId.id;
+    axios
+      .patch(
+        `${import.meta.env.VITE_REACT_APP_API_URL}/api/lists/edit`,
+        {
+          listName,
+          iconPath,
+          listId,
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        console.log(res);
+        navigate(-1);
+      })
+      .catch((err) => {
+        console.log(err);
+        const errorResponse = err.response.data.errors;
+        const errorArray = [];
+        for (const key of Object.keys(errorResponse)) {
+          errorArray.push(errorResponse[key].message);
+        }
+        setErrors(errorArray);
+      });
+  };
+
   return (
     <div className="newCategoryPage">
       {category ? (
         <div className="categoryForm">
           <h2>Update Category</h2>
-          <form onSubmit={""} onReset={resetHandler}>
+          <form onSubmit={catSubmitHandler} onReset={resetHandler}>
             <div className="form-group">
               <label htmlFor="categoryName">Category Name</label>
               <input
@@ -191,7 +244,7 @@ const UpdateCatForm = () => {
       ) : (
         <div className="categoryForm">
           <h2>Update List</h2>
-          <form onSubmit={""} onReset={resetHandler}>
+          <form onSubmit={listSubmitHandler} onReset={resetHandler}>
             <div className="form-group">
               <label htmlFor="categoryName">List Name</label>
               <input

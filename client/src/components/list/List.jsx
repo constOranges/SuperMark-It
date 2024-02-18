@@ -69,7 +69,7 @@ const List = () => {
             <div className="more" onClick={() => setOpen(!open)}>
               <MoreHorizIcon className="catIcons" />
             </div>
-            {open && <ListCatOptions listId={listId} list={currentList} />}
+            {open && <ListCatOptions listId={listId} list={currentList} listName={listName}/>}
           </div>
         </ClickAwayListener>
         <h1>{listName}</h1>
