@@ -12,7 +12,7 @@ const MoveItemToCat = ({ item }) => {
   const [categoryList, setCategoryList] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [itemName] = useState(item.itemName);
-  const [brand, setBrand] = useState(item.brand ? item.brand : "")
+  const [brand, setBrand] = useState(item.brand ? item.brand : "");
   const [quantity, setQuantity] = useState(item.quantity ? item.quantity : 0);
   const [expDate, setExpDate] = useState(
     itemExpDate ? itemExpDate : new Date()
@@ -20,7 +20,9 @@ const MoveItemToCat = ({ item }) => {
   const [notifyDate, setNotifyDate] = useState(
     itemNotifyDate ? itemNotifyDate : new Date()
   );
-  const [imagePath, setImagePath] = useState(item.imagePath ? item.imagePath : "");
+  const [imagePath, setImagePath] = useState(
+    item.imagePath ? item.imagePath : null
+  );
   const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState([]);
 
@@ -95,7 +97,7 @@ const MoveItemToCat = ({ item }) => {
   };
 
   return (
-    <div className="dropDownForm" >
+    <div className="dropDownForm">
       <form onSubmit={moveToCatHandler}>
         <div className="moveItemCatForm">
           <div className="form-group">
