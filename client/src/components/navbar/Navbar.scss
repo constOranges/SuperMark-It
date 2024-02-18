@@ -161,7 +161,7 @@
     animation: fadeIn 0.1s ease-in;
     background-color: rgb(255, 255, 255);
     position: absolute;
-    right: 9em;
+    right: 10em;
     top: 6.7em;
     width: 150px;
     display: flex;
@@ -176,6 +176,7 @@
     font-size: 12px;
     letter-spacing: 1px;
     text-transform: uppercase;
+    padding: 8px 0px;
 
     .link:hover {
       color: #47B6FE;
