@@ -66,7 +66,7 @@ const Options = ({ user }) => {
               <div className="catBody">NEW CATEGORY</div>
             </div>
           </Link>
-          <Link className="link" to="/category/1">
+          <Link className="link" to="/category/all">
             <div className="cat">
               <FastfoodRoundedIcon className="catIcon" />
               <div className="catBody">ALL</div>

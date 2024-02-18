@@ -20,6 +20,7 @@ const ItemOptions = ({
   listId,
   getCategory,
   getList,
+  getUserData,
   setOpen,
 }) => {
   const [toggleCat, setToggleCat] = useState(false);
@@ -48,7 +49,11 @@ const ItemOptions = ({
       .then((res) => {
         console.log(res);
         setOpen(false);
-        getCategory();
+        if (typeof getCategory === "function") {
+          getCategory();
+        } else {
+          getUserData();
+        }
       })
       .catch((err) => {
         console.log(err);

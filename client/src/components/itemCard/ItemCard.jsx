@@ -15,6 +15,7 @@ const ItemCard = ({
   getList,
   categoryName,
   listName,
+  getUserData
 }) => {
   const [open, setOpen] = useState(false);
   const [expired, setExpired] = useState(null);
@@ -87,6 +88,7 @@ const ItemCard = ({
               listId={listId}
               getCategory={getCategory}
               getList={getList}
+              getUserData={getUserData}
               setOpen={setOpen}
             />
           )}
