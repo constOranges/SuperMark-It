@@ -52,6 +52,12 @@ const Category = () => {
     }
   });
 
+  const currentCategory = category.map((cat) => {
+    if (`/category/${cat._id}` == window.location.pathname) {
+      return cat;
+    }
+  });
+
   return (
     <div className="category">
       <div className="top">
@@ -62,7 +68,7 @@ const Category = () => {
               <MoreHorizIcon className="moreIcon" />
             </div>
             {open && (
-              <ListCatOptions categoryId={categoryId} catName={catName} />
+              <ListCatOptions categoryId={categoryId} category={currentCategory}/>
             )}
           </div>
         </ClickAwayListener>

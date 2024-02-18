@@ -20,7 +20,7 @@ const MoveItemToCat = ({ item }) => {
   const [notifyDate, setNotifyDate] = useState(
     itemNotifyDate ? itemNotifyDate : new Date()
   );
-  const [imagePath, setImagePath] = useState("");
+  const [imagePath, setImagePath] = useState(item.imagePath ? item.imagePath : "");
   const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState([]);
 
