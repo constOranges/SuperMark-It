@@ -1,40 +1,45 @@
 .itemCard {
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    border-bottom: solid;
-    border-width: 1px;
-    border-color: rgb(224, 224, 224);
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-bottom: solid;
+  border-width: 1px;
+  border-color: rgb(224, 224, 224);
 
-    .left {
+  .expiredText {
+    span {
+      color: red;
+      font-size: 13.2px
+    }
+  }
 
-        .image {
-        width: 100px;
-        }
+  .left {
+    .image {
+      width: 100px;
+    }
+  }
+
+  .middle {
+    flex: 2;
+    font-family: Verdana;
+    padding-left: 15px;
+
+    h3 {
+      font-size: 15px;
     }
 
-    .middle {
-        flex: 2;
-        font-family: Verdana;
-        padding-left: 15px;
-
-        h3 {
-            font-size: 15px;
-        }
-
-        p {
-            font-size: 13px;
-            font-weight: normal;
-            color: rgb(59, 59, 59);
-        }
+    p {
+      font-size: 13px;
+      font-weight: normal;
+      color: rgb(59, 59, 59);
     }
+  }
 
-    .right {
-
-        .moreIcon {
-            font-size: 35px;
-            color: gray;
-            cursor: pointer;
-        }
+  .right {
+    .moreIcon {
+      font-size: 35px;
+      color: gray;
+      cursor: pointer;
     }
+  }
 }
