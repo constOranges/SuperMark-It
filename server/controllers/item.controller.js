@@ -3,16 +3,6 @@ const User = require("../models/user.model");
 const Item = require("../models/item.model");
 const cloudinary = require("../config/cloudinary");
 
-// GENERAL ITEMS
-
-module.exports.findItemById = (req, res) => {
-  Item.findById(req.body.itemId)
-    .then((currentItem) => {
-      res.json(currentItem);
-    })
-    .catch((err) => res.status(400).json(err));
-};
-
 // CATEGORIES
 
 module.exports.addItemToCategory = async (req, res) => {
@@ -25,7 +15,7 @@ module.exports.addItemToCategory = async (req, res) => {
       crop: "scale",
     });
 
-    const newItem = await Item.create({
+    const newItem = new Item({
       itemName: req.body.itemName,
       brand: req.body.brand,
       quantity: req.body.quantity,
@@ -37,52 +27,55 @@ module.exports.addItemToCategory = async (req, res) => {
       },
     });
 
-    User.updateOne(
-      {
-        _id: req.userId,
-        "categories._id": req.body.categoryId,
-      },
-      {
-        $push: {
-          "categories.$.items": newItem,
+    try {
+      await newItem.validate();
+
+      await User.updateOne(
+        {
+          _id: req.userId,
+          "categories._id": req.body.categoryId,
         },
-      },
-      { new: true }
-    )
-      .then((user) => {
-        res.status(200).json({ message: "Item created succesfully." });
-      })
-      .catch((err) => {
-        res.status(400).json(err);
-      });
+        {
+          $push: {
+            "categories.$.items": newItem,
+          },
+        },
+        { new: true }
+      );
+
+      res.status(200).json({ message: "Item created succesfully." });
+    } catch (err) {
+      res.status(400).json({ error: err.message });
+    }
   } else {
-    const newItem = await Item.create({
+    const newItem = new Item({
       itemName: req.body.itemName,
       brand: req.body.brand,
       quantity: req.body.quantity,
       expDate: req.body.expDate,
       notifyDate: req.body.notifyDate,
-      // imagePath: req.body.imagePath, change this to be a default icon?
     });
 
-    User.updateOne(
-      {
-        _id: req.userId,
-        "categories._id": req.body.categoryId,
-      },
-      {
-        $push: {
-          "categories.$.items": newItem,
+    try {
+      await newItem.validate();
+
+      await User.updateOne(
+        {
+          _id: req.userId,
+          "categories._id": req.body.categoryId,
         },
-      },
-      { new: true }
-    )
-      .then((user) => {
-        res.status(200).json({ message: "Item created succesfully." });
-      })
-      .catch((err) => {
-        res.status(400).json(err);
-      });
+        {
+          $push: {
+            "categories.$.items": newItem,
+          },
+        },
+        { new: true }
+      );
+
+      res.status(200).json({ message: "Item created succesfully." });
+    } catch (err) {
+      res.status(400).json({ error: err.message });
+    }
   }
 };
 
@@ -98,7 +91,7 @@ module.exports.existingItemToCategories = async (req, res) => {
       });
 
       for (let categoryId of req.body.categories) {
-        const duplicateItemWithNewId = await Item.create({
+        const duplicateItemWithNewId = new Item({
           itemName: req.body.itemName,
           brand: req.body.brand,
           quantity: req.body.quantity,
@@ -109,6 +102,8 @@ module.exports.existingItemToCategories = async (req, res) => {
             url: result.secure_url,
           },
         });
+
+        await duplicateItemWithNewId.validate();
 
         await User.updateOne(
           {
@@ -123,11 +118,15 @@ module.exports.existingItemToCategories = async (req, res) => {
           { new: true }
         );
       }
+
+      res.status(200).json({ message: "Item(s) updated successfully." });
     } else {
-      const currentItem = await Item.findById(req.body.itemId);
+      const currentItem = User.findById(req.userId).categories.id(req.body.itemId);
+
+      console.log(currentItem);
 
       for (let categoryId of req.body.categories) {
-        const duplicateItemWithNewId = await Item.create({
+        const duplicateItemWithNewId = new Item({
           itemName: req.body.itemName,
           brand: req.body.brand,
           quantity: req.body.quantity,
@@ -135,6 +134,8 @@ module.exports.existingItemToCategories = async (req, res) => {
           notifyDate: req.body.notifyDate,
           imagePath: currentItem.imagePath,
         });
+
+        await duplicateItemWithNewId.validate();
 
         await User.updateOne(
           {
@@ -150,9 +151,10 @@ module.exports.existingItemToCategories = async (req, res) => {
         );
       }
     }
+
     res.status(200).json({ message: "Item(s) moved successfully." });
-  } catch {
-    res.status(400).json({ error: "There was an error moving all items." });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
 };
 

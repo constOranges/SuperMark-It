@@ -7,12 +7,6 @@ module.exports = (app) => {
     next();
   });
   app.post(
-    "/api/items/findItemById",
-    authenticate,
-    getIdFromCookie,
-    ItemController.findItemById
-  );
-  app.post(
     "/api/items/newItemToCategory",
     authenticate,
     getIdFromCookie,
