@@ -6,7 +6,7 @@ import "./ListCatOptions.scss";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
-const ListCatOptions = ({ listId, categoryId, category, list }) => {
+const ListCatOptions = ({ listId, categoryId, category, list, catName, listName }) => {
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
 

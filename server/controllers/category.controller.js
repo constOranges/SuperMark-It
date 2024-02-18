@@ -20,6 +20,7 @@ module.exports.addCategory = (req, res) => {
         })
 }
 
+
 module.exports.removeCategory = async (req, res) => {
     const session = await mongoose.startSession();
     session.startTransaction();
@@ -71,4 +72,26 @@ module.exports.removeCategory = async (req, res) => {
 // Ask whether to have separate routes for name and icon or just one update route
 module.exports.editCategory = (req, res) => {
 
+    User.updateOne(
+      {
+        _id: req.userId,
+      },
+      {
+        $set: {
+          "categories.$[category].categoryName": req.body.categoryName,
+          "categories.$[category].iconPath": req.body.iconPath,
+        },
+      },
+      {
+        arrayFilters: [{ "category._id": req.body.categoryId }],
+        new: true,
+      },
+      
+    )
+      .then((user) => {
+        res.status(200).json({ message: "Category updated succesfully." });
+      })
+      .catch((err) => {
+        res.status(400).json(err);
+      });
 }

@@ -68,7 +68,7 @@ const Category = () => {
               <MoreHorizIcon className="catIcons" />
             </div>
             {open && (
-              <ListCatOptions categoryId={categoryId} category={currentCategory}/>
+              <ListCatOptions categoryId={categoryId} category={currentCategory} catName={catName}/>
             )}
           </div>
         </ClickAwayListener>
