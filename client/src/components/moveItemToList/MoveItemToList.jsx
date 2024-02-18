@@ -10,7 +10,9 @@ const MoveItemToList = ({ item }) => {
   const [itemName] = useState(item.itemName);
   const [brand, setBrand] = useState(item.brand ? item.brand : "");
   const [quantity, setQuantity] = useState(item.quantity ? item.quantity : 0);
-  const [imagePath, setImagePath] = useState("");
+  const [imagePath, setImagePath] = useState(
+    item.imagePath ? item.imagePath : null
+  );
   const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState([]);
 
@@ -45,13 +47,12 @@ const MoveItemToList = ({ item }) => {
     setFileToBase(file);
   };
 
-
   const moveToListHandler = (e) => {
     e.preventDefault();
 
     selectedLists.forEach((list) => {
       lists.push(list._id);
-    })
+    });
 
     axios
       .patch(
