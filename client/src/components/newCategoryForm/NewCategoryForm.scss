@@ -6,7 +6,7 @@
   h2 {
     color: rgb(75, 75, 75);
     text-align: left;
-    font-size: 25px;
+    font-size: 20px;
   }
 }
 
@@ -65,8 +65,8 @@
 
 
 @media (max-width: 700px) {
-  .categoryForm {
-    margin-top: -40px;
+  h2 {
+    margin-left: 23px;
   }
     .iconSelect {
     width: 27.5em;

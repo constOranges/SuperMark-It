@@ -4,6 +4,12 @@
     flex-direction: column;
     align-items: center;
 
+    h4 {
+        font-weight: 100;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
     label {
         font-size: 14px;
     }

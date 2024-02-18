@@ -1,4 +1,29 @@
 .newListItemPage {
     opacity: 1;
     animation: fadeIn 0.5s ease-in;
+
+    h2 {
+        font-size: 20px;
+        text-transform: capitalize;
+    }
+}
+
+@media (min-width: 701px) {
+  .newListItemPage {
+    display: block;
+    text-align: center;
+    margin-top: 120px;
+    margin-bottom: 80px;
+
+    .itemForm {
+      display: inline-block;
+      border-style: solid;
+      text-align: left;
+      border-width: 1px;
+      border-color: rgb(224, 224, 224);
+      border-radius: 25px;
+      padding: 50px 40px 0px 50px;
+      text-transform: capitalize;
+    }
+  }
 }

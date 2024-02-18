@@ -54,4 +54,10 @@ module.exports = (app) => {
     getIdFromCookie,
     ItemController.updateItemInList
   );
+  app.patch(
+    "/api/items/renewItem",
+    authenticate,
+    getIdFromCookie,
+    ItemController.renewItem
+  );
 };

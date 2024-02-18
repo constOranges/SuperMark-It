@@ -54,6 +54,12 @@ const List = () => {
     }
   });
 
+  const currentList = lists.map((list) => {
+    if (`/list/${list._id}` == window.location.pathname) {
+      return list;
+    }
+  });
+
   return (
     <div className="list">
       <div className="top">
@@ -63,7 +69,7 @@ const List = () => {
             <div className="more" onClick={() => setOpen(!open)}>
               <MoreHorizIcon className="moreIcon" />
             </div>
-            {open && <ListCatOptions listId={listId} listName={listName} />}
+            {open && <ListCatOptions listId={listId} list={currentList} />}
           </div>
         </ClickAwayListener>
         <Link to="/addListItem" className="buttonLink">

@@ -32,6 +32,11 @@
   animation: fadeIn 0.5s ease-in;
   max-width: 100%;
   overflow-x: hidden;
+
+  h2 {
+    font-size: 20px;
+    letter-spacing: 1px;
+  }
 }
 
 .registrationForm {
@@ -44,11 +49,12 @@
 
 label {
   display: block;
-  font-size: 1.2em;
+  font-size: 14px;
+  font-family: Verdana;
 }
 
 input {
-  width: 30%;
+  width: 360px;
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
@@ -57,8 +63,8 @@ input {
 }
 
 h2 {
-  margin-left: 1em;
   margin-bottom: 2em;
+  font-family: Verdana;
 }
 
 .btn {
@@ -163,6 +169,7 @@ p {
   font-weight: bold;
 }
 
+
 @media (max-width: 700px) {
   .errorMessage {
     text-align: center;
@@ -181,4 +188,23 @@ p {
     margin-right: 1em;
   }
 
+}
+
+@media (min-width: 701px) {
+  .newUserPage {
+    display: block;
+    text-align: center;
+    margin-top: 120px;
+    margin-bottom: 80px;
+
+    .registrationForm {
+      display: inline-block;
+      text-align: left;
+      border-style: solid;
+      border-width: 1px;
+      border-color: rgb(224, 224, 224);
+      border-radius: 25px;
+      padding: 50px 40px 0px 50px;
+    }
+  }
 }
