@@ -6,77 +6,85 @@ import "./ListCatOptions.scss";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
-const ListCatOptions = ({ listId, listName, categoryId, catName }) => {
+const ListCatOptions = ({ listId, categoryId, category, list }) => {
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
 
+  const deleteCatHandler = () => {
+    if (window.confirm(`Are you sure you want to delete ${catName}?`))
+      if (categoryId) {
+        categoryId = categoryId.id;
+      }
 
-    const deleteCatHandler = () => {
-      if (window.confirm(`Are you sure you want to delete ${catName}?`))
-
-        if (categoryId) {
-          categoryId = categoryId.id;
+    axios
+      .patch(
+        `${import.meta.env.VITE_REACT_APP_API_URL}/api/categories/remove`,
+        {
+          categoryId,
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        console.log(res);
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+        const errorResponse = err.response.data.errors;
+        const errorArray = [];
+        for (const key of Object.keys(errorResponse)) {
+          errorArray.push(errorResponse[key].message);
         }
-        
-      axios
-        .patch(
-          `${import.meta.env.VITE_REACT_APP_API_URL}/api/categories/remove`,
-          {
-            categoryId,
-          },
-          { withCredentials: true }
-        )
-        .then((res) => {
-          console.log(res);
-          navigate("/");
-        })
-        .catch((err) => {
-          console.log(err);
-          const errorResponse = err.response.data.errors;
-          const errorArray = [];
-          for (const key of Object.keys(errorResponse)) {
-            errorArray.push(errorResponse[key].message);
-          }
-          setErrors(errorArray);
-        });
-    };
+        setErrors(errorArray);
+      });
+  };
 
   const deleteListHandler = () => {
     if (window.confirm(`Are you sure you want to delete ${listName}`))
-    if(listId) {
+      if (listId) {
         listId = listId.id;
-    }
-      axios
-        .patch(
-          `${import.meta.env.VITE_REACT_APP_API_URL}/api/lists/remove`,
-          {
-            listId,
-          },
-          { withCredentials: true }
-        )
-        .then((res) => {
-          console.log(res);
-          navigate("/");
-        })
-        .catch((err) => {
-          console.log(err);
-          const errorResponse = err.response.data.errors;
-          const errorArray = [];
-          for (const key of Object.keys(errorResponse)) {
-            errorArray.push(errorResponse[key].message);
-          }
-          setErrors(errorArray);
-        });
+      }
+    axios
+      .patch(
+        `${import.meta.env.VITE_REACT_APP_API_URL}/api/lists/remove`,
+        {
+          listId,
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        console.log(res);
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+        const errorResponse = err.response.data.errors;
+        const errorArray = [];
+        for (const key of Object.keys(errorResponse)) {
+          errorArray.push(errorResponse[key].message);
+        }
+        setErrors(errorArray);
+      });
   };
 
   return (
     <div className="listCatOptions">
-      <div className="item">
-        <Link className="iconLink">
+      <Link
+        className="link"
+        to="/updateCategory"
+        state={{
+          categoryId: categoryId,
+          listId: listId,
+          list: list,
+          category: category,
+        }}
+      >
+        <div className="item">
           <CreateOutlinedIcon className="icon" />
-        </Link>
-        <Link className="link">Edit</Link>
-      </div>
+          Edit
+        </div>
+      </Link>
+
       {categoryId ? (
         <Link className="deleteLink" onClick={() => deleteCatHandler()}>
           <div className="item">

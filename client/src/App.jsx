@@ -14,6 +14,7 @@ import NewCategoryForm from "./components/newCategoryForm/NewCategoryForm";
 import NewListForm from "./components/newListForm/NewListForm";
 import UpdateCatItemForm from "./components/updateCatItemForm/UpdateCatItemForm";
 import UpdateListItemForm from "./components/updateListItemForm/UpdateListItemForm";
+import UpdateCatForm from "./components/updateCatForm/UpdateCatForm";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -91,6 +92,10 @@ function App() {
         {
           path: "/newList",
           element: <NewListForm />,
+        },
+        {
+          path: "/updateCategory",
+          element: <UpdateCatForm />,
         },
       ],
     },
