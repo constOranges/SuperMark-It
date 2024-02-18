@@ -5,6 +5,7 @@ import "./Category.scss";
 import ItemCard from "../itemCard/ItemCard";
 import ListCatOptions from "../listCatOptions/ListCatOptions";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -61,20 +62,22 @@ const Category = () => {
   return (
     <div className="category">
       <div className="top">
-        <h1>{catName}</h1>
         <ClickAwayListener onClickAway={handleClickAway}>
           <div>
             <div className="more" onClick={() => setOpen(!open)}>
-              <MoreHorizIcon className="moreIcon" />
+              <MoreHorizIcon className="catIcons" />
             </div>
             {open && (
               <ListCatOptions categoryId={categoryId} category={currentCategory}/>
             )}
           </div>
         </ClickAwayListener>
+        <h1>{catName}</h1>
         <Link to="/add" className="buttonLink">
-          <button>+ Add Item</button>
+          <AddRoundedIcon className="catIcons" />
         </Link>
+      </div>
+      <div className="center">
         <Form>
           <InputGroup>
             <Form.Control
