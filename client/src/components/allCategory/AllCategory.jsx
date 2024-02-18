@@ -31,7 +31,6 @@ const AllCategory = () => {
       });
   };
 
-
   useEffect(() => {
     getUserData();
   }, []);
@@ -51,20 +50,6 @@ const AllCategory = () => {
   return (
     <div className="category">
       <div className="top">
-        <ClickAwayListener onClickAway={handleClickAway}>
-          <div>
-            <div className="more" onClick={() => setOpen(!open)}>
-              <MoreHorizIcon className="catIcons" />
-            </div>
-            {open && (
-              <ListCatOptions
-                categoryId={categoryId}
-                category={currentCategory}
-                catName={catName}
-              />
-            )}
-          </div>
-        </ClickAwayListener>
         <h1>All Items</h1>
         <Link to="/add" className="buttonLink">
           <AddRoundedIcon className="catIcons" />
