@@ -68,35 +68,40 @@ const ItemOptions = ({
   };
 
   const deleteFromListHandler = () => {
-    if (window.confirm(`Are you sure you want to delete ${item.itemName}`))
-      if (listId) {
+    if (window.confirm(`Are you sure you want to delete ${item.itemName}`)) {
+      if (listId && typeof listId === "object") {
         listId = listId.id;
       }
-    axios
-      .patch(
-        `${
-          import.meta.env.VITE_REACT_APP_API_URL
-        }/api/items/removeItemFromList`,
-        {
-          itemId,
-          listId,
-        },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        console.log(res);
-        setOpen(false);
-        getList();
-      })
-      .catch((err) => {
-        console.log(err);
-        const errorResponse = err.response.data.errors;
-        const errorArray = [];
-        for (const key of Object.keys(errorResponse)) {
-          errorArray.push(errorResponse[key].message);
-        }
-        setErrors(errorArray);
-      });
+      axios
+        .patch(
+          `${
+            import.meta.env.VITE_REACT_APP_API_URL
+          }/api/items/removeItemFromList`,
+          {
+            itemId,
+            listId,
+          },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          console.log(res);
+          setOpen(false);
+          if (typeof getList === "function") {
+            getList();
+          } else {
+            getUserData();
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          const errorResponse = err.response.data.errors;
+          const errorArray = [];
+          for (const key of Object.keys(errorResponse)) {
+            errorArray.push(errorResponse[key].message);
+          }
+          setErrors(errorArray);
+        });
+    }
   };
 
   const toggleListHandler = (e) => {
