@@ -93,6 +93,7 @@ const Search = () => {
                   item={item}
                   categoryName={category.categoryName}
                   categoryId={category._id}
+                  getUserData={getUserData}
                 />
               )))
           })}
@@ -110,6 +111,7 @@ const Search = () => {
                   item={item}
                   listName={list.listName}
                   listId={list._id}
+                  getUserData={getUserData}
                 />
               )))
           })}
