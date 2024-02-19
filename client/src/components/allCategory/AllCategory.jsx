@@ -3,15 +3,11 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import "./AllCategory.scss";
 import ItemCard from "../itemCard/ItemCard";
-import ListCatOptions from "../listCatOptions/ListCatOptions";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
-import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 
 const AllCategory = () => {
-  const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [userData, setUserData] = useState(null);
 
@@ -41,10 +37,6 @@ const AllCategory = () => {
     });
   };
 
-  const handleClickAway = () => {
-    setOpen(false);
-  };
-
   itemData();
 
   return (
@@ -65,24 +57,30 @@ const AllCategory = () => {
           </InputGroup>
         </Form>
       </div>
-      <div className="bottom">
-        {categoryArr.map((category) => {
-          return category.items
-            ?.filter((item) => {
-              return search.toLowerCase() === ""
-                ? item
-                : item.itemName.toLowerCase().includes(search);
-            })
-            .map((item) => (
-              <ItemCard
-                item={item}
-                categoryName={category.categoryName}
-                categoryId={category._id}
-                getUserData={getUserData}
-              />
-            ));
-        })}
-      </div>
+      {categoryArr.length > 0 ? (
+        <div className="bottom">
+          {categoryArr.map((category) => {
+            return category.items
+              ?.filter((item) => {
+                return search.toLowerCase() === ""
+                  ? item
+                  : item.itemName.toLowerCase().includes(search);
+              })
+              .map((item) => (
+                <ItemCard
+                  item={item}
+                  categoryName={category.categoryName}
+                  categoryId={category._id}
+                  getUserData={getUserData}
+                />
+              ));
+          })}
+        </div>
+      ) : (
+        <div className="noItems">
+          <p>No Items Available</p>
+        </div>
+      )}
     </div>
   );
 };

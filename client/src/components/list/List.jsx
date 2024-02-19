@@ -69,7 +69,13 @@ const List = () => {
             <div className="more" onClick={() => setOpen(!open)}>
               <MoreHorizIcon className="catIcons" />
             </div>
-            {open && <ListCatOptions listId={listId} list={currentList} listName={listName}/>}
+            {open && (
+              <ListCatOptions
+                listId={listId}
+                list={currentList}
+                listName={listName}
+              />
+            )}
           </div>
         </ClickAwayListener>
         <h1>{listName}</h1>
@@ -87,24 +93,28 @@ const List = () => {
           </InputGroup>
         </Form>
       </div>
-      <div className="bottom">
-        {products
-          ? prodList
-              ?.filter((item) => {
-                return search.toLowerCase() === ""
-                  ? item
-                  : item.itemName.toLowerCase().includes(search);
-              })
-              .map((item) => (
-                <ItemCard
-                  item={item}
-                  key={item.id}
-                  listId={listId}
-                  getList={getList}
-                />
-              ))
-          : null}
-      </div>
+      {prodList.length > 0 ? (
+        <div className="bottom">
+          {prodList
+            ?.filter((item) => {
+              return search.toLowerCase() === ""
+                ? item
+                : item.itemName.toLowerCase().includes(search);
+            })
+            .map((item) => (
+              <ItemCard
+                item={item}
+                key={item.id}
+                listId={listId}
+                getList={getList}
+              />
+            ))}
+        </div>
+      ) : (
+        <div className="noItems">
+          <p>No Items Available</p>
+        </div>
+      )}
     </div>
   );
 };
