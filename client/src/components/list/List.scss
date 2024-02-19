@@ -17,7 +17,7 @@
 
     .catIcons {
       padding-top: 8px;
-      color: #47B6FE;
+      color: #47b6fe;
       font-size: 30px;
     }
 
@@ -53,6 +53,14 @@
 
     .center {
       padding-bottom: 60px;
+    }
+
+    .noItems {
+      p {
+        text-align: center;
+        font-weight: bold;
+        margin-top: -2em;
+      }
     }
 
     .bottom {

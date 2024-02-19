@@ -6,65 +6,74 @@ import "./ListCatOptions.scss";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
-const ListCatOptions = ({ listId, categoryId, category, list, catName, listName }) => {
+const ListCatOptions = ({
+  listId,
+  categoryId,
+  category,
+  list,
+  catName,
+  listName,
+}) => {
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
 
   const deleteCatHandler = () => {
-    if (window.confirm(`Are you sure you want to delete ${catName}?`))
+    if (window.confirm(`Are you sure you want to delete ${catName}?`)) {
       if (categoryId) {
         categoryId = categoryId.id;
       }
 
-    axios
-      .patch(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/api/categories/remove`,
-        {
-          categoryId,
-        },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        console.log(res);
-        navigate("/");
-      })
-      .catch((err) => {
-        console.log(err);
-        const errorResponse = err.response.data.errors;
-        const errorArray = [];
-        for (const key of Object.keys(errorResponse)) {
-          errorArray.push(errorResponse[key].message);
-        }
-        setErrors(errorArray);
-      });
+      axios
+        .patch(
+          `${import.meta.env.VITE_REACT_APP_API_URL}/api/categories/remove`,
+          {
+            categoryId,
+          },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          console.log(res);
+          navigate("/");
+        })
+        .catch((err) => {
+          console.log(err);
+          const errorResponse = err.response.data.errors;
+          const errorArray = [];
+          for (const key of Object.keys(errorResponse)) {
+            errorArray.push(errorResponse[key].message);
+          }
+          setErrors(errorArray);
+        });
+    }
   };
 
   const deleteListHandler = () => {
-    if (window.confirm(`Are you sure you want to delete ${listName}`))
+    if (window.confirm(`Are you sure you want to delete ${listName}`)) {
       if (listId) {
         listId = listId.id;
       }
-    axios
-      .patch(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/api/lists/remove`,
-        {
-          listId,
-        },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        console.log(res);
-        navigate("/");
-      })
-      .catch((err) => {
-        console.log(err);
-        const errorResponse = err.response.data.errors;
-        const errorArray = [];
-        for (const key of Object.keys(errorResponse)) {
-          errorArray.push(errorResponse[key].message);
-        }
-        setErrors(errorArray);
-      });
+      axios
+        .patch(
+          `${import.meta.env.VITE_REACT_APP_API_URL}/api/lists/remove`,
+          {
+            listId,
+          },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          console.log(res);
+          navigate("/");
+        })
+        .catch((err) => {
+          console.log(err);
+          const errorResponse = err.response.data.errors;
+          const errorArray = [];
+          for (const key of Object.keys(errorResponse)) {
+            errorArray.push(errorResponse[key].message);
+          }
+          setErrors(errorArray);
+        });
+    }
   };
 
   return (
