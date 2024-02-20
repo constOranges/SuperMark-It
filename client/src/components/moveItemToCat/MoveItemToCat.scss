@@ -22,14 +22,27 @@
 
     button {
       margin-left: 1.8em;
+      color: white;
+      background-color: #47b6fe;
+      border-style: none;
+      padding: 12px;
+      border-radius: 10px;
+      font-family: Verdana;
+    }
+
+    button:hover {
+      opacity: 70%;
+      cursor: pointer;
     }
 
     .multiselect {
-      width: 25.85em;
+      width: 25.7em;
       height: 2em;
       text-align: center;
+      font-size: 14px;
       border-style: solid;
       border-width: 0.1em;
+      border-color: rgb(201, 201, 201);
     }
   }
 }
@@ -63,14 +76,19 @@ span {
   border-left: solid;
   border-right: solid;
   border-width: 0.1em;
+  border-color: rgb(201, 201, 201);
 }
 
 .p-multiselect-item {
   border-bottom: solid;
   border-width: 0.1em;
+  border-color: rgb(201, 201, 201);
   height: 4em;
   z-index: 999;
   background-color: white;
+  font-family: Verdana;
+  font-size: 13px;
+  padding-left: 10px;
 }
 
 .p-multiselect-item:hover {

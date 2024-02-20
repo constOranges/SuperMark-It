@@ -1,5 +1,10 @@
 .navbar {
   z-index: 100;
+
+  .selectedNav {
+    color:#47b6fe;
+    background-color: white;
+  }
 }
 
 @media (max-width: 700px) {
@@ -105,6 +110,8 @@
       z-index: 1;
       font-family: Verdana;
       font-size: 16px;
+      font-weight: 100;
+      color: rgb(100, 100, 100);
       text-transform: uppercase;
       letter-spacing: 1px;
       border-radius: 10px;
@@ -217,6 +224,8 @@
       z-index: 1;
       font-family: Verdana;
       font-size: 12px;
+      font-weight: 100;
+      color: rgb(100, 100, 100);
       text-transform: uppercase;
       letter-spacing: 1px;
       border-radius: 10px;

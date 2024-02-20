@@ -45,3 +45,25 @@
     text-align: center;
   }
 }
+
+@media (min-width: 701px) {
+  .search {
+    margin: 40px 25%;
+
+    .catItems {
+      border-style: solid;
+      border-width: 1px;
+      border-color: rgb(224, 224, 224);
+      border-radius: 25px;
+      padding: 5px 15px 0 15px;
+    }
+
+    .listItems {
+      border-style: solid;
+      border-width: 1px;
+      border-color: rgb(224, 224, 224);
+      border-radius: 25px;
+      padding: 5px 15px 0 15px;
+    }
+  }
+}
