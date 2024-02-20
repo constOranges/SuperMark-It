@@ -10,6 +10,7 @@ import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import LoginForm from "../loginForm/LoginForm.jsx";
 import Alerts from "../alerts/Alerts.jsx";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
+import $ from "jquery";
 import "./Navbar.scss";
 
 const Navbar = ({ loggedIn, setLoggedIn, user }) => {
@@ -48,6 +49,13 @@ const Navbar = ({ loggedIn, setLoggedIn, user }) => {
     setOpenAlert(false);
   };
 
+  $(function () {
+    $(".icon").on("click", function () {
+      $(".icon").removeClass("selectedNav");
+      $(this).addClass("selectedNav");
+    });
+  });
+
   return (
     <div className="navbar">
       <div className="wrapper">
@@ -65,18 +73,18 @@ const Navbar = ({ loggedIn, setLoggedIn, user }) => {
         </div>
         <div className="right">
           <div className="icons">
-            <div className="homeIcon">
+            <div className="homeIcon icon">
               <Link className="link" to="/">
                 <HomeRoundedIcon className="navIcon" />
               </Link>
             </div>
-            <div className="searchIcon">
+            <div className="searchIcon icon">
               <Link className="link" to="/search">
                 <SearchRoundedIcon className="navIcon" />
               </Link>
             </div>
             <ClickAwayListener onClickAway={addItemClickAway}>
-              <div className="addIcon">
+              <div className="addIcon icon">
                 <AddBoxRoundedIcon
                   className="navIcon link"
                   onClick={() => setAddDropDown(!addDropDown)}
@@ -102,7 +110,7 @@ const Navbar = ({ loggedIn, setLoggedIn, user }) => {
               </div>
             </ClickAwayListener>
             {user ? (
-              <div className="favIcon">
+              <div className="favIcon icon">
                 <Link className="link" to={`/list/${favoritesList._id}`}>
                   <FavoriteRoundedIcon className="navIcon" />
                 </Link>
@@ -118,7 +126,7 @@ const Navbar = ({ loggedIn, setLoggedIn, user }) => {
             {/* Handler that closes login form when clicking outside of container */}
             <ClickAwayListener onClickAway={handleClickAway}>
               <div className="dropDown">
-                <div className="profileIcon link">
+                <div className="profileIcon link icon">
                   <PersonRoundedIcon
                     className="navIcon userIcon"
                     onClick={() => setOpen(!open)}
@@ -155,7 +163,7 @@ const Navbar = ({ loggedIn, setLoggedIn, user }) => {
 
             <ClickAwayListener onClickAway={alertClickAway}>
               <div className="dropDown">
-                <div className="notifIcon link">
+                <div className="notifIcon link icon">
                   <NotificationsRoundedIcon
                     className="navIcon"
                     onClick={() => setOpenAlert(!openAlert)}

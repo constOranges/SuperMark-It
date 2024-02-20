@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "./RenewItem.scss";
 
 const RenewItem = ({ item, categoryId, getCategory }) => {
   if (item.expDate && item.notifyDate) {
@@ -92,7 +93,7 @@ const RenewItem = ({ item, categoryId, getCategory }) => {
         </div>
       </form>
 
-      {success ? <p>Item renewed!</p> : null}
+      {success ? <p className="renewNotif">Item renewed!</p> : null}
     </div>
   );
 };
