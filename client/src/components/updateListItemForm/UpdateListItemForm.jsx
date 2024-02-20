@@ -13,7 +13,10 @@ const UpdateListItemForm = () => {
   const [errors, setErrors] = useState([]);
 
   const itemId = item._id;
-  listId = listId.id;
+
+  if (typeof listId === "object") {
+    listId = listId.id;
+  }
 
   const navigate = useNavigate();
 

@@ -19,6 +19,7 @@ import UpdateCatForm from "./components/updateCatForm/UpdateCatForm";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
+  const[user, setUser] = useState(null);
 
   useEffect(() => {
     axios
@@ -27,6 +28,7 @@ function App() {
       })
       .then((res) => {
         setLoggedIn(true);
+        setUser(res.data.user)
       })
       .catch((err) => {
         setLoggedIn(false);
@@ -37,7 +39,7 @@ function App() {
   const Layout = () => {
     return (
       <div className="app">
-        <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+        <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} user={user}/>
         <Outlet />
       </div>
     );
@@ -50,7 +52,7 @@ function App() {
       children: [
         {
           path: "/",
-          element: <Homepage />,
+          element: <Homepage user={user}/>,
         },
         {
           path: "/category/:id",

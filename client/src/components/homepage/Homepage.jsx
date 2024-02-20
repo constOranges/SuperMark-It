@@ -6,27 +6,10 @@ import Options from "../options/Options";
 import ListOptions from "../listOptions/ListOptions";
 import $ from "jquery";
 
-const Homepage = () => {
-  const [user, setUser] = useState(null);
-
+const Homepage = ({ user }) => {
+  
   // useState that controls toggle visiblity between Kitchen categories and List categories
   const [kitchen, setKitchen] = useState(true);
-
-  // Fetch current user data from API on page refresh
-  useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/users/currentuser`, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        setUser(res.data.user);
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
 
   //jquery that highlights whether Kitchen or List is selected
   $(function () {

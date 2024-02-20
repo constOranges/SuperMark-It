@@ -18,8 +18,6 @@ import LunchDiningRoundedIcon from "@mui/icons-material/LunchDining";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 
 const Options = ({ user }) => {
-
-
   function UserIcon(iconPath) {
     const value = JSON.stringify(iconPath);
     if (value.includes("kitchen")) {
@@ -55,6 +53,7 @@ const Options = ({ user }) => {
     }
   }
 
+  console.log(user);
 
   return (
     <div className="options">
@@ -72,26 +71,7 @@ const Options = ({ user }) => {
               <div className="catBody">ALL</div>
             </div>
           </Link>
-          <Link className="link">
-            <div className="cat">
-              <KitchenRoundedIcon className="catIcon" />
-              <div className="catBody">FRIDGE</div>
-            </div>
-          </Link>
-          <Link className="link">
-            <div className="cat">
-              <IcecreamRoundedIcon className="catIcon" />
-              <div className="catBody">FREEZER</div>
-            </div>
-          </Link>
-          <Link className="link">
-            <div className="cat">
-              <BreakfastDiningOutlinedIcon className="catIcon" />
-              <div className="catBody">PANTRY</div>
-            </div>
-          </Link>
-
-          {/* User-created categories */}
+          {/* Default and User-created categories */}
           {user
             ? user.categories.map((cat) => {
                 return (
