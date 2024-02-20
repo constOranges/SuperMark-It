@@ -13,7 +13,7 @@ import ClickAwayListener from "@mui/material/ClickAwayListener";
 import $ from "jquery";
 import "./Navbar.scss";
 
-const Navbar = ({ loggedIn, setLoggedIn, user }) => {
+const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
   const [open, setOpen] = useState(false);
   const [addDropDown, setAddDropDown] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
@@ -30,6 +30,7 @@ const Navbar = ({ loggedIn, setLoggedIn, user }) => {
       .then((res) => {
         setLoggedIn(false);
         console.log(res);
+        getUser();
         navigate("/");
       })
       .catch((err) => console.log(err));
@@ -146,6 +147,7 @@ const Navbar = ({ loggedIn, setLoggedIn, user }) => {
                         <LoginForm
                           setOpen={setOpen}
                           setLoggedIn={setLoggedIn}
+                          getUser={getUser}
                         />
                         <Link
                           className="link"
