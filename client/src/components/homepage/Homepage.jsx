@@ -7,7 +7,6 @@ import ListOptions from "../listOptions/ListOptions";
 import $ from "jquery";
 
 const Homepage = ({ user }) => {
-  
   // useState that controls toggle visiblity between Kitchen categories and List categories
   const [kitchen, setKitchen] = useState(true);
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
@@ -34,7 +34,7 @@ const Navbar = ({ loggedIn, setLoggedIn, user }) => {
       .catch((err) => console.log(err));
   };
 
-  const favoritesList = user.lists[0];
+  const favoritesList = user?.lists[0];
 
   const handleClickAway = () => {
     setOpen(false);
@@ -101,12 +101,20 @@ const Navbar = ({ loggedIn, setLoggedIn, user }) => {
                 )}
               </div>
             </ClickAwayListener>
+            {user ? (
+              <div className="favIcon">
+                <Link className="link" to={`/list/${favoritesList._id}`}>
+                  <FavoriteRoundedIcon className="navIcon" />
+                </Link>
+              </div>
+            ) : (
+              <div className="favIcon">
+                <Link className="link" to={`/list/1`}>
+                  <FavoriteRoundedIcon className="navIcon" />
+                </Link>
+              </div>
+            )}
 
-            <div className="favIcon">
-              <Link className="link" to={`/list/${favoritesList._id}`}>
-                <FavoriteRoundedIcon className="navIcon" />
-              </Link>
-            </div>
             {/* Handler that closes login form when clicking outside of container */}
             <ClickAwayListener onClickAway={handleClickAway}>
               <div className="dropDown">
