@@ -19,7 +19,7 @@ import UpdateCatForm from "./components/updateCatForm/UpdateCatForm";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
-  const[user, setUser] = useState(null);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     axios
