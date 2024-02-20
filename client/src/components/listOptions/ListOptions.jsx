@@ -20,7 +20,6 @@ import LunchDiningRoundedIcon from "@mui/icons-material/LunchDining";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const ListOptions = ({ user }) => {
-  
   function UserIcon(iconPath) {
     const value = JSON.stringify(iconPath);
     if (value.includes("kitchen")) {
@@ -51,6 +50,8 @@ const ListOptions = ({ user }) => {
       return <LocalBarRoundedIcon className="catIcon" />;
     } else if (value.includes("tapas")) {
       return <TapasRoundedIcon className="catIcon" />;
+    } else if (value.includes("favorites")) {
+      return <FavoriteIcon className="catIcon" />;
     } else {
       return null;
     }

@@ -40,9 +40,7 @@ const UpdateListItemForm = () => {
     e.preventDefault();
     axios
       .patch(
-        `${
-          import.meta.env.VITE_REACT_APP_API_URL
-        }/api/items/updateItemInList`,
+        `${import.meta.env.VITE_REACT_APP_API_URL}/api/items/updateItemInList`,
         {
           itemName,
           brand,
@@ -59,10 +57,10 @@ const UpdateListItemForm = () => {
       })
       .catch((err) => {
         console.log(err);
-        const errorResponse = err.response.data.errors;
+        const errorResponse = err.response.data;
         const errorArray = [];
         for (const key of Object.keys(errorResponse)) {
-          errorArray.push(errorResponse[key].message);
+          errorArray.push(errorResponse[key]);
         }
         setErrors(errorArray);
       });

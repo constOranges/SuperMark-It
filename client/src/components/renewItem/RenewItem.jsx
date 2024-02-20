@@ -15,9 +15,11 @@ const RenewItem = ({ item, categoryId, getCategory }) => {
 
   const [success, setSuccess] = useState(false);
 
+  const itemId = item._id;
 
-  const itemId = item._id
-  categoryId = categoryId.id;
+  if (typeof categoryId === "object") {
+    categoryId = categoryId.id;
+  }
 
   const renewHandler = (e) => {
     e.preventDefault();
@@ -37,7 +39,11 @@ const RenewItem = ({ item, categoryId, getCategory }) => {
       .then((res) => {
         console.log(res);
         setSuccess(true);
-        getCategory();
+        if (typeof getCategory === "function") {
+          getCategory();
+        } else {
+          getUserData();
+        }
       })
       .catch((err) => {
         console.log(err);
