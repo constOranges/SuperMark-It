@@ -265,7 +265,7 @@ module.exports.renewItem = async (req, res) => {
       res.status(200).json({ message: "Item renewed succesfully." });
     })
     .catch((err) => {
-      res.status(400).json(err);
+      res.status(400).json({ error: err.message });
     });
 };
 

@@ -74,7 +74,7 @@ module.exports.removeCategory = async (req, res) => {
     } catch (err) {
         await session.abortTransaction();
         session.endSession();
-        res.status(400).json(err);
+        res.status(400).json({ error: err.message });
     }
 }
 
@@ -100,6 +100,6 @@ module.exports.editCategory = (req, res) => {
             res.status(200).json({ message: "Category updated succesfully." });
         })
         .catch((err) => {
-            res.status(400).json(err);
+            res.status(400).json({ error: err.message });
         });
 }
