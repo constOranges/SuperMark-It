@@ -154,71 +154,70 @@ module.exports.existingItemToCategories = async (req, res) => {
 module.exports.updateItemInCategory = async (req, res, next) => {
   const { imagePath } = req.body;
 
-  if (imagePath) {
-    const result = await cloudinary.uploader.upload(imagePath, {
-      folder: "itemImages",
-      width: 300,
-      crop: "scale",
-    });
+  try {
+    // Do we need other validations for updating items?
+    if (req.body.itemName.length < 1) {
+      throw new Error("Item name is required.");
+    }
 
-    User.updateOne(
-      {
-        _id: req.userId,
-      },
-      {
-        $set: {
-          "categories.$[category].items.$[item].itemName": req.body.itemName,
-          "categories.$[category].items.$[item].brand": req.body.brand,
-          "categories.$[category].items.$[item].quantity": req.body.quantity,
-          "categories.$[category].items.$[item].expDate": req.body.expDate,
-          "categories.$[category].items.$[item].notifyDate": req.body.notifyDate,
-          "categories.$[category].items.$[item].imagePath": {
-            public_id: result.public_id,
-            url: result.secure_url,
+    if (imagePath) {
+      const result = await cloudinary.uploader.upload(imagePath, {
+        folder: "itemImages",
+        width: 300,
+        crop: "scale",
+      });
+
+      User.updateOne(
+        {
+          _id: req.userId,
+        },
+        {
+          $set: {
+            "categories.$[category].items.$[item].itemName": req.body.itemName,
+            "categories.$[category].items.$[item].brand": req.body.brand,
+            "categories.$[category].items.$[item].quantity": req.body.quantity,
+            "categories.$[category].items.$[item].expDate": req.body.expDate,
+            "categories.$[category].items.$[item].notifyDate": req.body.notifyDate,
+            "categories.$[category].items.$[item].imagePath": {
+              public_id: result.public_id,
+              url: result.secure_url,
+            },
           },
         },
-      },
-      {
-        arrayFilters: [
-          { "category._id": req.body.categoryId },
-          { "item._id": req.body.itemId },
-        ],
-      }
-    )
-      .then((user) => {
-        res.status(200).json({ message: "Item updated succesfully." });
-      })
-      .catch((err) => {
-        res.status(400).json(err);
-      });
-  } else {
-    // adjust query to update entire item once item collection refactoring is complete (on hold, could be unnecessary)
-    User.updateOne(
-      {
-        _id: req.userId,
-      },
-      {
-        $set: {
-          "categories.$[category].items.$[item].itemName": req.body.itemName,
-          "categories.$[category].items.$[item].brand": req.body.brand,
-          "categories.$[category].items.$[item].quantity": req.body.quantity,
-          "categories.$[category].items.$[item].expDate": req.body.expDate,
-          "categories.$[category].items.$[item].notifyDate": req.body.notifyDate,
+        {
+          arrayFilters: [
+            { "category._id": req.body.categoryId },
+            { "item._id": req.body.itemId },
+          ],
+        }
+      )
+      res.status(200).json({ message: "Item updated succesfully." });
+    } else {
+      // adjust query to update entire item once item collection refactoring is complete (on hold, could be unnecessary)
+      User.updateOne(
+        {
+          _id: req.userId,
         },
-      },
-      {
-        arrayFilters: [
-          { "category._id": req.body.categoryId },
-          { "item._id": req.body.itemId },
-        ],
-      }
-    )
-      .then((user) => {
-        res.status(200).json({ message: "Item updated succesfully." });
-      })
-      .catch((err) => {
-        res.status(400).json(err);
-      });
+        {
+          $set: {
+            "categories.$[category].items.$[item].itemName": req.body.itemName,
+            "categories.$[category].items.$[item].brand": req.body.brand,
+            "categories.$[category].items.$[item].quantity": req.body.quantity,
+            "categories.$[category].items.$[item].expDate": req.body.expDate,
+            "categories.$[category].items.$[item].notifyDate": req.body.notifyDate,
+          },
+        },
+        {
+          arrayFilters: [
+            { "category._id": req.body.categoryId },
+            { "item._id": req.body.itemId },
+          ],
+        }
+      )
+      res.status(200).json({ message: "Item updated succesfully." });
+    }
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
 };
 
@@ -413,66 +412,65 @@ module.exports.existingItemToLists = async (req, res) => {
 module.exports.updateItemInList = async (req, res, next) => {
   const { imagePath } = req.body;
 
-  if (imagePath) {
-    const result = await cloudinary.uploader.upload(imagePath, {
-      folder: "itemImages",
-      width: 300,
-      crop: "scale",
-    });
+  try {
+    // Do we need other validations for updating items?
+    if (req.body.itemName.length < 1) {
+      throw new Error("Item name is required.");
+    }
 
-    User.updateOne(
-      {
-        _id: req.userId,
-      },
-      {
-        $set: {
-          "lists.$[list].items.$[item].itemName": req.body.itemName,
-          "lists.$[list].items.$[item].brand": req.body.brand,
-          "lists.$[list].items.$[item].quantity": req.body.quantity,
-          "lists.$[list].items.$[item].imagePath": {
-            public_id: result.public_id,
-            url: result.secure_url,
+    if (imagePath) {
+      const result = await cloudinary.uploader.upload(imagePath, {
+        folder: "itemImages",
+        width: 300,
+        crop: "scale",
+      });
+
+      User.updateOne(
+        {
+          _id: req.userId,
+        },
+        {
+          $set: {
+            "lists.$[list].items.$[item].itemName": req.body.itemName,
+            "lists.$[list].items.$[item].brand": req.body.brand,
+            "lists.$[list].items.$[item].quantity": req.body.quantity,
+            "lists.$[list].items.$[item].imagePath": {
+              public_id: result.public_id,
+              url: result.secure_url,
+            },
           },
         },
-      },
-      {
-        arrayFilters: [
-          { "list._id": req.body.listId },
-          { "item._id": req.body.itemId },
-        ],
-      }
-    )
-      .then((user) => {
-        res.status(200).json({ message: "Item updated succesfully." });
-      })
-      .catch((err) => {
-        res.status(400).json(err);
-      });
-  } else {
-    User.updateOne(
-      {
-        _id: req.userId,
-      },
-      {
-        $set: {
-          "lists.$[list].items.$[item].itemName": req.body.itemName,
-          "lists.$[list].items.$[item].brand": req.body.brand,
-          "lists.$[list].items.$[item].quantity": req.body.quantity,
+        {
+          arrayFilters: [
+            { "list._id": req.body.listId },
+            { "item._id": req.body.itemId },
+          ],
+        }
+      )
+      res.status(200).json({ message: "Item updated succesfully." });
+    } else {
+      User.updateOne(
+        {
+          _id: req.userId,
         },
-      },
-      {
-        arrayFilters: [
-          { "list._id": req.body.listId },
-          { "item._id": req.body.itemId },
-        ],
-      }
-    )
-      .then((user) => {
-        res.status(200).json({ message: "Item updated succesfully." });
-      })
-      .catch((err) => {
-        res.status(400).json(err);
-      });
+        {
+          $set: {
+            "lists.$[list].items.$[item].itemName": req.body.itemName,
+            "lists.$[list].items.$[item].brand": req.body.brand,
+            "lists.$[list].items.$[item].quantity": req.body.quantity,
+          },
+        },
+        {
+          arrayFilters: [
+            { "list._id": req.body.listId },
+            { "item._id": req.body.itemId },
+          ],
+        }
+      )
+      res.status(200).json({ message: "Item updated succesfully." });
+    }
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
 };
 
