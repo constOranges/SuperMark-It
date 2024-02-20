@@ -65,10 +65,10 @@ const UpdateCatItemForm = () => {
       })
       .catch((err) => {
         console.log(err);
-        const errorResponse = err.response.data.errors;
+        const errorResponse = err.response.data;
         const errorArray = [];
         for (const key of Object.keys(errorResponse)) {
-          errorArray.push(errorResponse[key].message);
+          errorArray.push(errorResponse[key]);
         }
         setErrors(errorArray);
       });

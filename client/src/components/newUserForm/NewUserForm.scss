@@ -73,7 +73,7 @@ h2 {
 
 .submitBtn {
   padding: 15px 40px;
-  background: #47B6FE;
+  background: #47b6fe;
   border: 0;
   color: #fff;
   text-transform: uppercase;
@@ -169,13 +169,11 @@ p {
   font-weight: bold;
 }
 
-
 @media (max-width: 700px) {
   .errorMessage {
     text-align: center;
     display: flex;
     flex-direction: row;
-    position: sticky;
     height: 7em;
     width: 79%;
     margin-left: 2.3em;
@@ -187,7 +185,6 @@ p {
   p {
     margin-right: 1em;
   }
-
 }
 
 @media (min-width: 701px) {
@@ -206,5 +203,9 @@ p {
       border-radius: 25px;
       padding: 50px 40px 0px 50px;
     }
+  }
+  .errorMessage {
+    margin-top: 3em;
+    left: 34.3%;
   }
 }

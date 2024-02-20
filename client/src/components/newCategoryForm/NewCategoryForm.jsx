@@ -19,8 +19,8 @@ import $ from "jquery";
 import "./NewCategoryForm.scss";
 
 const NewCategoryForm = () => {
-  const [categoryName, setCategoryName] = useState("");
-  const [iconPath, setIconPath] = useState("");
+  const [categoryName, setCategoryName] = useState(null);
+  const [iconPath, setIconPath] = useState(null);
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
 
@@ -49,6 +49,7 @@ const NewCategoryForm = () => {
         setErrors(errorArray);
       });
   };
+
 
   const resetHandler = (e) => {
     e.preventDefault();
