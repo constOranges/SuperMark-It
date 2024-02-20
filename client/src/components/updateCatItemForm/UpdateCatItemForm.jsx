@@ -17,7 +17,10 @@ const UpdateCatItemForm = () => {
   const [errors, setErrors] = useState([]);
 
   const itemId = item._id;
-  categoryId = categoryId.id;
+
+  if (typeof categoryId === "object") {
+    categoryId = categoryId.id;
+  }
 
   const navigate = useNavigate();
 

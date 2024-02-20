@@ -12,7 +12,7 @@ import Alerts from "../alerts/Alerts.jsx";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import "./Navbar.scss";
 
-const Navbar = ({ loggedIn, setLoggedIn }) => {
+const Navbar = ({ loggedIn, setLoggedIn, user }) => {
   const [open, setOpen] = useState(false);
   const [addDropDown, setAddDropDown] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
@@ -33,6 +33,8 @@ const Navbar = ({ loggedIn, setLoggedIn }) => {
       })
       .catch((err) => console.log(err));
   };
+
+  const favoritesList = user.lists[0];
 
   const handleClickAway = () => {
     setOpen(false);
@@ -101,7 +103,7 @@ const Navbar = ({ loggedIn, setLoggedIn }) => {
             </ClickAwayListener>
 
             <div className="favIcon">
-              <Link className="link" to="/list/1">
+              <Link className="link" to={`/list/${favoritesList._id}`}>
                 <FavoriteRoundedIcon className="navIcon" />
               </Link>
             </div>

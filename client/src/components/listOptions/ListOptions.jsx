@@ -68,14 +68,7 @@ const ListOptions = ({ user }) => {
             </div>
           </Link>
 
-          <Link to="/list/1" className="link">
-            <div className="cat">
-              <FavoriteIcon className="catIcon" />
-              <div className="catBody">FAVORITES</div>
-            </div>
-          </Link>
-
-          {/* User-created lists */}
+          {/* Default and User-created lists */}
           {user
             ? user.lists.map((list) => {
                 return (
