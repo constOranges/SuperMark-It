@@ -6,7 +6,9 @@
 
   .moveItemToListForm {
     height: 20em;
+    width: 40em;
     overflow-y: scroll;
+    overflow-x: hidden;
 
     input {
       z-index: 998;
