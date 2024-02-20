@@ -38,7 +38,7 @@ const ItemSchema = new mongoose.Schema(
       },
     },
   },
-  { timestamps: false }
+  { timestamps: false, collection: false }
 );
 
 module.exports = mongoose.model("Item", ItemSchema);

@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const Item = require('./item.model');
+const Category = require('./category.model');
+const List = require('./list.model');
 
 const UserSchema = new mongoose.Schema({
     name: {
@@ -21,38 +23,60 @@ const UserSchema = new mongoose.Schema({
         required: [true, "Password is required."],
         minlength: [8, "Password must be at least 8 characters."]
     },
-    // Could make the choice to use separate category and list schemas here too,
-    // currently unsure if necessary/beneficial to do so
-    categories: [{
-        categoryName: String,
-        iconPath: String,
-        // Consider changing items to references instead of embedded documents to save space
-        items: [Item.schema]
-    }], // Must add default categories (Fridge, Freezer, Pantry)
-    lists: [{
-        listName: String,
-        iconPath: String,
-        items: [Item.schema]
-    }] // Add default list for favorites, make sure it cannot be deleted
-}, {timestamps: true});
+    categories: {
+        type: [
+            Category.schema
+        ],
+        default: [
+            {
+                categoryName: "Fridge",
+                iconPath: "kitchen",
+                items: []
+            },
+            {
+                categoryName: "Freezer",
+                iconPath: "icecream",
+                items: []
+            },
+            {
+                categoryName: "Pantry",
+                iconPath: "breakfast",
+                items: []
+            }
+        ]
+    },
+    lists: {
+        type: [
+            List.schema
+        ],
+        default: [
+            {
+                listName: "Favorites",
+                iconPath: "favorites",
+                deletable: "UNDELETABLE",
+                items: []
+            }
+        ]
+    }
+}, { timestamps: true });
 
 UserSchema.virtual('confirmPassword')
-    .get( () => this._confirmPassword )
-    .set( value => this._confirmPassword = value );
+    .get(() => this._confirmPassword)
+    .set(value => this._confirmPassword = value);
 
-UserSchema.pre('validate', function(next) {
+UserSchema.pre('validate', function (next) {
     if (this.password !== this.confirmPassword) {
         this.invalidate('confirmPassword', 'Password must match confirm password.');
     }
     next();
-    });
+});
 
-UserSchema.pre('save', function(next) {
+UserSchema.pre('save', function (next) {
     bcrypt.hash(this.password, 10)
         .then(hash => {
-        this.password = hash;
-        next();
+            this.password = hash;
+            next();
         });
-    });
+});
 
 module.exports = mongoose.model('User', UserSchema);
