@@ -57,11 +57,18 @@ const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
     });
   });
 
+  $(function () {
+    $(".logo").on("click", function () {
+      $(".icon").removeClass("selectedNav");
+      $(".homeIcon").addClass("selectedNav");
+    });
+  });
+
   return (
     <div className="navbar">
       <div className="wrapper">
         <div className="left">
-          <Link className="link" to="/">
+          <Link className="link logo" to="/">
             <img
               className="logo"
               src="/images/logo.jpg"
