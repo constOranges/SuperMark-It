@@ -156,10 +156,11 @@ module.exports.updateItemInCategory = async (req, res, next) => {
   const { imagePath } = req.body;
 
   try {
-    // Do we need other validations for updating items?
-    if (req.body.itemName.length < 1) {
-      throw new Error("Item name is required.");
-    }
+    const updatedItem = new Item({
+      itemName: req.body.itemName,
+    })
+
+    await updatedItem.validate();
 
     if (imagePath) {
       const result = await cloudinary.uploader.upload(imagePath, {
@@ -414,10 +415,11 @@ module.exports.updateItemInList = async (req, res, next) => {
   const { imagePath } = req.body;
 
   try {
-    // Do we need other validations for updating items?
-    if (req.body.itemName.length < 1) {
-      throw new Error("Item name is required.");
-    }
+    const updatedItem = new Item({
+      itemName: req.body.itemName,
+    })
+
+    await updatedItem.validate();
 
     if (imagePath) {
       const result = await cloudinary.uploader.upload(imagePath, {
