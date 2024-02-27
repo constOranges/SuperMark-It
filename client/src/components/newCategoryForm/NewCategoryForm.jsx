@@ -16,12 +16,14 @@ import BakeryDiningRoundedIcon from "@mui/icons-material/BakeryDining";
 import LocalPizzaRoundedIcon from "@mui/icons-material/LocalPizza";
 import LunchDiningRoundedIcon from "@mui/icons-material/LunchDining";
 import $ from "jquery";
+import ErrorMessage from "../errorMessage/ErrorMessage";
 import "./NewCategoryForm.scss";
 
 const NewCategoryForm = () => {
   const [categoryName, setCategoryName] = useState(null);
   const [iconPath, setIconPath] = useState(null);
   const [errors, setErrors] = useState([]);
+  const [errorToggle, setErrorToggle] = useState(false);
   const navigate = useNavigate();
 
   const submitHandler = (e) => {
@@ -50,6 +52,16 @@ const NewCategoryForm = () => {
       });
   };
 
+  useEffect(() => {
+    if (errors.length > 0) {
+      setErrorToggle(true);
+    }
+  });
+
+  const errorHandler = () => {
+    setErrors([]);
+    setErrorToggle(false);
+  };
 
   const resetHandler = (e) => {
     e.preventDefault();
@@ -62,7 +74,6 @@ const NewCategoryForm = () => {
       $(this).addClass("selected");
     });
   });
-
 
   //ICON HANDLERS
   const kitchenHandler = () => {
@@ -198,12 +209,8 @@ const NewCategoryForm = () => {
           </div>
         </form>
       </div>
-      {errors ? (
-        <div className="errorMessage">
-          {errors.map((err) => (
-            <p>{err}</p>
-          ))}
-        </div>
+      {errorToggle ? (
+        <ErrorMessage errors={errors} errorHandler={errorHandler} />
       ) : null}
     </div>
   );

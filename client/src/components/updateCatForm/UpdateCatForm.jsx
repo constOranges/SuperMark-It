@@ -16,6 +16,7 @@ import BakeryDiningRoundedIcon from "@mui/icons-material/BakeryDining";
 import LocalPizzaRoundedIcon from "@mui/icons-material/LocalPizza";
 import LunchDiningRoundedIcon from "@mui/icons-material/LunchDining";
 import $ from "jquery";
+import ErrorMessage from "../errorMessage/ErrorMessage";
 import "./UpdateCatForm.scss";
 
 const UpdateCatForm = () => {
@@ -29,6 +30,7 @@ const UpdateCatForm = () => {
     category ? category.iconPath : list.iconPath
   );
   const [errors, setErrors] = useState([]);
+  const [errorToggle, setErrorToggle] = useState(false);
   const navigate = useNavigate();
 
   const resetHandler = (e) => {
@@ -154,6 +156,17 @@ const UpdateCatForm = () => {
         }
         setErrors(errorArray);
       });
+  };
+
+  useEffect(() => {
+    if (errors.length > 0) {
+      setErrorToggle(true);
+    }
+  });
+
+  const errorHandler = () => {
+    setErrors([]);
+    setErrorToggle(false);
   };
 
   return (
@@ -326,12 +339,8 @@ const UpdateCatForm = () => {
         </div>
       )}
 
-      {errors ? (
-        <div className="errorMessage">
-          {errors.map((err) => (
-            <p>{err}</p>
-          ))}
-        </div>
+      {errorToggle ? (
+        <ErrorMessage errors={errors} errorHandler={errorHandler} />
       ) : null}
     </div>
   );
