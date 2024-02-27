@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./NewUserForm.scss";
+import CloseIcon from '@mui/icons-material/Close';
 
 const NewUserForm = ({ setLoggedIn }) => {
   const [name, setName] = useState("");
@@ -109,10 +110,13 @@ const NewUserForm = ({ setLoggedIn }) => {
         </form>
       </div>
       {errors ? (
-        <div className="errorMessage">
-          {errors.map((err) => (
-            <p>{err}</p>
-          ))}
+        <div className="overlay">
+          <div className="errorMessage">
+            <CloseIcon className="close" />
+            {errors.map((err) => (
+              <p>{err}</p>
+            ))}
+          </div>
         </div>
       ) : null}
     </div>

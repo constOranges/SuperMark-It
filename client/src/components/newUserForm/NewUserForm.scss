@@ -148,38 +148,49 @@ h2 {
 }
 
 .errorMessage {
-  position: sticky;
-  background-color: rgba(255, 133, 133, 0.644);
-  border-style: solid;
-  border-radius: 0.5em;
-  width: 30vw;
-  margin: 1em;
-  margin-bottom: 2.5em;
-  padding: 0.5em;
-  opacity: 1;
   animation: horizontal-shaking 0.25s;
+  position: fixed;
+  right: 0px;
+  left: 0px;
+  z-index: 4;
+  background-color: white;
+  padding: 50px;
+  text-transform: uppercase;
+  font-family: helvetica;
+  font-size: 15px;
+  letter-spacing: 2px;
+  border-radius: 20px;
+  color: red;
+  -webkit-box-shadow: 0px 0px 7px -5px black;
+  box-shadow: 0px 0px 7px -5px black;
+  overflow-x: hidden;
+
+  .close {
+    position: absolute;
+    color: rgb(185, 185, 185);
+    font-size: 32px;
+    right: 15px;
+    top: 15px;
+  }
+
+  .close:hover {
+    cursor: pointer;
+    opacity: 70%;
+  }
 }
 
 .errorMessage:empty {
   display: none;
 }
 
-p {
-  font-size: 1.1em;
-  font-weight: bold;
-}
 
 @media (max-width: 700px) {
   .errorMessage {
     text-align: center;
-    display: flex;
-    flex-direction: row;
-    height: 7em;
+    bottom: 350px;
     width: 79%;
     margin-left: 2.3em;
-    padding: 1em;
-    padding-bottom: 2em;
-    z-index: -1;
+    padding: 4em 1em;
   }
 
   p {
@@ -204,8 +215,27 @@ p {
       padding: 50px 40px 0px 50px;
     }
   }
+
+  // .overlay {
+  //   position: fixed; /* Sit on top of the page content */
+  //   display: none;
+  //   width: 100%; /* Full width (cover the whole page) */
+  //   height: 100%; /* Full height (cover the whole page) */
+  //   top: 0;
+  //   left: 0;
+  //   right: 0;
+  //   bottom: 0;
+  //   background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+  //   z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+  //   cursor: pointer; /* Add a pointer on hover */
+  // }
+
   .errorMessage {
-    margin-top: 3em;
-    left: 34.3%;
+    margin: 0;
+    height: auto;
+    position: fixed;
+    bottom: 25em;
+    left: 30vw;
+    right: 30vw;
   }
 }
