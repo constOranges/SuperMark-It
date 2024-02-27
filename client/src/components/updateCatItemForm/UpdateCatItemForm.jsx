@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
+import ErrorMessage from "../errorMessage/ErrorMessage";
 import "./UpdateCatItemForm.scss";
 
 const UpdateCatItemForm = () => {
@@ -15,6 +16,7 @@ const UpdateCatItemForm = () => {
   const [notifyDate, setNotifyDate] = useState(itemNotifyDate);
   const [imagePath, setImagePath] = useState("");
   const [errors, setErrors] = useState([]);
+  const [errorToggle, setErrorToggle] = useState(false);
 
   const itemId = item._id;
 
@@ -76,6 +78,17 @@ const UpdateCatItemForm = () => {
         }
         setErrors(errorArray);
       });
+  };
+
+  useEffect(() => {
+    if (errors.length > 0) {
+      setErrorToggle(true);
+    }
+  });
+
+  const errorHandler = () => {
+    setErrors([]);
+    setErrorToggle(false);
   };
 
   return (
@@ -163,12 +176,8 @@ const UpdateCatItemForm = () => {
           </div>
         </form>
       </div>
-      {errors ? (
-        <div className="errorMessage">
-          {errors.map((err) => (
-            <p>{err}</p>
-          ))}
-        </div>
+      {errorToggle ? (
+        <ErrorMessage errors={errors} errorHandler={errorHandler} />
       ) : null}
     </div>
   );

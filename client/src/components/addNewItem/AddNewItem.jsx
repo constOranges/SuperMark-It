@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import ErrorMessage from "../errorMessage/ErrorMessage";
 import "./AddNewItem.scss";
 
 const AddNewItem = () => {
@@ -13,6 +14,7 @@ const AddNewItem = () => {
   const [categories, setCategories] = useState([]);
   const [categoryId, setCategoryId] = useState("");
   const [errors, setErrors] = useState([]);
+  const [errorToggle, setErrorToggle] = useState(false);
 
   const navigate = useNavigate();
 
@@ -30,6 +32,11 @@ const AddNewItem = () => {
         console.log(err);
       });
   }, []);
+
+  const errorHandler = () => {
+    setErrors([]);
+    setErrorToggle(false);
+  };
 
   const categoryHandler = (e) => {
     e.preventDefault();
@@ -85,6 +92,12 @@ const AddNewItem = () => {
         setErrors(errorArray);
       });
   };
+
+  useEffect(() => {
+    if (errors.length > 0) {
+      setErrorToggle(true);
+    }
+  });
 
   return (
     <div className="newItemPage">
@@ -185,12 +198,8 @@ const AddNewItem = () => {
           </div>
         </form>
       </div>
-      {errors ? (
-        <div className="errorMessage">
-          {errors.map((err) => (
-            <p>{err}</p>
-          ))}
-        </div>
+      {errorToggle ? (
+        <ErrorMessage errors={errors} errorHandler={errorHandler} />
       ) : null}
     </div>
   );

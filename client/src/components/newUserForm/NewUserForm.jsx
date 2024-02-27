@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./NewUserForm.scss";
-import CloseIcon from '@mui/icons-material/Close';
+import ErrorMessage from "../errorMessage/ErrorMessage";
 
 const NewUserForm = ({ setLoggedIn }) => {
   const [name, setName] = useState("");
@@ -10,6 +10,7 @@ const NewUserForm = ({ setLoggedIn }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
+  const [errorToggle, setErrorToggle] = useState(false);
   const navigate = useNavigate();
 
   const registrationHandler = (e) => {
@@ -43,6 +44,17 @@ const NewUserForm = ({ setLoggedIn }) => {
           setErrors(errorArray);
         }
       });
+  };
+
+  useEffect(() => {
+    if (errors.length > 0) {
+      setErrorToggle(true);
+    }
+  });
+
+  const errorHandler = () => {
+    setErrors([]);
+    setErrorToggle(false);
   };
 
   const resetHandler = (e) => {
@@ -109,15 +121,8 @@ const NewUserForm = ({ setLoggedIn }) => {
           </div>
         </form>
       </div>
-      {errors ? (
-        <div className="overlay">
-          <div className="errorMessage">
-            {/* <CloseIcon className="close" /> */}
-            {errors.map((err) => (
-              <p>{err}</p>
-            ))}
-          </div>
-        </div>
+      {errorToggle ? (
+        <ErrorMessage errors={errors} errorHandler={errorHandler} />
       ) : null}
     </div>
   );

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import ErrorMessage from "../errorMessage/ErrorMessage";
 import "./AddListItem.scss";
-import $ from "jquery";
 
 const AddListItem = () => {
   const [itemName, setItemName] = useState("");
@@ -12,6 +12,7 @@ const AddListItem = () => {
   const [lists, setLists] = useState([]);
   const [listId, setListId] = useState("");
   const [errors, setErrors] = useState([]);
+  const [errorToggle, setErrorToggle] = useState(false);
 
   const navigate = useNavigate();
 
@@ -29,6 +30,11 @@ const AddListItem = () => {
         console.log(err);
       });
   }, []);
+
+  const errorHandler = () => {
+    setErrors([]);
+    setErrorToggle(false);
+  };
 
   const listHandler = (e) => {
     e.preventDefault();
@@ -75,7 +81,6 @@ const AddListItem = () => {
       .catch((err) => {
         console.log(err);
         const errorResponse = err.response.data.errors;
-
         const errorArray = [];
         for (const key of Object.keys(errorResponse)) {
           errorArray.push(errorResponse[key].message);
@@ -83,6 +88,12 @@ const AddListItem = () => {
         setErrors(errorArray);
       });
   };
+
+  useEffect(() => {
+    if (errors.length > 0) {
+      setErrorToggle(true);
+    }
+  });
 
   return (
     <div className="newListItemPage">
@@ -160,12 +171,8 @@ const AddListItem = () => {
           </div>
         </form>
       </div>
-      {errors ? (
-        <div className="errorMessage">
-          {errors.map((err) => (
-            <p>{err}</p>
-          ))}
-        </div>
+      {errorToggle ? (
+        <ErrorMessage errors={errors} errorHandler={errorHandler} />
       ) : null}
     </div>
   );
