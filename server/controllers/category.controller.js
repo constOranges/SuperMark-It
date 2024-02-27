@@ -23,7 +23,7 @@ module.exports.addCategory = async (req, res) => {
 
         res.status(200).json({ message: "Category created succesfully." });
     } catch (err) {
-        res.status(400).json({ error: err.message })
+        res.status(400).json(err);
     }
 }
 
@@ -52,7 +52,6 @@ module.exports.removeCategory = async (req, res) => {
         //                 item._id,
         //                 { $pull: { inUseIDs: req.body.categoryId } },
         //                 { new: true }
-        0
         //             );
 
         //             // deletes item permanently if no longer in use by any categories or lists
@@ -78,28 +77,34 @@ module.exports.removeCategory = async (req, res) => {
     }
 }
 
-module.exports.editCategory = (req, res) => {
-
-    User.updateOne(
-        {
-            _id: req.userId,
-        },
-        {
-            $set: {
-                "categories.$[category].categoryName": req.body.categoryName,
-                "categories.$[category].iconPath": req.body.iconPath,
-            },
-        },
-        {
-            arrayFilters: [{ "category._id": req.body.categoryId }],
-            new: true,
-        },
-
-    )
-        .then((user) => {
-            res.status(200).json({ message: "Category updated succesfully." });
+module.exports.editCategory = async (req, res) => {
+    try {
+        const updatedCategory = new Category({
+            categoryName: req.body.categoryName,
+            iconPath: req.body.iconPath,
+            items: []
         })
-        .catch((err) => {
-            res.status(400).json({ error: err.message });
-        });
+
+        await updatedCategory.validate();
+
+        await User.updateOne(
+            {
+                _id: req.userId,
+            },
+            {
+                $set: {
+                    "categories.$[category].categoryName": req.body.categoryName,
+                    "categories.$[category].iconPath": req.body.iconPath,
+                },
+            },
+            {
+                arrayFilters: [{ "category._id": req.body.categoryId }],
+                new: true,
+            },
+        )
+        
+        res.status(200).json({ message: "Category updated successfully. "});
+    } catch (err) {
+        res.status(400).json(err);
+    }
 }
