@@ -29,7 +29,7 @@ module.exports.createUser = (req, res) => {
                 })
                 .json({ user: userInfo });
         })
-        .catch(err => res.status(400).json({ error: err.message }));
+        .catch(err => res.status(400).json(err));
 }
 
 module.exports.loginUser = async (req, res) => {
