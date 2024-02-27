@@ -32,6 +32,8 @@ const ItemCard = ({
     setOpen(false);
   };
 
+  
+
   return (
     <div className="itemCard">
       <div className="left">

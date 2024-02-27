@@ -39,27 +39,13 @@ const List = () => {
     setOpen(false);
   };
 
-  const prodList = [];
-
-  const products = lists.filter((list) => {
-    if (`/list/${list._id}` == window.location.pathname) {
-      list.items.forEach((item) => {
-        prodList.push(item);
-      });
-    }
-  });
-
-  const listName = lists.map((list) => {
-    if (`/list/${list._id}` == window.location.pathname) {
-      return list.listName;
-    }
-  });
-
-  const currentList = lists.map((list) => {
+  let currentList = lists.filter((list) => {
     if (`/list/${list._id}` == window.location.pathname) {
       return list;
     }
   });
+
+  currentList ? (currentList = currentList[0]) : currentList;
 
   return (
     <div className="list">
@@ -69,16 +55,10 @@ const List = () => {
             <div className="more" onClick={() => setOpen(!open)}>
               <MoreHorizIcon className="catIcons" />
             </div>
-            {open && (
-              <ListCatOptions
-                listId={listId}
-                list={currentList}
-                listName={listName}
-              />
-            )}
+            {open && <ListCatOptions listId={listId} list={currentList} />}
           </div>
         </ClickAwayListener>
-        <h1>{listName}</h1>
+        <h1>{currentList?.listName}</h1>
         <Link to="/addListItem" className="buttonLink">
           <AddRoundedIcon className="catIcons" />
         </Link>
@@ -93,9 +73,9 @@ const List = () => {
           </InputGroup>
         </Form>
       </div>
-      {prodList.length > 0 ? (
+      {currentList?.items?.length > 0 ? (
         <div className="bottom">
-          {prodList
+          {currentList?.items
             ?.filter((item) => {
               return search.toLowerCase() === ""
                 ? item

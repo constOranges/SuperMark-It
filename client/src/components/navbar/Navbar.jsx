@@ -48,6 +48,7 @@ const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
 
   const alertClickAway = () => {
     setOpenAlert(false);
+
   };
 
   $(function () {

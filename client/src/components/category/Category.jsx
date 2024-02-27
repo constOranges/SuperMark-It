@@ -38,26 +38,13 @@ const Category = () => {
     setOpen(false);
   };
 
-  const prodList = [];
-
-  const products = category.map((cat) => {
-    if (`/category/${cat._id}` == window.location.pathname) {
-      cat.items.forEach((item) => {
-        prodList.push(item);
-      });
-    }
-  });
-  const catName = category.map((cat) => {
-    if (`/category/${cat._id}` == window.location.pathname) {
-      return cat.categoryName;
-    }
-  });
-
-  const currentCategory = category.map((cat) => {
+  let currentCategory = category.filter((cat) => {
     if (`/category/${cat._id}` == window.location.pathname) {
       return cat;
     }
   });
+
+  currentCategory ? (currentCategory = currentCategory[0]) : currentCategory;
 
   return (
     <div className="category">
@@ -71,12 +58,11 @@ const Category = () => {
               <ListCatOptions
                 categoryId={categoryId}
                 category={currentCategory}
-                catName={catName}
               />
             )}
           </div>
         </ClickAwayListener>
-        <h1>{catName}</h1>
+        <h1>{currentCategory?.categoryName}</h1>
         <Link to="/add" className="buttonLink">
           <AddRoundedIcon className="catIcons" />
         </Link>
@@ -91,9 +77,9 @@ const Category = () => {
           </InputGroup>
         </Form>
       </div>
-      {prodList.length > 0 ? (
+      {currentCategory?.items?.length > 0 ? (
         <div className="bottom">
-          {prodList
+          {currentCategory?.items
             ?.filter((item) => {
               return search.toLowerCase() === ""
                 ? item

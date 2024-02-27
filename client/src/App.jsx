@@ -41,6 +41,8 @@ function App() {
     getUser();
   }, []);
 
+  console.log(user)
+
   const Layout = () => {
     return (
       <div className="app">

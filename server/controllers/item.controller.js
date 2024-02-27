@@ -45,7 +45,7 @@ module.exports.addItemToCategory = async (req, res) => {
 
       res.status(200).json({ message: "Item created succesfully." });
     } catch (err) {
-      res.status(400).json({ error: err.message });
+      res.status(400).json(err);
     }
   } else {
     const newItem = new Item({
@@ -74,7 +74,8 @@ module.exports.addItemToCategory = async (req, res) => {
 
       res.status(200).json({ message: "Item created succesfully." });
     } catch (err) {
-      res.status(400).json({ error: err.message });
+      console.log(err);
+      res.status(400).json(err);
     }
   }
 };
@@ -147,7 +148,7 @@ module.exports.existingItemToCategories = async (req, res) => {
     }
     res.status(200).json({ message: "Item(s) updated successfully." });
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(400).json(err);
   }
 };
 
@@ -155,10 +156,11 @@ module.exports.updateItemInCategory = async (req, res, next) => {
   const { imagePath } = req.body;
 
   try {
-    // Do we need other validations for updating items?
-    if (req.body.itemName.length < 1) {
-      throw new Error("Item name is required.");
-    }
+    const updatedItem = new Item({
+      itemName: req.body.itemName,
+    })
+
+    await updatedItem.validate();
 
     if (imagePath) {
       const result = await cloudinary.uploader.upload(imagePath, {
@@ -217,7 +219,7 @@ module.exports.updateItemInCategory = async (req, res, next) => {
       res.status(200).json({ message: "Item updated succesfully." });
     }
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(400).json(err);
   }
 };
 
@@ -265,7 +267,7 @@ module.exports.renewItem = async (req, res) => {
       res.status(200).json({ message: "Item renewed succesfully." });
     })
     .catch((err) => {
-      res.status(400).json(err);
+      res.status(400).json({ error: err.message });
     });
 };
 
@@ -309,7 +311,7 @@ module.exports.addItemToList = async (req, res) => {
 
       res.status(200).json({ message: "Item created succesfully." });
     } catch (err) {
-      res.status(400).json({ error: err.message });
+      res.status(400).json(err);
     }
   } else {
     const newItem = new Item({
@@ -336,7 +338,7 @@ module.exports.addItemToList = async (req, res) => {
 
       res.status(200).json({ message: "Item created succesfully." });
     } catch (err) {
-      res.status(400).json({ error: err.message });
+      res.status(400).json(err);
     }
   }
 };
@@ -405,7 +407,7 @@ module.exports.existingItemToLists = async (req, res) => {
     }
     res.status(200).json({ message: "Item(s) updated successfully." });
   } catch {
-    res.status(400).json({ error: "There was an error moving all items." });
+    res.status(400).json(err);
   }
 };
 
@@ -413,10 +415,11 @@ module.exports.updateItemInList = async (req, res, next) => {
   const { imagePath } = req.body;
 
   try {
-    // Do we need other validations for updating items?
-    if (req.body.itemName.length < 1) {
-      throw new Error("Item name is required.");
-    }
+    const updatedItem = new Item({
+      itemName: req.body.itemName,
+    })
+
+    await updatedItem.validate();
 
     if (imagePath) {
       const result = await cloudinary.uploader.upload(imagePath, {
@@ -470,7 +473,7 @@ module.exports.updateItemInList = async (req, res, next) => {
       res.status(200).json({ message: "Item updated succesfully." });
     }
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(400).json(err);
   }
 };
 

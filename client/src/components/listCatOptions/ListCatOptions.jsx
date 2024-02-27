@@ -11,8 +11,6 @@ const ListCatOptions = ({
   categoryId,
   category,
   list,
-  catName,
-  listName,
 }) => {
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
@@ -46,6 +44,8 @@ const ListCatOptions = ({
         });
     }
   };
+
+
 
   const deleteListHandler = () => {
     if (window.confirm(`Are you sure you want to delete ${listName}`)) {
