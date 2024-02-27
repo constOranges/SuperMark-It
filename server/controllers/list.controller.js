@@ -24,7 +24,7 @@ module.exports.addList = async (req, res) => {
 
         res.status(200).json({ message: "List created succesfully." });
     } catch (err) {
-        res.status(400).json({ error: err.message });
+        res.status(400).json(err);
     }
 }
 
@@ -84,26 +84,34 @@ module.exports.removeList = async (req, res) => {
     }
 }
 
-module.exports.editList = (req, res) => {
-    User.updateOne(
-        {
-            _id: req.userId,
-        },
-        {
-            $set: {
-                "lists.$[list].listName": req.body.listName,
-                "lists.$[list].iconPath": req.body.iconPath,
-            },
-        },
-        {
-            arrayFilters: [{ "list._id": req.body.listId }],
-            new: true,
-        }
-    )
-        .then((user) => {
-            res.status(200).json({ message: "List updated succesfully." });
+module.exports.editList = async (req, res) => {
+    try {
+        const updatedList = new List({
+            listName: req.body.listName,
+            iconPath: req.body.iconPath,
+            items: []
         })
-        .catch((err) => {
-            res.status(400).json(err);
-        });
-};
+
+        await updatedList.validate();
+
+        await User.updateOne(
+            {
+                _id: req.userId,
+            },
+            {
+                $set: {
+                    "lists.$[list].listName": req.body.listName,
+                    "lists.$[list].iconPath": req.body.iconPath,
+                },
+            },
+            {
+                arrayFilters: [{ "list._id": req.body.listId }],
+                new: true,
+            },
+        )
+        
+        res.status(200).json({ message: "List updated successfully. "});
+    } catch (err) {
+        res.status(400).json(err);
+    }
+}
