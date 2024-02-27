@@ -21,25 +21,35 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
+  const getUser = () => {
     axios
       .get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/users/currentuser`, {
         withCredentials: true,
       })
       .then((res) => {
         setLoggedIn(true);
-        setUser(res.data.user)
+        setUser(res.data.user);
       })
       .catch((err) => {
         setLoggedIn(false);
+        setUser(null);
         console.log(err);
       });
+  };
+
+  useEffect(() => {
+    getUser();
   }, []);
 
   const Layout = () => {
     return (
       <div className="app">
-        <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} user={user}/>
+        <Navbar
+          loggedIn={loggedIn}
+          setLoggedIn={setLoggedIn}
+          user={user}
+          getUser={getUser}
+        />
         <Outlet />
       </div>
     );
@@ -52,7 +62,7 @@ function App() {
       children: [
         {
           path: "/",
-          element: <Homepage user={user}/>,
+          element: <Homepage user={user} />,
         },
         {
           path: "/category/:id",
