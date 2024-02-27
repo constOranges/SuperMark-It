@@ -39,15 +39,10 @@ const NewUserForm = ({ setLoggedIn }) => {
           for (const key of Object.keys(errorResponse)) {
             errorArray.push(errorResponse[key].message);
           }
-          console.log(errorArray);
           setErrors(errorArray);
         }
       });
   };
-
-  useEffect(() => {
-    console.log(errors);
-  }, [errors])
 
   const resetHandler = (e) => {
     e.preventDefault();
