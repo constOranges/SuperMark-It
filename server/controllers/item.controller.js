@@ -74,6 +74,7 @@ module.exports.addItemToCategory = async (req, res) => {
 
       res.status(200).json({ message: "Item created succesfully." });
     } catch (err) {
+      console.log(err);
       res.status(400).json(err);
     }
   }
