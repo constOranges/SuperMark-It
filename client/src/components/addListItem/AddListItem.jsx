@@ -74,10 +74,11 @@ const AddListItem = () => {
       })
       .catch((err) => {
         console.log(err);
-        const errorResponse = err.response.data;
+        const errorResponse = err.response.data.errors;
+
         const errorArray = [];
         for (const key of Object.keys(errorResponse)) {
-          errorArray.push(errorResponse[key]);
+          errorArray.push(errorResponse[key].message);
         }
         setErrors(errorArray);
       });

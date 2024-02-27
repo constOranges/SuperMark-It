@@ -60,10 +60,11 @@ const UpdateListItemForm = () => {
       })
       .catch((err) => {
         console.log(err);
-        const errorResponse = err.response.data;
+        const errorResponse = err.response.data.errors;
+        console.log(errorResponse);
         const errorArray = [];
         for (const key of Object.keys(errorResponse)) {
-          errorArray.push(errorResponse[key]);
+          errorArray.push(errorResponse[key].message);
         }
         setErrors(errorArray);
       });
