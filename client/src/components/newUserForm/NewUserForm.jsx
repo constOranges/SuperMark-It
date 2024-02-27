@@ -49,6 +49,8 @@ const NewUserForm = ({ setLoggedIn }) => {
     navigate("/");
   };
 
+  console.log(errors);
+
   return (
     <div className="newUserPage">
       <div className="registrationForm">

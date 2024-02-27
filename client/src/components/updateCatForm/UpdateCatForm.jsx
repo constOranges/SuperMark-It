@@ -22,11 +22,11 @@ const UpdateCatForm = () => {
   const location = useLocation();
   let { categoryId, listId, category, list } = location.state;
   const [categoryName, setCategoryName] = useState(
-    category ? category[0].categoryName : null
+    category ? category.categoryName : null
   );
-  const [listName, setListName] = useState(list ? list[0].listName : null);
+  const [listName, setListName] = useState(list ? list.listName : null);
   const [iconPath, setIconPath] = useState(
-    category ? category[0].iconPath : list[0].iconPath
+    category ? category.iconPath : list.iconPath
   );
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
