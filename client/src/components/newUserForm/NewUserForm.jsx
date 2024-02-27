@@ -112,7 +112,7 @@ const NewUserForm = ({ setLoggedIn }) => {
       {errors ? (
         <div className="overlay">
           <div className="errorMessage">
-            <CloseIcon className="close" />
+            {/* <CloseIcon className="close" /> */}
             {errors.map((err) => (
               <p>{err}</p>
             ))}
