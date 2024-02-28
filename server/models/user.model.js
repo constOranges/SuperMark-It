@@ -57,6 +57,23 @@ const UserSchema = new mongoose.Schema({
                 items: []
             }
         ]
+    },
+    notifications: {
+        type: [
+            {
+                itemId: String,
+                itemName: String,
+                imagePath: {
+                    public_id: {
+                        type: String,
+                    },
+                    url: {
+                        type: String,
+                    },
+                },
+                expDate: Date
+            }
+        ]
     }
 }, { timestamps: true });
 
