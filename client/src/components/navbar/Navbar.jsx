@@ -48,7 +48,10 @@ const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
 
   const alertClickAway = () => {
     setOpenAlert(false);
+  };
 
+  const closeLogin = () => {
+    setOpen(false);
   };
 
   $(function () {
@@ -151,19 +154,23 @@ const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
                         </Link>
                       </div>
                     ) : (
-                      <div className="userForm">
-                        <LoginForm
-                          setOpen={setOpen}
-                          setLoggedIn={setLoggedIn}
-                          getUser={getUser}
-                        />
-                        <Link
-                          className="link"
-                          to="/newUser"
-                          onClick={() => setOpen(!open)}
-                        >
-                          Sign-up
-                        </Link>
+                      <div className="logInOverlay">
+                        <ClickAwayListener onClickAway={closeLogin}>
+                          <div className="userForm">
+                            <LoginForm
+                              setOpen={setOpen}
+                              setLoggedIn={setLoggedIn}
+                              getUser={getUser}
+                            />
+                            <Link
+                              className="link"
+                              to="/newUser"
+                              onClick={() => setOpen(!open)}
+                            >
+                              Sign-up
+                            </Link>
+                          </div>
+                        </ClickAwayListener>
                       </div>
                     )}
                   </div>
