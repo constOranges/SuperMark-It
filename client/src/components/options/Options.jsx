@@ -53,7 +53,6 @@ const Options = ({ user }) => {
     }
   }
 
-  console.log(user);
 
   return (
     <div className="options">

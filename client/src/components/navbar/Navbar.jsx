@@ -48,6 +48,7 @@ const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
 
   const alertClickAway = () => {
     setOpenAlert(false);
+    $(".notifIcon").removeClass("selectedNav");
   };
 
   const closeLogin = () => {
@@ -187,7 +188,7 @@ const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
                   />
                 </div>
 
-                {openAlert && <Alerts />}
+                {openAlert && <Alerts user={user} />}
               </div>
             </ClickAwayListener>
           </div>

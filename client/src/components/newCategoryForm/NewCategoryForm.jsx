@@ -19,7 +19,7 @@ import $ from "jquery";
 import ErrorMessage from "../errorMessage/ErrorMessage";
 import "./NewCategoryForm.scss";
 
-const NewCategoryForm = () => {
+const NewCategoryForm = ({ getUser }) => {
   const [categoryName, setCategoryName] = useState(null);
   const [iconPath, setIconPath] = useState(null);
   const [errors, setErrors] = useState([]);
@@ -40,6 +40,7 @@ const NewCategoryForm = () => {
       .then((res) => {
         console.log(res);
         navigate("/");
+        getUser();
       })
       .catch((err) => {
         console.log(err);

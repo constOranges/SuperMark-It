@@ -19,7 +19,7 @@ import $ from "jquery";
 import ErrorMessage from "../errorMessage/ErrorMessage";
 import "./NewListForm.scss";
 
-const NewListForm = () => {
+const NewListForm = ({ getUser }) => {
   const [listName, setListName] = useState("");
   const [iconPath, setIconPath] = useState("");
   const [errors, setErrors] = useState([]);
@@ -40,6 +40,7 @@ const NewListForm = () => {
       .then((res) => {
         console.log(res);
         navigate("/");
+        getUser();
       })
       .catch((err) => {
         console.log(err);

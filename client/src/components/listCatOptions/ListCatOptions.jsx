@@ -6,22 +6,21 @@ import "./ListCatOptions.scss";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
-const ListCatOptions = ({
-  listId,
-  categoryId,
-  category,
-  list,
-}) => {
+const ListCatOptions = ({ listId, categoryId, category, list }) => {
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
 
-  const deleteCatHandler = () => {
-    if (window.confirm(`Are you sure you want to delete ${catName}?`)) {
+  const deleteCatHandler = async () => {
+    if (
+      window.confirm(
+        `Are you sure you want to delete ${category.categoryName}?`
+      )
+    ) {
       if (categoryId) {
         categoryId = categoryId.id;
       }
 
-      axios
+      await axios
         .patch(
           `${import.meta.env.VITE_REACT_APP_API_URL}/api/categories/remove`,
           {
@@ -32,6 +31,7 @@ const ListCatOptions = ({
         .then((res) => {
           console.log(res);
           navigate("/");
+          window.location.reload(false);
         })
         .catch((err) => {
           console.log(err);
@@ -45,14 +45,12 @@ const ListCatOptions = ({
     }
   };
 
-
-
-  const deleteListHandler = () => {
-    if (window.confirm(`Are you sure you want to delete ${listName}`)) {
+  const deleteListHandler = async () => {
+    if (window.confirm(`Are you sure you want to delete ${list.listName}`)) {
       if (listId) {
         listId = listId.id;
       }
-      axios
+      await axios
         .patch(
           `${import.meta.env.VITE_REACT_APP_API_URL}/api/lists/remove`,
           {
@@ -63,6 +61,7 @@ const ListCatOptions = ({
         .then((res) => {
           console.log(res);
           navigate("/");
+          window.location.reload(false);
         })
         .catch((err) => {
           console.log(err);
