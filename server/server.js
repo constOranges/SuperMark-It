@@ -23,7 +23,7 @@ require("./routes/notification.route")(app);
 const NotificationController = require("./controllers/notification.controller");
 // Sends expiration date notifications every day at 7 AM PST.
 // Adjust frequency/time based on timezones if necessary.
-cron.schedule('29 13 * * *', NotificationController.pushNotificationsToArray);
+cron.schedule('11 15 * * *', NotificationController.pushNotificationsToArray);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 

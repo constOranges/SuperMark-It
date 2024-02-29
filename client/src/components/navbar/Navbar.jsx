@@ -48,7 +48,9 @@ const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
 
   const alertClickAway = () => {
     setOpenAlert(false);
-    $(".notifIcon").removeClass("selectedNav");
+    $(function () {
+      $(".notifIcon").removeClass("selectedNav");
+    });
   };
 
   const closeLogin = () => {
