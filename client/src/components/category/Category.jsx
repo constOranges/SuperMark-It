@@ -46,6 +46,12 @@ const Category = () => {
 
   currentCategory ? (currentCategory = currentCategory[0]) : currentCategory;
 
+  const sortExpDate = () => {
+    currentCategory.items.sort(function (a, b) {
+      return new Date(a.expDate) - new Date(b.expDate);
+    });
+  };
+
   return (
     <div className="category">
       <div className="top">

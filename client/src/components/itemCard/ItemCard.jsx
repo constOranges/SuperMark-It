@@ -7,6 +7,8 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import ItemOptions from "../itemOptions/ItemOptions";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 
+import defaultImage from "../../defaultImage/orange.png";
+
 const ItemCard = ({
   item,
   categoryId,
@@ -37,11 +39,19 @@ const ItemCard = ({
   return (
     <div className="itemCard">
       <div className="left">
-        <img
-          src={item.imagePath?.url}
-          alt="Image of product"
-          className="image"
-        />
+        {item.imagePath ? (
+          <img
+            src={item.imagePath?.url}
+            alt="Image of product"
+            className="image"
+          />
+        ) : (
+          <img
+            src={defaultImage}
+            alt="Image of product"
+            className="image"
+          />
+        )}
       </div>
       <div className="middle">
         <h3>{item.itemName}</h3>

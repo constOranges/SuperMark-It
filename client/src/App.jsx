@@ -41,7 +41,7 @@ function App() {
     getUser();
   }, []);
 
-  console.log(user)
+  console.log(user);
 
   const Layout = () => {
     return (
@@ -101,16 +101,20 @@ function App() {
         {
           path: "/newUser",
           element: (
-            <NewUserForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+            <NewUserForm
+              loggedIn={loggedIn}
+              setLoggedIn={setLoggedIn}
+              getUser={getUser}
+            />
           ),
         },
         {
           path: "/newCategory",
-          element: <NewCategoryForm />,
+          element: <NewCategoryForm getUser={getUser} />,
         },
         {
           path: "/newList",
-          element: <NewListForm />,
+          element: <NewListForm getUser={getUser} />,
         },
         {
           path: "/updateCategory",

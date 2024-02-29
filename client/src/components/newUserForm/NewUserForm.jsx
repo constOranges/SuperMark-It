@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, } from "react-router-dom";
 import axios from "axios";
 import "./NewUserForm.scss";
 import ErrorMessage from "../errorMessage/ErrorMessage";
 
-const NewUserForm = ({ setLoggedIn }) => {
+const NewUserForm = ({ setLoggedIn, getUser }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,6 +29,7 @@ const NewUserForm = ({ setLoggedIn }) => {
       .then((res) => {
         setLoggedIn(true);
         navigate("/");
+        getUser();
       })
       .catch((err) => {
         if (err.response.data.code === 11000) {

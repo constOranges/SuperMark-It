@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import ErrorMessage from "../errorMessage/ErrorMessage";
 import "./RenewItem.scss";
 
 const RenewItem = ({ item, categoryId, getCategory }) => {
@@ -14,6 +15,7 @@ const RenewItem = ({ item, categoryId, getCategory }) => {
     itemNotifyDate ? itemNotifyDate : new Date()
   );
 
+  const [errors, setErrors] = useState([]);
   const [success, setSuccess] = useState(false);
 
   const itemId = item._id;
