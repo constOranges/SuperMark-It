@@ -3,7 +3,10 @@ import axios from "axios";
 import defaultImage from "../../defaultImage/orange.png";
 import { DateTime } from "luxon";
 import CloseIcon from "@mui/icons-material/Close";
+import io from "socket.io-client";
 import "./Alerts.scss";
+
+const socket = io("http://localhost:8000");
 
 const Alerts = () => {
   const [notifications, setNotifications] = useState([]);
@@ -25,6 +28,16 @@ const Alerts = () => {
   useEffect(() => {
     getNotifications();
   }, []);
+
+  useEffect(() => {
+    socket.on('new-notification', (notification) => {
+      setNotifications((prevNotifications) => [...prevNotifications, notification]);
+    });
+
+    return () => {
+      socket.disconnect();
+    }
+  }, [])
 
   const deleteHandler = async (e, notificationId) => {
     e.preventDefault();
