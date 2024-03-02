@@ -258,7 +258,7 @@ module.exports.renewItem = async (req, res) => {
     },
     {
       arrayFilters: [
-        { category_id: req.body.categoryId },
+        { "category._id": req.body.categoryId },
         { "item._id": req.body.itemId },
       ],
     }
