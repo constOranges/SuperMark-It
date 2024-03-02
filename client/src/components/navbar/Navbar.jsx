@@ -190,7 +190,7 @@ const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
                   />
                 </div>
 
-                {openAlert && <Alerts user={user} />}
+                {openAlert && <Alerts />}
               </div>
             </ClickAwayListener>
           </div>
