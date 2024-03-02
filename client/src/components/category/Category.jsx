@@ -13,7 +13,10 @@ import InputGroup from "react-bootstrap/InputGroup";
 const Category = () => {
   const [category, setCategory] = useState([]);
   const [open, setOpen] = useState(false);
+  const [currentCategory, setCurrentCategory] = useState({});
+  const [items, setItems] = useState([]);
   const [search, setSearch] = useState("");
+  const [reverse, setReverse] = useState(false);
   const categoryId = useParams();
 
   const getCategory = async () => {
@@ -34,22 +37,47 @@ const Category = () => {
     getCategory();
   }, []);
 
+  useEffect(() => {
+    category.filter((cat) => {
+      if (`/category/${cat._id}` == window.location.pathname) {
+        setCurrentCategory(cat);
+      }
+    });
+  }, [category]);
+
+  useEffect(() => {
+    setItems(currentCategory.items);
+  }, [currentCategory]);
+
   const handleClickAway = () => {
     setOpen(false);
   };
 
-  let currentCategory = category.filter((cat) => {
-    if (`/category/${cat._id}` == window.location.pathname) {
-      return cat;
-    }
-  });
+  const getDefaultItemList = () => {
+    getCategory();
+  };
 
-  currentCategory ? (currentCategory = currentCategory[0]) : currentCategory;
 
   const sortExpDate = () => {
-    currentCategory.items.sort(function (a, b) {
+    const sortingArr = [...items];
+    sortingArr.sort(function (a, b) {
       return new Date(a.expDate) - new Date(b.expDate);
     });
+    setItems(sortingArr);
+  };
+
+  const sortAlphabetically = () => {
+    const sortingArr = [...items];
+    sortingArr.sort(function (a, b) {
+      if (a.itemName.toLowerCase() < b.itemName.toLowerCase()) {
+        return -1;
+      } else if (a.itemName.toLowerCase() > b.itemName.toLowerCase()) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+    setItems(sortingArr);
   };
 
   return (
@@ -83,9 +111,13 @@ const Category = () => {
           </InputGroup>
         </Form>
       </div>
-      {currentCategory?.items?.length > 0 ? (
+
+      {items?.length > 0 ? (
         <div className="bottom">
-          {currentCategory?.items
+          <button onClick={getDefaultItemList}>Sort by Date Added</button>
+          <button onClick={sortExpDate}>Sort by Exp Date</button>
+          <button onClick={sortAlphabetically}>Sort Alphabetically</button>
+          {items
             ?.filter((item) => {
               return search.toLowerCase() === ""
                 ? item

@@ -196,7 +196,6 @@ module.exports.updateItemInCategory = async (req, res, next) => {
       res.status(200).json({ message: "Item updated succesfully." });
     } else {
       // adjust query to update entire item once item collection refactoring is complete (on hold, could be unnecessary)
-      console.log(req.body);
       await User.updateOne(
         {
           _id: req.userId,

@@ -16,6 +16,8 @@ module.exports.pushNotificationsToArray = async () => {
             category.items.forEach(item => {
                 let notifyISO = item.notifyDate.toISOString().slice(0, 10);
                 let expISO = item.expDate.toISOString().slice(0, 10);
+                // console.log(expISO)
+                // console.log(currentISO)
                 if (notifyISO === currentISO || expISO === currentISO) {
                     itemsToNotify.push({
                         itemId: item._id,
