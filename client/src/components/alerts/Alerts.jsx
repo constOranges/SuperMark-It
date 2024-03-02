@@ -68,41 +68,45 @@ const Alerts = () => {
 
   return (
     <div className="notificationDropDown">
-      <button onClick={(e) => deleteAll(e)}>CLEAR ALL</button>
-      {notifications.map((notification) => {
-        const expDateInt = new Date(notification.expDate).getTime();
-        return (
-          <div className="addLink">
-            <CloseIcon
-              className="close"
-              onClick={(e) => deleteHandler(e, notification._id)}
-            />
-            {notification.imagePath ? (
-              <img
-                src={notification.imagePath?.url}
-                alt="Image of product"
-                className="image"
-              />
-            ) : (
-              <img
-                src={defaultImage}
-                alt="Image of product"
-                className="image"
-              />
-            )}
+      {notifications.length > 0 ? (
+        <div>
+          <button onClick={(e) => deleteAll(e)}>CLEAR ALL</button>
+          {notifications.map((notification) => {
+            const expDateInt = new Date(notification.expDate).getTime();
+            return (
+              <div className="addLink">
+                <CloseIcon
+                  className="close"
+                  onClick={(e) => deleteHandler(e, notification._id)}
+                />
+                {notification.imagePath ? (
+                  <img
+                    src={notification.imagePath?.url}
+                    alt="Image of product"
+                    className="image"
+                  />
+                ) : (
+                  <img
+                    src={defaultImage}
+                    alt="Image of product"
+                    className="image"
+                  />
+                )}
 
-            {currentDate < expDateInt ? (
-              <p>{`${notification.itemName} will expire on ${DateTime.fromISO(
-                notification.expDate
-              )
-                .toUTC()
-                .toFormat("LL/dd/yyyy")}`}</p>
-            ) : (
-              <p>{`${notification.itemName} has expired`}</p>
-            )}
-          </div>
-        );
-      })}
+                {currentDate < expDateInt ? (
+                  <p>{`${
+                    notification.itemName
+                  } will expire on ${DateTime.fromISO(notification.expDate)
+                    .toUTC()
+                    .toFormat("LL/dd/yyyy")}`}</p>
+                ) : (
+                  <p>{`${notification.itemName} has expired`}</p>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      ) : (<p>No notifications</p>)}
     </div>
   );
 };
