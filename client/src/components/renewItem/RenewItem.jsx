@@ -30,7 +30,7 @@ const RenewItem = ({ item, categoryId, getCategory }) => {
       .patch(
         `${
           import.meta.env.VITE_REACT_APP_API_URL
-        }/api/items/updateItemInCategory`,
+        }/api/items/renewItem`,
         {
           expDate,
           notifyDate,
