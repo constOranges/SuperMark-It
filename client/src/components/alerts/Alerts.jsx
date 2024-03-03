@@ -1,43 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import axios from "axios";
 import defaultImage from "../../defaultImage/orange.png";
 import { DateTime } from "luxon";
 import CloseIcon from "@mui/icons-material/Close";
-import io from "socket.io-client";
 import "./Alerts.scss";
 
-const socket = io("http://localhost:8000");
-
-const Alerts = () => {
-  const [notifications, setNotifications] = useState([]);
+const Alerts = ({ notifications, getNotifications }) => {
   const currentDate = new Date().getTime();
-
-  const getNotifications = () => {
-    axios
-      .get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/users/currentuser`, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        setNotifications(res.data.user.notifications);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  useEffect(() => {
-    getNotifications();
-  }, []);
-
-  useEffect(() => {
-    socket.on('new-notification', (notification) => {
-      setNotifications((prevNotifications) => [...prevNotifications, notification]);
-    });
-
-    return () => {
-      socket.disconnect();
-    }
-  }, [])
 
   const deleteHandler = async (e, notificationId) => {
     e.preventDefault();
@@ -119,7 +88,9 @@ const Alerts = () => {
             );
           })}
         </div>
-      ) : (<p>No notifications</p>)}
+      ) : (
+        <p>No notifications</p>
+      )}
     </div>
   );
 };
