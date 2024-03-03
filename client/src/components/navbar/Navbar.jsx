@@ -10,14 +10,48 @@ import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import LoginForm from "../loginForm/LoginForm.jsx";
 import Alerts from "../alerts/Alerts.jsx";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
+import io from "socket.io-client";
 import $ from "jquery";
 import "./Navbar.scss";
+
+const socket = io("http://localhost:8000");
 
 const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
   const [open, setOpen] = useState(false);
   const [addDropDown, setAddDropDown] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
+  const [notifications, setNotifications] = useState([]);
   const navigate = useNavigate();
+
+  const getNotifications = () => {
+    axios
+      .get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/users/currentuser`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setNotifications(res.data.user.notifications);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getNotifications();
+  }, []);
+
+  useEffect(() => {
+    socket.on("new-notification", (notification) => {
+      setNotifications((prevNotifications) => [
+        ...prevNotifications,
+        notification,
+      ]);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   const logoutHandler = async (e) => {
     e.preventDefault();
@@ -189,10 +223,17 @@ const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
                     className="navIcon"
                     onClick={() => setOpenAlert(!openAlert)}
                   />
-                  <span>0</span>
+                  {notifications.length > 0 ? (
+                    <span>{notifications.length}</span>
+                  ) : null}
                 </div>
 
-                {openAlert && <Alerts />}
+                {openAlert && (
+                  <Alerts
+                    notifications={notifications}
+                    getNotifications={getNotifications}
+                  />
+                )}
               </div>
             </ClickAwayListener>
           </div>
