@@ -84,6 +84,7 @@ const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
           </Link>
           <div className="mobileNotifIcon">
             <NotificationsRoundedIcon className="navIcon" />
+            <span>0</span>
           </div>
         </div>
         <div className="right">
@@ -188,6 +189,7 @@ const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
                     className="navIcon"
                     onClick={() => setOpenAlert(!openAlert)}
                   />
+                  <span>0</span>
                 </div>
 
                 {openAlert && <Alerts />}
