@@ -42,6 +42,7 @@ const AllCategory = () => {
   return (
     <div className="category">
       <div className="top">
+        <span> </span>
         <h1>All Items</h1>
         <Link to="/add" className="buttonLink">
           <AddRoundedIcon className="catIcons" />

@@ -82,7 +82,7 @@ const Alerts = () => {
   return (
     <div className="notificationDropDown">
       {notifications.length > 0 ? (
-        <div>
+        <div className="notificationAlerts">
           <button onClick={(e) => deleteAll(e)}>CLEAR ALL</button>
           {notifications.map((notification) => {
             const expDateInt = new Date(notification.expDate).getTime();
