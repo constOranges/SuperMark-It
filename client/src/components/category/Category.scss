@@ -31,13 +31,43 @@
     display: block;
     text-align: center;
 
+    .searchForm {
+      margin-bottom: 10px;
+    }
+
+    .buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+
+      h4 {
+        font-family: Verdana;
+        font-size: 13px;
+        font-weight: 100;
+        color: gray;
+      }
+
+      button {
+        border-style: none;
+        background-color: white;
+        font-family: Verdana;
+        color: rgb(75, 75, 75);
+      }
+
+      button:hover {
+        cursor: pointer;
+        color: #47b6fe;
+      }
+    }
+
     .form-control {
       width: 60%;
     }
   }
 
   .bottom {
-    margin-top: -70px;
+    // margin-top: -70px;
   }
 }
 
@@ -56,14 +86,16 @@
     margin: 120px 25%;
 
     .center {
-      padding-bottom: 60px;
+      
+      .searchForm {
+        padding-bottom: 40px;
+      }
     }
 
     .noItems {
       p {
         text-align: center;
         font-weight: bold;
-        margin-top: -3em;
       }
     }
 

@@ -57,7 +57,6 @@ const Category = () => {
     getCategory();
   };
 
-
   const sortExpDate = () => {
     const sortingArr = [...items];
     sortingArr.sort(function (a, b) {
@@ -102,7 +101,7 @@ const Category = () => {
         </Link>
       </div>
       <div className="center">
-        <Form>
+        <Form className="searchForm">
           <InputGroup>
             <Form.Control
               onChange={(e) => setSearch(e.target.value.toLowerCase())}
@@ -110,13 +109,26 @@ const Category = () => {
             />
           </InputGroup>
         </Form>
+        <div className="buttons">
+          <h4>Sort By:</h4>
+          <button onClick={getDefaultItemList}>Date Added</button>
+          <h4>|</h4>
+          <button onClick={sortExpDate}>Expiration Date</button>
+          <h4>|</h4>
+          <button onClick={sortAlphabetically}>Alphabetically</button>
+        </div>
       </div>
 
       {items?.length > 0 ? (
         <div className="bottom">
-          <button onClick={getDefaultItemList}>Sort by Date Added</button>
-          <button onClick={sortExpDate}>Sort by Exp Date</button>
-          <button onClick={sortAlphabetically}>Sort Alphabetically</button>
+          {/* <div className="buttons">
+            <h4>Sort By:</h4>
+            <button onClick={getDefaultItemList}>Date Added</button>
+            <h4>|</h4>
+            <button onClick={sortExpDate}>Expiration Date</button>
+            <h4>|</h4>
+            <button onClick={sortAlphabetically}>Alphabetically</button>
+          </div> */}
           {items
             ?.filter((item) => {
               return search.toLowerCase() === ""
