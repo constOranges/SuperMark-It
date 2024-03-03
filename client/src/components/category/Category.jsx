@@ -9,6 +9,7 @@ import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
+import $ from "jquery";
 
 const Category = () => {
   const [category, setCategory] = useState([]);
@@ -79,6 +80,13 @@ const Category = () => {
     setItems(sortingArr);
   };
 
+  $(function () {
+    $(".sortButton").on("click", function () {
+      $(".sortButton").removeClass("selectedSort");
+      $(this).addClass("selectedSort");
+    });
+  });
+
   return (
     <div className="category">
       <div className="top">
@@ -111,11 +119,17 @@ const Category = () => {
         </Form>
         <div className="buttons">
           <h4>Sort By:</h4>
-          <button onClick={getDefaultItemList}>Date Added</button>
+          <button className="sortButton" onClick={getDefaultItemList}>
+            Date Added
+          </button>
           <h4>|</h4>
-          <button onClick={sortExpDate}>Expiration Date</button>
+          <button className="sortButton" onClick={sortExpDate}>
+            Expiration Date
+          </button>
           <h4>|</h4>
-          <button onClick={sortAlphabetically}>Alphabetically</button>
+          <button className="sortButton" onClick={sortAlphabetically}>
+            A-Z
+          </button>
         </div>
       </div>
 

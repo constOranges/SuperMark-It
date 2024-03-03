@@ -48,26 +48,27 @@
         color: gray;
       }
 
-      button {
+      .sortButton {
         border-style: none;
         background-color: white;
         font-family: Verdana;
         color: rgb(75, 75, 75);
       }
 
-      button:hover {
+      .sortButton:hover {
         cursor: pointer;
         color: #47b6fe;
+      }
+
+      .selectedSort {
+        color:#47b6fe;
+        font-weight: 600;
       }
     }
 
     .form-control {
       width: 60%;
     }
-  }
-
-  .bottom {
-    // margin-top: -70px;
   }
 }
 
