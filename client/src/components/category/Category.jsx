@@ -12,12 +12,11 @@ import InputGroup from "react-bootstrap/InputGroup";
 import $ from "jquery";
 
 const Category = () => {
-  const [category, setCategory] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [open, setOpen] = useState(false);
   const [currentCategory, setCurrentCategory] = useState({});
   const [items, setItems] = useState([]);
   const [search, setSearch] = useState("");
-  const [reverse, setReverse] = useState(false);
   const categoryId = useParams();
 
   const getCategory = async () => {
@@ -26,7 +25,7 @@ const Category = () => {
         withCredentials: true,
       })
       .then((res) => {
-        setCategory(res.data.user.categories);
+        setCategories(res.data.user.categories);
         console.log(res);
       })
       .catch((err) => {
@@ -39,12 +38,12 @@ const Category = () => {
   }, []);
 
   useEffect(() => {
-    category.filter((cat) => {
+    categories.filter((cat) => {
       if (`/category/${cat._id}` == window.location.pathname) {
         setCurrentCategory(cat);
       }
     });
-  }, [category]);
+  }, [categories]);
 
   useEffect(() => {
     setItems(currentCategory.items);
@@ -119,7 +118,10 @@ const Category = () => {
         </Form>
         <div className="buttons">
           <h4>Sort By:</h4>
-          <button className="sortButton" onClick={getDefaultItemList}>
+          <button
+            className="sortButton selectedSort"
+            onClick={getDefaultItemList}
+          >
             Date Added
           </button>
           <h4>|</h4>
@@ -135,14 +137,6 @@ const Category = () => {
 
       {items?.length > 0 ? (
         <div className="bottom">
-          {/* <div className="buttons">
-            <h4>Sort By:</h4>
-            <button onClick={getDefaultItemList}>Date Added</button>
-            <h4>|</h4>
-            <button onClick={sortExpDate}>Expiration Date</button>
-            <h4>|</h4>
-            <button onClick={sortAlphabetically}>Alphabetically</button>
-          </div> */}
           {items
             ?.filter((item) => {
               return search.toLowerCase() === ""
