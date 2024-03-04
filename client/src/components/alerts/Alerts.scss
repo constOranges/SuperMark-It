@@ -1,60 +1,126 @@
-.notificationDropDown {
-  opacity: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: right;
-  position: absolute;
-  right: 1em;
-  top: 4.8em;
-  width: 300px;
-  animation: fadeIn 0.2s ease-in;
-  cursor: auto;
-
-  .notificationAlerts {
+@media (min-width: 701px) {
+  .notificationDropDown {
+    opacity: 1;
     display: flex;
     flex-direction: column;
+    justify-content: right;
+    position: absolute;
+    right: 1em;
+    top: 4.8em;
+    width: 300px;
+    animation: fadeIn 0.2s ease-in;
+    cursor: auto;
 
-    button {
-      border-style: none;
-      letter-spacing: 1px;
-      padding: 5px;
-      border-radius: 6px;
-      margin-bottom: 4px;
-      background-color: rgb(236, 236, 236);
-    }
+    .notificationAlerts {
+      display: flex;
+      flex-direction: column;
 
-    button:hover {
-      cursor: pointer;
-      color: red;
-      opacity: 70%;
-    }
-
-    .addLink {
-      background-color: #ffffff;
-      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-      padding: 12px 16px;
-      z-index: 1;
-      font-family: Verdana;
-      font-size: 12px;
-      font-weight: 100;
-      color: rgb(100, 100, 100);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      border-radius: 10px;
-      margin-top: 5px;
-
-      .image {
-        max-width: 100px;
+      button {
+        border-style: none;
+        letter-spacing: 1px;
+        padding: 5px;
+        border-radius: 6px;
+        margin-bottom: 4px;
+        background-color: rgb(236, 236, 236);
       }
 
-      .close {
+      button:hover {
         cursor: pointer;
-        position: absolute;
-        right: 0.5em;
+        color: red;
+        opacity: 70%;
       }
 
-      .close:hover {
+      .addLink {
+        background-color: #ffffff;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        padding: 12px 16px;
+        z-index: 1;
+        font-family: Verdana;
+        font-size: 12px;
+        font-weight: 100;
+        color: rgb(100, 100, 100);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-radius: 10px;
+        margin-top: 5px;
+
+        .image {
+          max-width: 100px;
+        }
+
+        .close {
+          cursor: pointer;
+          position: absolute;
+          right: 0.5em;
+        }
+
+        .close:hover {
+          color: red;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .notificationDropDown {
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: right;
+    position: absolute;
+    right: 1em;
+    top: -45em;
+    width: 300px;
+    animation: fadeIn 0.2s ease-in;
+    cursor: auto;
+
+    .notificationAlerts {
+      display: flex;
+      flex-direction: column;
+
+      button {
+        border-style: none;
+        letter-spacing: 1px;
+        padding: 5px;
+        border-radius: 6px;
+        margin-bottom: 4px;
+        background-color: rgb(236, 236, 236);
+      }
+
+      button:hover {
+        cursor: pointer;
         color: red;
+        opacity: 70%;
+      }
+
+      .addLink {
+        background-color: #ffffff;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        padding: 12px 16px;
+        z-index: 1;
+        font-family: Verdana;
+        font-size: 12px;
+        font-weight: 100;
+        color: rgb(100, 100, 100);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-radius: 10px;
+        margin-top: 5px;
+
+        .image {
+          max-width: 100px;
+        }
+
+        .close {
+          cursor: pointer;
+          position: absolute;
+          right: 0.5em;
+        }
+
+        .close:hover {
+          color: red;
+        }
       }
     }
   }
