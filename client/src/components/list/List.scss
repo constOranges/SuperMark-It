@@ -34,6 +34,37 @@
     .form-control {
       width: 60%;
     }
+
+    .buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+
+      h4 {
+        font-family: Verdana;
+        font-size: 13px;
+        font-weight: 100;
+        color: gray;
+      }
+
+      .sortButton {
+        border-style: none;
+        background-color: white;
+        font-family: Verdana;
+        color: rgb(75, 75, 75);
+      }
+
+      .sortButton:hover {
+        cursor: pointer;
+        color: #47b6fe;
+      }
+
+      .selectedSort {
+        color: #47b6fe;
+        font-weight: 600;
+      }
+    }
   }
 
   .bottom {
