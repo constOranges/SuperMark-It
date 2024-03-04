@@ -22,7 +22,7 @@
     text-overflow: shrink;
 
     .logo {
-      margin-top: 10px;
+      margin-top: 6px;
       width: 250px;
     }
   }
@@ -56,21 +56,21 @@
     span {
         font-size: 12px;
         font-family: Verdana;
-        width: 16px;
-        height: 16px;
+        width: 20px;
+        height: 20px;
         border-radius: 50%;
         background-color: #ff0000;
         color: rgb(255, 255, 255);
         position: absolute;
-        right: 4px;
-        top: 32px;
+        right: 5px;
+        top: 20px;
         display: flex;
         align-items: center;
         justify-content: center;
       }
 
     .navIcon {
-      font-size: 7.5vw;
+      font-size: 50px;
       color: rgb(100, 100, 100);
       cursor: pointer;
     }

@@ -24,12 +24,13 @@ const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
   const [notifications, setNotifications] = useState([]);
   const navigate = useNavigate();
 
-  const getNotifications = () => {
+  const getNotifications = async () => {
     axios
       .get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/users/currentuser`, {
         withCredentials: true,
       })
       .then((res) => {
+        console.log(res.data.user.notifications);
         setNotifications(res.data.user.notifications);
       })
       .catch((err) => {
@@ -43,10 +44,8 @@ const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
 
   useEffect(() => {
     socket.on("new-notification", (notification) => {
-      setNotifications((prevNotifications) => [
-        ...prevNotifications,
-        notification,
-      ]);
+      console.log(notification);
+      getNotifications();
     });
 
     return () => {
@@ -88,10 +87,6 @@ const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
     });
   };
 
-  const mobileClickAway = () => {
-    setMobileAlert(false);
-  };
-
   const closeLogin = () => {
     setOpen(false);
   };
@@ -121,17 +116,16 @@ const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
               alt="Blue background with white text"
             />
           </Link>
-          <ClickAwayListener onClickAway={mobileClickAway}>
-            <div className="mobileNotifIcon">
-              <NotificationsRoundedIcon
-                className="navIcon icon"
-                onClick={() => setMobileAlert(!mobileAlert)}
-              />
-              {notifications.length > 0 ? (
-                <span>{notifications.length}</span>
-              ) : null}
-            </div>
-          </ClickAwayListener>
+
+          <div className="mobileNotifIcon">
+            <NotificationsRoundedIcon
+              className="navIcon icon"
+              onClick={() => setMobileAlert(!mobileAlert)}
+            />
+            {notifications.length > 0 ? (
+              <span>{notifications.length}</span>
+            ) : null}
+          </div>
         </div>
         <div className="right">
           <div className="icons">
@@ -245,6 +239,7 @@ const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
               <Alerts
                 notifications={notifications}
                 getNotifications={getNotifications}
+                setMobileAlert={setMobileAlert}
               />
             ) : null}
           </div>

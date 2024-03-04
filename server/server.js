@@ -8,7 +8,13 @@ const cron = require("node-cron");
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIO(server);
+const io = socketIO(server, {
+    cors: {
+        origin: process.env.CLIENT_URI,
+        methods: ['GET', 'POST'],
+        credentials: true,
+    }
+});
 
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");
@@ -29,8 +35,8 @@ require("./routes/notification.route")(app);
 const NotificationController = require("./controllers/notification.controller");
 // Sends expiration date notifications every day at 7 AM PST.
 // Adjust frequency/time based on timezones if necessary.
-cron.schedule("53 15 * * *", () => {
-    NotificationController.pushNotificationsToArray();
+cron.schedule("0 7 * * *", async () => {
+    await NotificationController.pushNotificationsToArray();
     io.emit("new-notification", { message: "New expiration notifications received!" });
 });
 
