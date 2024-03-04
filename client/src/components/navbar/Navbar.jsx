@@ -88,10 +88,6 @@ const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
     });
   };
 
-  const mobileClickAway = () => {
-    setMobileAlert(false);
-  };
-
   const closeLogin = () => {
     setOpen(false);
   };
@@ -121,17 +117,16 @@ const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
               alt="Blue background with white text"
             />
           </Link>
-          <ClickAwayListener onClickAway={mobileClickAway}>
-            <div className="mobileNotifIcon">
-              <NotificationsRoundedIcon
-                className="navIcon icon"
-                onClick={() => setMobileAlert(!mobileAlert)}
-              />
-              {notifications.length > 0 ? (
-                <span>{notifications.length}</span>
-              ) : null}
-            </div>
-          </ClickAwayListener>
+
+          <div className="mobileNotifIcon">
+            <NotificationsRoundedIcon
+              className="navIcon icon"
+              onClick={() => setMobileAlert(!mobileAlert)}
+            />
+            {notifications.length > 0 ? (
+              <span>{notifications.length}</span>
+            ) : null}
+          </div>
         </div>
         <div className="right">
           <div className="icons">
@@ -245,6 +240,7 @@ const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
               <Alerts
                 notifications={notifications}
                 getNotifications={getNotifications}
+                setMobileAlert={setMobileAlert}
               />
             ) : null}
           </div>

@@ -3,9 +3,11 @@ import axios from "axios";
 import defaultImage from "../../defaultImage/orange.png";
 import { DateTime } from "luxon";
 import CloseIcon from "@mui/icons-material/Close";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import $ from "jquery";
 import "./Alerts.scss";
 
-const Alerts = ({ notifications, getNotifications }) => {
+const Alerts = ({ notifications, getNotifications, setMobileAlert }) => {
   const currentDate = new Date().getTime();
 
   const deleteHandler = async (e, notificationId) => {
@@ -52,6 +54,11 @@ const Alerts = ({ notifications, getNotifications }) => {
     <div className="notificationDropDown">
       {notifications.length > 0 ? (
         <div className="notificationAlerts">
+          <div className="alertHeader">
+            <ArrowBackIcon className="backIcon" onClick={() => setMobileAlert(false)}/>
+            <h3>Notifications</h3>
+            <ArrowBackIcon className="hiddenIcon" />
+          </div>
           <button onClick={(e) => deleteAll(e)}>CLEAR ALL</button>
           {notifications.map((notification) => {
             const expDateInt = new Date(notification.expDate).getTime();
