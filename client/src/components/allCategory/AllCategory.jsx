@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { Link} from "react-router-dom";
 import "./AllCategory.scss";
 import ItemCard from "../itemCard/ItemCard";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
