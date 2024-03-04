@@ -89,7 +89,9 @@ const Alerts = ({ notifications, getNotifications }) => {
           })}
         </div>
       ) : (
-        <p>No notifications</p>
+        <div className="noAlerts">
+          <p>No notifications</p>
+        </div>
       )}
     </div>
   );
