@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import "./AllCategory.scss";
@@ -6,12 +6,11 @@ import ItemCard from "../itemCard/ItemCard";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
+import $ from "jquery";
 
 const AllCategory = () => {
   const [search, setSearch] = useState("");
-  const [userData, setUserData] = useState(null);
-
-  const categoryArr = [];
+  const [allItems, setAllItems] = useState([]);
 
   const getUserData = async () => {
     await axios
@@ -20,7 +19,19 @@ const AllCategory = () => {
       })
       .then((res) => {
         console.log(res);
-        setUserData(res.data.user);
+        setAllItems([]);
+        res.data.user.categories.map((category) => {
+          category.items.map((item) => {
+            setAllItems((oldArray) => [
+              ...oldArray,
+              {
+                ...item,
+                categoryName: category.categoryName,
+                categoryId: category._id,
+              },
+            ]);
+          });
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -31,28 +42,20 @@ const AllCategory = () => {
     getUserData();
   }, []);
 
-  const itemData = () => {
-    userData?.categories.forEach((category) => {
-      categoryArr.push(category);
-    });
-  };
-
-  itemData();
-
   const getDefaultItemList = () => {
-    // getUserData();
+    getUserData();
   };
 
   const sortExpDate = () => {
-    const sortingArr = [...categoryArr];
+    const sortingArr = [...allItems];
     sortingArr.sort(function (a, b) {
       return new Date(a.expDate) - new Date(b.expDate);
     });
-    setItems(sortingArr);
+    setAllItems(sortingArr);
   };
 
   const sortAlphabetically = () => {
-    const sortingArr = [...items];
+    const sortingArr = [...allItems];
     sortingArr.sort(function (a, b) {
       if (a.itemName.toLowerCase() < b.itemName.toLowerCase()) {
         return -1;
@@ -62,8 +65,15 @@ const AllCategory = () => {
         return 0;
       }
     });
-    setItems(sortingArr);
+    setAllItems(sortingArr);
   };
+
+  $(function () {
+    $(".sortButton").on("click", function () {
+      $(".sortButton").removeClass("selectedSort");
+      $(this).addClass("selectedSort");
+    });
+  });
 
   return (
     <div className="category">
@@ -101,24 +111,22 @@ const AllCategory = () => {
           </button>
         </div>
       </div>
-      {categoryArr.length > 0 ? (
+      {allItems.length > 0 ? (
         <div className="bottom">
-          {categoryArr.map((category) => {
-            return category.items
-              ?.filter((item) => {
-                return search.toLowerCase() === ""
-                  ? item
-                  : item.itemName.toLowerCase().includes(search);
-              })
-              .map((item) => (
-                <ItemCard
-                  item={item}
-                  categoryName={category.categoryName}
-                  categoryId={category._id}
-                  getUserData={getUserData}
-                />
-              ));
-          })}
+          {allItems
+            ?.filter((item) => {
+              return search.toLowerCase() === ""
+                ? item
+                : item.itemName.toLowerCase().includes(search);
+            })
+            .map((item) => (
+              <ItemCard
+                item={item}
+                categoryName={item.categoryName}
+                categoryId={item.categoryId}
+                getUserData={getUserData}
+              />
+            ))}
         </div>
       ) : (
         <div className="noItems">
