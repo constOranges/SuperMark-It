@@ -10,11 +10,14 @@ import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
+import $ from "jquery";
 
 const List = () => {
   const [open, setOpen] = useState(false);
   const [lists, setLists] = useState([]);
   const [search, setSearch] = useState("");
+  const [currentList, setCurrentList] = useState({});
+  const [items, setItems] = useState([]);
   const listId = useParams();
 
   const getList = async () => {
@@ -35,17 +38,46 @@ const List = () => {
     getList();
   }, []);
 
+  useEffect(() => {
+    lists.filter((list) => {
+      if (`/list/${list._id}` == window.location.pathname) {
+        setCurrentList(list);
+      }
+    });
+  }, [lists]);
+
+  useEffect(() => {
+    setItems(currentList.items);
+  }, [currentList]);
+
+  const getDefaultItemList = () => {
+    getList();
+  };
+
+  const sortAlphabetically = () => {
+    const sortingArr = [...items];
+    sortingArr.sort(function (a, b) {
+      if (a.itemName.toLowerCase() < b.itemName.toLowerCase()) {
+        return -1;
+      } else if (a.itemName.toLowerCase() > b.itemName.toLowerCase()) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+    setItems(sortingArr);
+  };
+
   const handleClickAway = () => {
     setOpen(false);
   };
 
-  let currentList = lists.filter((list) => {
-    if (`/list/${list._id}` == window.location.pathname) {
-      return list;
-    }
+  $(function () {
+    $(".sortButton").on("click", function () {
+      $(".sortButton").removeClass("selectedSort");
+      $(this).addClass("selectedSort");
+    });
   });
-
-  currentList ? (currentList = currentList[0]) : currentList;
 
   return (
     <div className="list">
@@ -72,10 +104,20 @@ const List = () => {
             />
           </InputGroup>
         </Form>
+        <div className="buttons">
+          <h4>Sort By:</h4>
+          <button className="sortButton selectedSort" onClick={getDefaultItemList}>
+            Date Added
+          </button>
+          <h4>|</h4>
+          <button className="sortButton" onClick={sortAlphabetically}>
+            A-Z
+          </button>
+        </div>
       </div>
-      {currentList?.items?.length > 0 ? (
+      {items?.length > 0 ? (
         <div className="bottom">
-          {currentList?.items
+          {items
             ?.filter((item) => {
               return search.toLowerCase() === ""
                 ? item
