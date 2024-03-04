@@ -39,6 +39,32 @@ const AllCategory = () => {
 
   itemData();
 
+  const getDefaultItemList = () => {
+    // getUserData();
+  };
+
+  const sortExpDate = () => {
+    const sortingArr = [...categoryArr];
+    sortingArr.sort(function (a, b) {
+      return new Date(a.expDate) - new Date(b.expDate);
+    });
+    setItems(sortingArr);
+  };
+
+  const sortAlphabetically = () => {
+    const sortingArr = [...items];
+    sortingArr.sort(function (a, b) {
+      if (a.itemName.toLowerCase() < b.itemName.toLowerCase()) {
+        return -1;
+      } else if (a.itemName.toLowerCase() > b.itemName.toLowerCase()) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+    setItems(sortingArr);
+  };
+
   return (
     <div className="category">
       <div className="top">
@@ -57,6 +83,23 @@ const AllCategory = () => {
             />
           </InputGroup>
         </Form>
+        <div className="buttons">
+          <h4>Sort By:</h4>
+          <button
+            className="sortButton selectedSort"
+            onClick={getDefaultItemList}
+          >
+            Date Added
+          </button>
+          <h4>|</h4>
+          <button className="sortButton" onClick={sortExpDate}>
+            Expiration Date
+          </button>
+          <h4>|</h4>
+          <button className="sortButton" onClick={sortAlphabetically}>
+            A-Z
+          </button>
+        </div>
       </div>
       {categoryArr.length > 0 ? (
         <div className="bottom">

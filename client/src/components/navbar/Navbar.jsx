@@ -20,6 +20,7 @@ const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
   const [open, setOpen] = useState(false);
   const [addDropDown, setAddDropDown] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
+  const [mobileAlert, setMobileAlert] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const navigate = useNavigate();
 
@@ -87,6 +88,10 @@ const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
     });
   };
 
+  const mobileClickAway = () => {
+    setMobileAlert(false);
+  };
+
   const closeLogin = () => {
     setOpen(false);
   };
@@ -116,10 +121,17 @@ const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
               alt="Blue background with white text"
             />
           </Link>
-          <div className="mobileNotifIcon">
-            <NotificationsRoundedIcon className="navIcon" />
-            <span>0</span>
-          </div>
+          <ClickAwayListener onClickAway={mobileClickAway}>
+            <div className="mobileNotifIcon">
+              <NotificationsRoundedIcon
+                className="navIcon icon"
+                onClick={() => setMobileAlert(!mobileAlert)}
+              />
+              {notifications.length > 0 ? (
+                <span>{notifications.length}</span>
+              ) : null}
+            </div>
+          </ClickAwayListener>
         </div>
         <div className="right">
           <div className="icons">
@@ -227,15 +239,14 @@ const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
                     <span>{notifications.length}</span>
                   ) : null}
                 </div>
-
-                {openAlert && (
-                  <Alerts
-                    notifications={notifications}
-                    getNotifications={getNotifications}
-                  />
-                )}
               </div>
             </ClickAwayListener>
+            {openAlert || mobileAlert ? (
+              <Alerts
+                notifications={notifications}
+                getNotifications={getNotifications}
+              />
+            ) : null}
           </div>
         </div>
       </div>
