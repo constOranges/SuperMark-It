@@ -49,7 +49,7 @@ const AllCategory = () => {
         </Link>
       </div>
       <div className="center">
-        <Form>
+        <Form className="searchForm">
           <InputGroup>
             <Form.Control
               onChange={(e) => setSearch(e.target.value.toLowerCase())}
