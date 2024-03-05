@@ -55,7 +55,10 @@ const Alerts = ({ notifications, getNotifications, setMobileAlert }) => {
       {notifications.length > 0 ? (
         <div className="notificationAlerts">
           <div className="alertHeader">
-            <ArrowBackIcon className="backIcon" onClick={() => setMobileAlert(false)}/>
+            <ArrowBackIcon
+              className="backIcon"
+              onClick={() => setMobileAlert(false)}
+            />
             <h3>Notifications</h3>
             <ArrowBackIcon className="hiddenIcon" />
           </div>
@@ -97,6 +100,14 @@ const Alerts = ({ notifications, getNotifications, setMobileAlert }) => {
         </div>
       ) : (
         <div className="noAlerts">
+          <div className="alertHeader">
+            <ArrowBackIcon
+              className="backIcon"
+              onClick={() => setMobileAlert(false)}
+            />
+            <h3>Notifications</h3>
+            <ArrowBackIcon className="hiddenIcon" />
+          </div>
           <p>No notifications</p>
         </div>
       )}
