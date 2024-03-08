@@ -43,12 +43,15 @@ const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
   }, []);
 
   useEffect(() => {
+    console.log("Socket connection established.");
+
     socket.on("new-notification", (notification) => {
       console.log(notification);
       getNotifications();
     });
 
     return () => {
+      console.log("Disconnecting socket.");
       socket.disconnect();
     };
   }, []);

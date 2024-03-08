@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, } from "react-router-dom";
 import axios from "axios";
+import moment from "moment-timezone";
 import "./NewUserForm.scss";
 import ErrorMessage from "../errorMessage/ErrorMessage";
 
 const NewUserForm = ({ setLoggedIn, getUser }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [timezoneArray, setTimezoneArray] = useState([]);
+  const [timezone, setTimezone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
@@ -21,6 +24,7 @@ const NewUserForm = ({ setLoggedIn, getUser }) => {
         {
           name,
           email,
+          timezone,
           password,
           confirmPassword,
         },
@@ -46,6 +50,14 @@ const NewUserForm = ({ setLoggedIn, getUser }) => {
         }
       });
   };
+
+  useEffect(() => {
+    const fetchedTimezones = moment.tz.names();
+    setTimezoneArray(fetchedTimezones);
+
+    const defaultTimezone = moment.tz.guess();
+    setTimezone(defaultTimezone);
+  }, []);
 
   useEffect(() => {
     if (errors.length > 0) {
@@ -89,6 +101,22 @@ const NewUserForm = ({ setLoggedIn, getUser }) => {
               placeholder="Email"
               onChange={(e) => setEmail(e.target.value)}
             />
+          </div>
+          <div className="form-group">
+            <label htmlFor="timezone">Timezone</label>
+            <select
+              name="timezone"
+              id="timezone"
+              className="form-control"
+              value={timezone}
+              onChange={(e) => setTimezone(e.target.value)}
+            >
+              {timezoneArray.map((tz) => (
+                <option key={tz} value={tz}>
+                  {tz.replace("_", " ")}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="form-group">
             <label htmlFor="password">Password</label>
