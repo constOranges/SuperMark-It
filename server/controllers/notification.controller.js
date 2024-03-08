@@ -6,7 +6,7 @@ module.exports.pushNotificationsToArray = async () => {
     const allUsers = await User.find();
 
     const currentDate = new Date();
-    const currentISO = currentDate.toISOString().slice(0, 10);
+    const currentISO = currentDate.toISOString().slice(0, 13);
 
     console.log(`Scheduled push notification task ran at: ${currentDate}`);
 
@@ -14,10 +14,9 @@ module.exports.pushNotificationsToArray = async () => {
         let itemsToNotify = [];
         user.categories.forEach(category => {
             category.items.forEach(item => {
-                let notifyISO = item.notifyDate.toISOString().slice(0, 10);
-                let expISO = item.expDate.toISOString().slice(0, 10);
-                // console.log(expISO)
-                // console.log(currentISO)
+                let notifyISO = item.notifyDate.toISOString().slice(0, 13);
+                let expISO = item.expDate.toISOString().slice(0, 13);
+                console.log(notifyISO, expISO, currentISO);
                 if (notifyISO === currentISO || expISO === currentISO) {
                     itemsToNotify.push({
                         itemId: item._id,
