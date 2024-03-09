@@ -62,6 +62,21 @@ input {
   box-sizing: border-box;
 }
 
+select {
+  width: 360px;
+  height: 44px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  background-color: white;
+}
+
+select:hover {
+  cursor: pointer;
+}
+
 h2 {
   margin-bottom: 2em;
   font-family: Verdana;
@@ -148,18 +163,18 @@ h2 {
 }
 
 .overlay {
-    animation: fadeIn 0.3s ease-in;
-    position: fixed; 
-    width: 100%; 
-    height: 100%; 
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); 
-    z-index: 2; 
-    cursor: auto; 
-  }
+  animation: fadeIn 0.3s ease-in;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  cursor: auto;
+}
 
 .errorMessage {
   animation: horizontal-shaking 0.25s;
@@ -196,7 +211,6 @@ h2 {
 .errorMessage:empty {
   display: none;
 }
-
 
 @media (max-width: 700px) {
   .errorMessage {
