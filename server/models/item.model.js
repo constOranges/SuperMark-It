@@ -29,6 +29,9 @@ const ItemSchema = new mongoose.Schema(
       ],
       // add default date for notifications or expirations
     },
+    originalTimezone: {
+      type: String,
+    },
     imagePath: {
       public_id: {
         type: String,

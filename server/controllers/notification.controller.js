@@ -1,6 +1,13 @@
 const mongoose = require("mongoose");
 const User = require("../models/user.model");
 const Item = require("../models/item.model");
+const moment = require("moment-timezone");
+
+function timezoneConversion(itemDate, userTimezone) {
+    const itemDateMoment = moment.utc(itemDate);
+    const convertedMoment = itemDateMoment.clone().tz(userTimezone, true);
+    return convertedMoment.toISOString();
+};
 
 module.exports.pushNotificationsToArray = async () => {
     const allUsers = await User.find();
@@ -14,8 +21,10 @@ module.exports.pushNotificationsToArray = async () => {
         let itemsToNotify = [];
         user.categories.forEach(category => {
             category.items.forEach(item => {
-                let notifyISO = item.notifyDate.toISOString().slice(0, 13);
-                let expISO = item.expDate.toISOString().slice(0, 13);
+                const adjustedNotifyDate = timezoneConversion(item.notifyDate, user.timezone);
+                const adjustedExpDate = timezoneConversion(item.expDate, user.timezone);
+                const notifyISO = adjustedNotifyDate.slice(0, 13);
+                const expISO = adjustedExpDate.slice(0, 13);
                 console.log(notifyISO, expISO, currentISO);
                 if (notifyISO === currentISO || expISO === currentISO) {
                     itemsToNotify.push({
