@@ -1,6 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
+// should we remove luxon npm package?
 import { DateTime } from "luxon";
+import moment from "moment-timezone";
 import "./ItemCard.scss";
 import { Link } from "react-router-dom";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
@@ -24,6 +26,10 @@ const ItemCard = ({
   const currentDate = new Date().getTime();
   const expDateInt = new Date(item.expDate).getTime();
 
+  // Pass this in as prop from GET currentuser
+  const userTimezone = "America/Los_Angeles";
+
+  // Do I need to adjust this to use displayDateInLocalTimezone()?
   useEffect(() => {
     if (expDateInt < currentDate) {
       setExpired("EXPIRED");
@@ -34,7 +40,11 @@ const ItemCard = ({
     setOpen(false);
   };
 
-  
+  const displayDateInLocalTimezone = (dateInput) => {
+    const dateMoment = moment.utc(dateInput);
+    const convertedMoment = dateMoment.clone().tz(userTimezone, true);
+    return convertedMoment.format("MM/DD/YYYY");
+  }
 
   return (
     <div className="itemCard">
@@ -62,13 +72,14 @@ const ItemCard = ({
             <div className="expiredText">
               <span>
                 Expired:{" "}
-                {DateTime.fromISO(item.expDate).toUTC().toFormat("LL/dd/yyyy")}
+                {/* {DateTime.fromISO(item.expDate).toUTC().toFormat("LL/dd/yyyy")} */}
+                {displayDateInLocalTimezone(item.expDate)}
               </span>
             </div>
           ) : (
             <p>
               Expires:{" "}
-              {DateTime.fromISO(item.expDate).toUTC().toFormat("LL/dd/yyyy")}
+              {displayDateInLocalTimezone(item.expDate)}
             </p>
           )
         ) : null}

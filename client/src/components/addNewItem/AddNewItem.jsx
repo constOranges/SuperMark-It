@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import moment from "moment";
 import ErrorMessage from "../errorMessage/ErrorMessage";
 import "./AddNewItem.scss";
 
@@ -12,7 +11,6 @@ const AddNewItem = () => {
   const [expDate, setExpDate] = useState(new Date());
   const [notifyDate, setNotifyDate] = useState(new Date());
   const [imagePath, setImagePath] = useState(null);
-  const [currentTimezone, setCurrentTimezone] = useState("");
   const [categories, setCategories] = useState([]);
   const [categoryId, setCategoryId] = useState("");
   const [errors, setErrors] = useState([]);
@@ -28,7 +26,6 @@ const AddNewItem = () => {
       })
       .then((res) => {
         setCategories(res.data.user.categories);
-        setCurrentTimezone(res.data.user.timezone);
         console.log(res);
       })
       .catch((err) => {
@@ -45,14 +42,6 @@ const AddNewItem = () => {
     e.preventDefault();
     setCategoryId(e.target.value);
   };
-
-  // Change to save timezone as local time with timezone appended; adjust on backend for server time comparison with UTC time
-  const dateHandler = (dateInput) => {
-    const selectedDate = moment.tz(dateInput, currentTimezone).startOf('day');
-    const utcDate = selectedDate.utc().format();
-    console.log(utcDate);
-    return utcDate;
-  }
 
   const setFileToBase = (file) => {
     const reader = new FileReader();
@@ -172,7 +161,7 @@ const AddNewItem = () => {
               name="expDate"
               id="expDate"
               pattern="\d{4}-\d{2}-\d{2}"
-              onChange={(e) => setExpDate(dateHandler(e.target.value))}
+              onChange={(e) => setExpDate(e.target.value)}
             />
           </div>
           <div className="form-group">
@@ -183,7 +172,7 @@ const AddNewItem = () => {
               name="notifyDate"
               id="notifyDate"
               pattern="\d{4}-\d{2}-\d{2}"
-              onChange={(e) => setNotifyDate(dateHandler(e.target.value))}
+              onChange={(e) => setNotifyDate(e.target.value)}
             />
           </div>
           <div className="form-group">
