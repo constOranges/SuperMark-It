@@ -61,10 +61,40 @@ module.exports.logout = (req, res) => {
     res.sendStatus(200);
 }
 
-module.exports.updateUser = (req, res) => {
-    User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
-        .then(updatedUser => res.json(updatedUser))
-        .catch(err => res.json({ message: "Something went wrong updating user information.", error: err }));
+module.exports.updateUser = async (req, res) => {
+    const { oldPassword, newPassword, confirmPassword, email, timezone } = req.body;
+
+    try {
+        const user = await User.findById(req.userId);
+
+        if (!user) {
+            return res.status(404).json({ error: "User not found." });
+        }
+
+        const passwordCheck = await bcrypt.compare(oldPassword, user.password);
+        if (!passwordCheck) {
+            return res.status(401).json({ error: "The old password you entered is incorrect." });
+        }
+
+        if (email) {
+            user.email = email;
+        }
+        if (timezone) {
+            user.timezone = timezone;
+        }
+        if (newPassword) {
+            user.confirmPassword = confirmPassword;
+            // password is hashed in model validations
+            user.password = newPassword;
+        }
+
+        await user.save();
+        res.status(200).json({ message: "User updated successfully." });
+    } catch (err) {
+        // Fix error handling
+        console.log(err);
+        res.status(500).json({ error: "Internal server error." });
+    }
 }
 
 module.exports.deleteUser = (req, res) => {
