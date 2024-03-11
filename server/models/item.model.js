@@ -28,9 +28,6 @@ const ItemSchema = new mongoose.Schema(
         "Notification date must be some time in the future.",
       ],
     },
-    originalTimezone: {
-      type: String,
-    },
     imagePath: {
       public_id: {
         type: String,
