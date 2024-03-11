@@ -97,8 +97,24 @@ module.exports.updateUser = async (req, res) => {
     }
 }
 
-module.exports.deleteUser = (req, res) => {
-    User.findByIdAndDelete(req.params.id)
-        .then(result => res.json(result))
-        .catch(err => res.json({ message: "Something went wrong deleting the user.", error: err }));
+module.exports.deleteUser = async (req, res) => {
+    try {
+        const user = await User.findById(req.userId);
+
+        if (!user) {
+            return res.status(404).json({ error: "User not found." });
+        }
+
+        const passwordCheck = await bcrypt.compare(req.body.password, user.password);
+        if (!passwordCheck) {
+            return res.status(401).json({ error: "The password you entered is incorrect." });
+        }
+
+        await user.deleteOne();
+        res.status(200).json({ message: "User deleted successfully." });
+    } catch (err) {
+        // Fix error handling
+        console.log(err);
+        res.status(500).json({ error: "Internal server error." });
+    }
 }
