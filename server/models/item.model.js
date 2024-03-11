@@ -14,6 +14,7 @@ const ItemSchema = new mongoose.Schema(
     quantity: {
       type: Number,
     },
+    // may need to save dates as strings and parse them to deal with timezone issue/daylight savings
     expDate: {
       type: Date,
       min: [
