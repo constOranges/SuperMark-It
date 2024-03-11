@@ -14,7 +14,6 @@ const ItemSchema = new mongoose.Schema(
     quantity: {
       type: Number,
     },
-    // may need to save dates as strings and parse them to deal with timezone issue/daylight savings
     expDate: {
       type: Date,
       min: [
@@ -28,7 +27,6 @@ const ItemSchema = new mongoose.Schema(
         currentDate.getDate(),
         "Notification date must be some time in the future.",
       ],
-      // add default date for notifications or expirations
     },
     originalTimezone: {
       type: String,
