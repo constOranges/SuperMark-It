@@ -198,6 +198,9 @@ const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
                   <div className="formContainer">
                     {loggedIn ? (
                       <div className="logoutForm">
+                        <Link className="link" to="/editUser">
+                          Account Settings
+                        </Link>
                         <Link className="link" to="/" onClick={logoutHandler}>
                           Logout
                         </Link>

@@ -166,24 +166,18 @@
     left: 0px;
     z-index: 999;
     background-color: white;
-    padding: 10px;
     font-family: Verdana;
     border-radius: 20px;
     -webkit-box-shadow: 0px 0px 7px -5px black;
     box-shadow: 0px 0px 7px -5px black;
     animation: slide-up 0.5s cubic-bezier(0.4, 0, 0.2, 1) backwards;
     overflow-x: hidden;
-
+    gap: 40px;
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     padding: 40px 16px;
-    z-index: 1;
-    font-family: Verdana;
     font-size: 17px;
     text-transform: uppercase;
     letter-spacing: 1px;
-    border-radius: 10px;
-    margin-top: 5px;
   }
 }
 
@@ -311,12 +305,11 @@
     animation: fadeIn 0.1s ease-in;
     background-color: rgb(255, 255, 255);
     position: absolute;
-    right: 10em;
+    right: 5em;
     top: 6.7em;
-    width: 150px;
+    width: 200px;
     display: flex;
     flex-direction: column;
-    align-items: center;
     padding: 0.5em;
     z-index: 5;
     -webkit-box-shadow: 0px 0px 7px -5px black;
@@ -326,7 +319,8 @@
     font-size: 12px;
     letter-spacing: 1px;
     text-transform: uppercase;
-    padding: 8px 0px;
+    padding: 15px;
+    gap: 10px;
 
     .link:hover {
       color: #47b6fe;
