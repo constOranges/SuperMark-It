@@ -30,7 +30,7 @@ const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data.user.notifications);
+        // console.log(res.data.user.notifications);
         setNotifications(res.data.user.notifications);
       })
       .catch((err) => {
@@ -198,6 +198,9 @@ const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
                   <div className="formContainer">
                     {loggedIn ? (
                       <div className="logoutForm">
+                        <Link className="link" to="/editUser">
+                          Account Settings
+                        </Link>
                         <Link className="link" to="/" onClick={logoutHandler}>
                           Logout
                         </Link>

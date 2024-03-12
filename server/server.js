@@ -9,11 +9,11 @@ const cron = require("node-cron");
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server, {
-    cors: {
-        origin: process.env.CLIENT_URI,
-        methods: ['GET', 'POST'],
-        credentials: true,
-    }
+  cors: {
+    origin: process.env.CLIENT_URI,
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
 });
 
 const swaggerUi = require("swagger-ui-express");
@@ -35,19 +35,19 @@ require("./routes/notification.route")(app);
 const NotificationController = require("./controllers/notification.controller");
 // Sends expiration date notifications every day at 7 AM PST.
 // Adjust frequency/time based on timezones if necessary.
-cron.schedule("0 * * * *", async () => {
+cron.schedule("0 7 * * *", async () => {
     await NotificationController.pushNotificationsToArray();
-    io.emit("new-notification", { message: "Expiration notifications array received." });
+    io.emit("new-notification", { message: "New expiration notifications received!" });
 });
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 io.on("connection", (socket) => {
-    console.log("Client connected.");
+  console.log("Client connected.");
 
-    socket.on("disconnect", () => {
-        console.log("Client disconnected.");
-    });
+  socket.on("disconnect", () => {
+    console.log("Client disconnected.");
+  });
 });
 
 server.listen(port, () => console.log(`Listening on port: ${port}`));
