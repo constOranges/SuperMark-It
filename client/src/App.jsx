@@ -111,7 +111,13 @@ function App() {
         },
         {
           path: "/editUser",
-          element: <EditUserForm user={user} getUser={getUser} />,
+          element: (
+            <EditUserForm
+              user={user}
+              getUser={getUser}
+              setLoggedIn={setLoggedIn}
+            />
+          ),
         },
         {
           path: "/newCategory",
