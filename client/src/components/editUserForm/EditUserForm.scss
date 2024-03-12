@@ -1,0 +1,37 @@
+.deleteText {
+  color: red;
+  text-align: center;
+  margin-right: 2em;
+}
+
+.deleteText:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  opacity: 0.6;
+}
+
+.deleteText:active {
+  transform: translateY(2px);
+}
+
+.btn {
+  .deleteBtn {
+    padding: 15px 40px;
+    background: red;
+    border: 0;
+    color: #fff;
+    text-transform: uppercase;
+    font-family: helvetica;
+    font-size: 12px;
+    letter-spacing: 3px;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+    cursor: pointer;
+    margin-right: 1.5em;
+    z-index: 1;
+  }
+
+  .deleteBtn:hover {
+    opacity: .6;
+  }
+}
