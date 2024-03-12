@@ -30,7 +30,7 @@ const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data.user.notifications);
+        // console.log(res.data.user.notifications);
         setNotifications(res.data.user.notifications);
       })
       .catch((err) => {

@@ -16,6 +16,7 @@ import NewListForm from "./components/newListForm/NewListForm";
 import UpdateCatItemForm from "./components/updateCatItemForm/UpdateCatItemForm";
 import UpdateListItemForm from "./components/updateListItemForm/UpdateListItemForm";
 import UpdateCatForm from "./components/updateCatForm/UpdateCatForm";
+import EditUserForm from "./components/editUserForm/EditUserForm";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -107,6 +108,10 @@ function App() {
               getUser={getUser}
             />
           ),
+        },
+        {
+          path: "/editUser",
+          element: <EditUserForm user={user} getUser={getUser} />,
         },
         {
           path: "/newCategory",
