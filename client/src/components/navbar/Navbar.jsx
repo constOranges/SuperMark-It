@@ -42,6 +42,8 @@ const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
     getNotifications();
   }, []);
 
+  // Current bug regarding lost socket connection that occurs sometimes when restarting project,
+  // could just be development issue but something to look into
   useEffect(() => {
     console.log("Socket connection established.");
 

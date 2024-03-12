@@ -27,10 +27,6 @@ const ItemSchema = new mongoose.Schema(
         currentDate.getDate(),
         "Notification date must be some time in the future.",
       ],
-      // add default date for notifications or expirations
-    },
-    originalTimezone: {
-      type: String,
     },
     imagePath: {
       public_id: {
