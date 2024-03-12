@@ -10,6 +10,7 @@ import "./Search.scss";
 const Search = () => {
   const [search, setSearch] = useState("");
   const [userData, setUserData] = useState(null);
+  const [userTimezone, setUserTimezone] = useState("");
   const [toggle, setToggle] = useState(true);
 
   const categoryArr = [];
@@ -23,6 +24,7 @@ const Search = () => {
       .then((res) => {
         console.log(res);
         setUserData(res.data.user);
+        setUserTimezone(res.data.user.timezone);
       })
       .catch((err) => {
         console.log(err);
@@ -94,6 +96,7 @@ const Search = () => {
                   categoryName={category.categoryName}
                   categoryId={category._id}
                   getUserData={getUserData}
+                  userTimezone={userTimezone}
                 />
               )))
           })}
@@ -112,6 +115,7 @@ const Search = () => {
                   listName={list.listName}
                   listId={list._id}
                   getUserData={getUserData}
+                  userTimezone={userTimezone}
                 />
               )))
           })}

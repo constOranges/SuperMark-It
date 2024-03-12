@@ -19,22 +19,11 @@ const ItemCard = ({
   getList,
   categoryName,
   listName,
-  getUserData
+  getUserData,
+  userTimezone
 }) => {
   const [open, setOpen] = useState(false);
   const [expired, setExpired] = useState(null);
-  const currentDate = new Date().getTime();
-  const expDateInt = new Date(item.expDate).getTime();
-
-  // Pass this in as prop from GET currentuser
-  const userTimezone = "America/Los_Angeles";
-
-  // Do I need to adjust this to use displayDateInLocalTimezone()?
-  useEffect(() => {
-    if (expDateInt < currentDate) {
-      setExpired("EXPIRED");
-    }
-  }, []);
 
   const handleClickAway = () => {
     setOpen(false);
@@ -43,8 +32,17 @@ const ItemCard = ({
   const displayDateInLocalTimezone = (dateInput) => {
     const dateMoment = moment.utc(dateInput);
     const convertedMoment = dateMoment.clone().tz(userTimezone, true);
-    return convertedMoment.format("MM/DD/YYYY");
+    return convertedMoment;
   }
+
+  const currentDate = moment(new Date());
+  const expDateInt = displayDateInLocalTimezone(item.expDate);
+
+  useEffect(() => {
+    if (currentDate.diff(expDateInt) >= 0) {
+      setExpired("EXPIRED");
+    }
+  }, []);
 
   return (
     <div className="itemCard">
@@ -73,13 +71,13 @@ const ItemCard = ({
               <span>
                 Expired:{" "}
                 {/* {DateTime.fromISO(item.expDate).toUTC().toFormat("LL/dd/yyyy")} */}
-                {displayDateInLocalTimezone(item.expDate)}
+                {displayDateInLocalTimezone(item.expDate).format("MM/DD/YYYY")}
               </span>
             </div>
           ) : (
             <p>
               Expires:{" "}
-              {displayDateInLocalTimezone(item.expDate)}
+              {displayDateInLocalTimezone(item.expDate).format("MM/DD/YYYY")}
             </p>
           )
         ) : null}

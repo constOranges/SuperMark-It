@@ -15,6 +15,7 @@ const Category = () => {
   const [categories, setCategories] = useState([]);
   const [open, setOpen] = useState(false);
   const [currentCategory, setCurrentCategory] = useState({});
+  const [userTimezone, setUserTimezone] = useState("");
   const [items, setItems] = useState([]);
   const [search, setSearch] = useState("");
   const categoryId = useParams();
@@ -26,6 +27,7 @@ const Category = () => {
       })
       .then((res) => {
         setCategories(res.data.user.categories);
+        setUserTimezone(res.data.user.timezone);
         console.log(res);
       })
       .catch((err) => {
@@ -148,6 +150,7 @@ const Category = () => {
                 item={item}
                 categoryId={categoryId}
                 getCategory={getCategory}
+                userTimezone={userTimezone}
               />
             ))}
         </div>

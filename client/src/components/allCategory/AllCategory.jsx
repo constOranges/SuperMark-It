@@ -11,6 +11,7 @@ import $ from "jquery";
 const AllCategory = () => {
   const [search, setSearch] = useState("");
   const [allItems, setAllItems] = useState([]);
+  const [userTimezone, setUserTimezone] = useState("");
 
   const getUserData = async () => {
     await axios
@@ -19,6 +20,7 @@ const AllCategory = () => {
       })
       .then((res) => {
         console.log(res);
+        setUserTimezone(res.data.user.timezone);
         setAllItems([]);
         res.data.user.categories.map((category) => {
           category.items.map((item) => {
@@ -125,6 +127,7 @@ const AllCategory = () => {
                 categoryName={item.categoryName}
                 categoryId={item.categoryId}
                 getUserData={getUserData}
+                userTimezone={userTimezone}
               />
             ))}
         </div>
