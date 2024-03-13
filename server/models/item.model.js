@@ -17,18 +17,18 @@ const ItemSchema = new mongoose.Schema(
     expDate: {
       type: Date,
       // Date validators are not functional
-      min: [
-        currentDate.getUTCDate(),
-        "Expiration date must be some time in the future.",
-      ],
+      // min: [
+      //   currentDate.getUTCDate(),
+      //   "Expiration date must be some time in the future.",
+      // ],
     },
     notifyDate: {
       type: Date,
       // Date validators are not functional
-      min: [
-        currentDate.getUTCDate(),
-        "Notification date must be some time in the future.",
-      ],
+      // min: [
+      //   currentDate.getUTCDate(),
+      //   "Notification date must be some time in the future.",
+      // ],
     },
     imagePath: {
       public_id: {

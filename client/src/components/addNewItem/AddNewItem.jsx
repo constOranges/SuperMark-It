@@ -8,8 +8,8 @@ const AddNewItem = () => {
   const [itemName, setItemName] = useState("");
   const [brand, setBrand] = useState("");
   const [quantity, setQuantity] = useState(0);
-  const [expDate, setExpDate] = useState(new Date());
-  const [notifyDate, setNotifyDate] = useState(new Date());
+  const [expDate, setExpDate] = useState(null);
+  const [notifyDate, setNotifyDate] = useState(null);
   const [imagePath, setImagePath] = useState(null);
   const [categories, setCategories] = useState([]);
   const [categoryId, setCategoryId] = useState("");
@@ -64,6 +64,7 @@ const AddNewItem = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    console.log(expDate, notifyDate);
     axios
       .post(
         `${import.meta.env.VITE_REACT_APP_API_URL}/api/items/newItemToCategory`,
