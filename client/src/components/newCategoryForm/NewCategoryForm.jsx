@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import KitchenRoundedIcon from "@mui/icons-material/KitchenRounded";
 import FastfoodRoundedIcon from "@mui/icons-material/FastfoodRounded";
@@ -26,9 +26,9 @@ const NewCategoryForm = ({ getUser }) => {
   const [errorToggle, setErrorToggle] = useState(false);
   const navigate = useNavigate();
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    axios
+    await axios
       .post(
         `${import.meta.env.VITE_REACT_APP_API_URL}/api/categories/add`,
         {
@@ -39,8 +39,22 @@ const NewCategoryForm = ({ getUser }) => {
       )
       .then((res) => {
         console.log(res);
-        navigate("/");
-        getUser();
+        axios
+          .get(
+            `${import.meta.env.VITE_REACT_APP_API_URL}/api/users/currentuser`,
+            {
+              withCredentials: true,
+            }
+          )
+          .then((res) => {
+            const newCategory =
+              res.data.user.categories[res.data.user.categories.length - 1];
+            navigate(`/category/${newCategory._id}`);
+            getUser();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
       .catch((err) => {
         console.log(err);
