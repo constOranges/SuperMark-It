@@ -6,6 +6,7 @@ const moment = require("moment-timezone");
 function timezoneConversion(itemDate, userTimezone) {
     const itemDateMoment = moment.utc(itemDate);
     const convertedMoment = itemDateMoment.clone().tz(userTimezone, true);
+    console.log(itemDate, userTimezone, convertedMoment.toISOString());
     return convertedMoment.toISOString();
 };
 
@@ -21,18 +22,20 @@ module.exports.pushNotificationsToArray = async () => {
         let itemsToNotify = [];
         user.categories.forEach(category => {
             category.items.forEach(item => {
-                const adjustedNotifyDate = timezoneConversion(item.notifyDate, user.timezone);
-                const adjustedExpDate = timezoneConversion(item.expDate, user.timezone);
-                const notifyISO = adjustedNotifyDate.slice(0, 13);
-                const expISO = adjustedExpDate.slice(0, 13);
-                console.log(notifyISO, expISO, currentISO);
-                if (notifyISO === currentISO || expISO === currentISO) {
-                    itemsToNotify.push({
-                        itemId: item._id,
-                        itemName: item.itemName,
-                        expDate: item.expDate,
-                        imagePath: item.imagePath
-                    });
+                if (item.notifyDate && item.expDate) {
+                    let adjustedNotifyDate = timezoneConversion(item.notifyDate, user.timezone);
+                    let adjustedExpDate = timezoneConversion(item.expDate, user.timezone);
+                    let notifyISO = adjustedNotifyDate.slice(0, 13);
+                    let expISO = adjustedExpDate.slice(0, 13);
+                    console.log(notifyISO, expISO, currentISO);
+                    if (notifyISO === currentISO || expISO === currentISO) {
+                        itemsToNotify.push({
+                            itemId: item._id,
+                            itemName: item.itemName,
+                            expDate: item.expDate,
+                            imagePath: item.imagePath
+                        });
+                    }
                 }
             })
         });
@@ -58,7 +61,7 @@ module.exports.deleteNotificationById = async (req, res) => {
                 }
             }
         })
-        res.status(200).json({ message: "Notification removed successfully. "})
+        res.status(200).json({ message: "Notification removed successfully. " })
     } catch (err) {
         res.status(400).json(err);
     }

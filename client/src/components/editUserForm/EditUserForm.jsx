@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import moment from "moment-timezone";
 import "./EditUserForm.scss";
+import DeleteUser from "../deleteUser/DeleteUser";
 import ErrorMessage from "../errorMessage/ErrorMessage";
 
 const EditUserForm = ({ user, getUser, setLoggedIn }) => {
@@ -197,31 +198,11 @@ const EditUserForm = ({ user, getUser, setLoggedIn }) => {
           Delete User
         </h4>
         {deleteToggle ? (
-          <form onSubmit={deleteUserHandler}>
-            <div className="form-group">
-              <label htmlFor="password">Enter Current Password</label>
-              <input
-                type="password"
-                className="form-control"
-                name="password"
-                id="password"
-                placeholder="Password"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-            <div className="btn">
-              <button className="deleteBtn" type="submit">
-                Delete User
-              </button>
-              <button
-                className="cancelBtn"
-                type="reset"
-                onClick={() => setDeleteToggle(!deleteToggle)}
-              >
-                Cancel
-              </button>
-            </div>
-          </form>
+          <DeleteUser
+            setPassword={setPassword}
+            setDeleteToggle={setDeleteToggle}
+            deleteToggle={deleteToggle}
+          />
         ) : null}
       </div>
       {errorToggle ? (
