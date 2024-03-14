@@ -22,8 +22,8 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
 
-  const getUser = () => {
-    axios
+  const getUser = async () => {
+    await axios
       .get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/users/currentuser`, {
         withCredentials: true,
       })
@@ -121,7 +121,7 @@ function App() {
         },
         {
           path: "/newCategory",
-          element: <NewCategoryForm getUser={getUser} />,
+          element: <NewCategoryForm getUser={getUser}  />,
         },
         {
           path: "/newList",

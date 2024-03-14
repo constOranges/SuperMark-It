@@ -30,7 +30,7 @@ const LoginForm = ({ setLoggedIn, getUser }) => {
       })
       .catch((err) => {
         console.log(err);
-        // setLoginErrors(err.response.data);
+        setLoginErrors(err.response.data);
       });
 
   };

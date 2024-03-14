@@ -39,8 +39,21 @@ const NewListForm = ({ getUser }) => {
       )
       .then((res) => {
         console.log(res);
-        navigate("/");
-        getUser();
+        axios
+          .get(
+            `${import.meta.env.VITE_REACT_APP_API_URL}/api/users/currentuser`,
+            {
+              withCredentials: true,
+            }
+          )
+          .then((res) => {
+            const newList = res.data.user.lists[res.data.user.lists.length - 1];
+            navigate(`/list/${newList._id}`);
+            getUser();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
       .catch((err) => {
         console.log(err);
