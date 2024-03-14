@@ -69,17 +69,17 @@
     margin-left: 23px;
   }
     .iconSelect {
-    width: 27.5em;
+    width: 24em;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 
     .indivIcon {
-      width: 3em;
-      height: 3em;
+      width: 2.5em;
+      height: 2.5em;
       border-style: solid;
       border-width: 0.01em;
       border-radius: 0.2em;
-      margin-bottom: 1em;
+      margin-bottom: 0.6em;
     }
   }
 }
