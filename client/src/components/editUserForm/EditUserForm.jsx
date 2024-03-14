@@ -92,6 +92,7 @@ const EditUserForm = ({ user, getUser, setLoggedIn }) => {
         )
         .then((res) => {
           console.log(res);
+          setLoggedIn(false);
           getUser();
           navigate("/");
         })
