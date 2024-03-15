@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./LoginForm.scss";
 
-const LoginForm = () => {
+const LoginForm = ({setOpen}) => {
 
   const { setLoggedIn, getUser } = useContext(UserContext);
 
@@ -30,6 +30,7 @@ const LoginForm = () => {
         setLoggedIn(true);
         getUser();
         navigate("/");
+        setOpen(false)
       })
       .catch((err) => {
         console.log(err);
