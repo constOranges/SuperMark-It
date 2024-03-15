@@ -62,6 +62,12 @@ const AddListItem = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    if (!listId) {
+      setErrors([
+        "Please select a list."
+      ]);
+      return;
+    }
     axios
       .post(
         `${import.meta.env.VITE_REACT_APP_API_URL}/api/items/newItemToList`,
@@ -119,7 +125,7 @@ const AddListItem = () => {
               id="lists_id"
               onChange={listHandler}
             >
-              <option defaultValue>Select List</option>
+              <option defaultValue value={""}>Select List</option>
               {lists.map((list) => {
                 return (
                   <option value={list._id} key={list._id}>
