@@ -70,15 +70,12 @@
       }
     }
   }
-
-  .bottom {
-    margin-top: -70px;
-  }
 }
 
 @media (max-width: 700px) {
   .list {
     margin-top: 20px;
+    margin-bottom: 60px;
 
     .noItems {
       p {
@@ -94,7 +91,9 @@
     margin: 120px 25%;
 
     .center {
-      padding-bottom: 60px;
+      .searchForm {
+        padding-bottom: 40px;
+      }
     }
 
     .noItems {
