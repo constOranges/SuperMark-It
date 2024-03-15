@@ -75,6 +75,13 @@
 @media (max-width: 700px) {
   .category {
     margin-top: 20px;
+
+    .noItems {
+      p {
+        text-align: center;
+        margin-top: 50px;
+      }
+    }
   }
 
   .arrows {
