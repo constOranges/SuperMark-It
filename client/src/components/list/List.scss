@@ -79,6 +79,13 @@
 @media (max-width: 700px) {
   .list {
     margin-top: 20px;
+
+    .noItems {
+      p {
+        text-align: center;
+        margin-top: 50px;
+      }
+    }
   }
 }
 

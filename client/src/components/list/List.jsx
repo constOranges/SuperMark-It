@@ -54,6 +54,8 @@ const List = () => {
     getList();
   };
 
+  console.log(currentList);
+
   const sortAlphabetically = () => {
     const sortingArr = [...items];
     sortingArr.sort(function (a, b) {
@@ -84,9 +86,12 @@ const List = () => {
       <div className="top">
         <ClickAwayListener onClickAway={handleClickAway}>
           <div>
-            <div className="more" onClick={() => setOpen(!open)}>
-              <MoreHorizIcon className="catIcons" />
-            </div>
+            {currentList.listName !== "Favorites" ? (
+              <div className="more" onClick={() => setOpen(!open)}>
+                <MoreHorizIcon className="catIcons" />
+              </div>
+            ) : null}
+
             {open && <ListCatOptions listId={listId} list={currentList} />}
           </div>
         </ClickAwayListener>
@@ -106,7 +111,10 @@ const List = () => {
         </Form>
         <div className="buttons">
           <h4>Sort By:</h4>
-          <button className="sortButton selectedSort" onClick={getDefaultItemList}>
+          <button
+            className="sortButton selectedSort"
+            onClick={getDefaultItemList}
+          >
             Date Added
           </button>
           <h4>|</h4>
