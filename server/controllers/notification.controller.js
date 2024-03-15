@@ -22,20 +22,22 @@ module.exports.pushNotificationsToArray = async () => {
         let itemsToNotify = [];
         user.categories.forEach(category => {
             category.items.forEach(item => {
-                if (item.notifyDate && item.expDate) {
+                let notifyISO, expISO;
+                if (item.notifyDate) {
                     let adjustedNotifyDate = timezoneConversion(item.notifyDate, user.timezone);
+                    notifyISO = adjustedNotifyDate.slice(0, 13);
+                }
+                if (item.expDate) {
                     let adjustedExpDate = timezoneConversion(item.expDate, user.timezone);
-                    let notifyISO = adjustedNotifyDate.slice(0, 13);
-                    let expISO = adjustedExpDate.slice(0, 13);
-                    console.log(notifyISO, expISO, currentISO);
-                    if (notifyISO === currentISO || expISO === currentISO) {
-                        itemsToNotify.push({
-                            itemId: item._id,
-                            itemName: item.itemName,
-                            expDate: item.expDate,
-                            imagePath: item.imagePath
-                        });
-                    }
+                    expISO = adjustedExpDate.slice(0, 13);
+                }
+                if (notifyISO === currentISO || expISO === currentISO) {
+                    itemsToNotify.push({
+                        itemId: item._id,
+                        itemName: item.itemName,
+                        expDate: item.expDate,
+                        imagePath: item.imagePath
+                    });
                 }
             })
         });
