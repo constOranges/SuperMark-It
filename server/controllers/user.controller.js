@@ -115,6 +115,6 @@ module.exports.deleteUser = async (req, res) => {
     } catch (err) {
         // Fix error handling
         console.log(err);
-        res.status(500).json({ error: "Internal server error." });
+        res.status(400).json(err);
     }
 }

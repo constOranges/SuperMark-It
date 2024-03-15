@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./DeleteUser.scss";
 
-const DeleteUser = ({ setPassword, setDeleteToggle, deleteToggle }) => {
+const DeleteUser = ({ setDeleteToggle, deleteToggle, getUser }) => {
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
   console.log("working");
 
@@ -28,18 +29,19 @@ const DeleteUser = ({ setPassword, setDeleteToggle, deleteToggle }) => {
           navigate("/");
         })
         .catch((err) => {
-          if (err.response.data.code === 11000) {
-            let keyName = Object.keys(err.response.data.keyValue)[0];
-            setErrors([`The ${keyName} provided already exists.`]);
-          } else {
-            console.log(err);
-            const errorResponse = err.response.data.errors;
-            const errorArray = [];
-            for (const key of Object.keys(errorResponse)) {
-              errorArray.push(errorResponse[key].message);
-            }
-            setErrors(errorArray);
-          }
+          console.log(err);
+          // if (err.response.data.code === 11000) {
+          //   let keyName = Object.keys(err.response.data.keyValue)[0];
+          //   setErrors([`The ${keyName} provided already exists.`]);
+          // } else {
+          //   console.log(err);
+          //   const errorResponse = err.response.data.errors;
+          //   const errorArray = [];
+          //   for (const key of Object.keys(errorResponse)) {
+          //     errorArray.push(errorResponse[key].message);
+          //   }
+          //   setErrors(errorArray);
+          // }
         });
     }
   };

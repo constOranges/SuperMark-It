@@ -202,6 +202,7 @@ const EditUserForm = ({ user, getUser, setLoggedIn }) => {
             setPassword={setPassword}
             setDeleteToggle={setDeleteToggle}
             deleteToggle={deleteToggle}
+            getUser={getUser}
           />
         ) : null}
       </div>
