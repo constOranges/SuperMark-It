@@ -33,8 +33,7 @@ require("./routes/item.route")(app);
 require("./routes/notification.route")(app);
 
 const NotificationController = require("./controllers/notification.controller");
-// Sends expiration date notifications every day at 7 AM PST.
-// Adjust frequency/time based on timezones if necessary.
+// Sends expiration date notifications every day at midnight according to user's local timezone.
 cron.schedule("0 * * * *", async () => {
     await NotificationController.pushNotificationsToArray();
     io.emit("new-notification", { message: "New expiration notifications received!" });
