@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import UserContext from "../UserContext.jsx";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
@@ -16,7 +17,8 @@ import "./Navbar.scss";
 
 const socket = io("http://localhost:8000");
 
-const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
+const Navbar = () => {
+  const { loggedIn, setLoggedIn, user, getUser } = useContext(UserContext)
   const [open, setOpen] = useState(false);
   const [addDropDown, setAddDropDown] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
@@ -198,7 +200,7 @@ const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
                   <div className="formContainer">
                     {loggedIn ? (
                       <div className="logoutForm">
-                        <Link className="link" to="/editUser">
+                        <Link className="link" to="/editUser" onClick={closeLogin}>
                           Account Settings
                         </Link>
                         <Link className="link" to="/" onClick={logoutHandler}>
@@ -211,8 +213,6 @@ const Navbar = ({ loggedIn, setLoggedIn, user, getUser }) => {
                           <div className="userForm">
                             <LoginForm
                               setOpen={setOpen}
-                              setLoggedIn={setLoggedIn}
-                              getUser={getUser}
                             />
                             <Link
                               className="link"

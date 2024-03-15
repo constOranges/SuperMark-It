@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "../homepage/Homepage.scss";
 import axios from "axios";
 import Options from "../options/Options";
 import ListOptions from "../listOptions/ListOptions";
 import $ from "jquery";
 
-const Homepage = ({ user, }) => {
+const Homepage = () => {
   // useState that controls toggle visiblity between Kitchen categories and List categories
   const [kitchen, setKitchen] = useState(true);
 
@@ -37,7 +37,7 @@ const Homepage = ({ user, }) => {
           </div>
         </div>
       </div>
-      {kitchen ? <Options user={user} /> : <ListOptions user={user} />}
+      {kitchen ? <Options /> : <ListOptions />}
     </div>
   );
 };

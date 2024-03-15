@@ -1,5 +1,6 @@
 import "./Options.scss";
-import React from "react";
+import React, { useContext } from "react";
+import UserContext from "../UserContext.jsx";
 import { Link } from "react-router-dom";
 import KitchenRoundedIcon from "@mui/icons-material/KitchenRounded";
 import FastfoodRoundedIcon from "@mui/icons-material/FastfoodRounded";
@@ -17,7 +18,9 @@ import LocalPizzaRoundedIcon from "@mui/icons-material/LocalPizza";
 import LunchDiningRoundedIcon from "@mui/icons-material/LunchDining";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 
-const Options = ({ user }) => {
+const Options = () => {
+  const { user } = useContext(UserContext);
+
   function UserIcon(iconPath) {
     const value = JSON.stringify(iconPath);
     if (value.includes("kitchen")) {
@@ -52,7 +55,6 @@ const Options = ({ user }) => {
       return null;
     }
   }
-
 
   return (
     <div className="options">

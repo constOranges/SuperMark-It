@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import UserContext from "../UserContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import moment from "moment-timezone";
@@ -6,10 +7,10 @@ import "./EditUserForm.scss";
 import DeleteUser from "../deleteUser/DeleteUser";
 import ErrorMessage from "../errorMessage/ErrorMessage";
 
-const EditUserForm = ({ user, getUser, setLoggedIn }) => {
+const EditUserForm = () => {
+  const { user, getUser } = useContext(UserContext);
   const [timezoneArray, setTimezoneArray] = useState([]);
   const [oldPassword, setOldPassword] = useState("");
-  const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState(user?.email ? user?.email : "");
@@ -76,43 +77,6 @@ const EditUserForm = ({ user, getUser, setLoggedIn }) => {
       });
   };
 
-  const deleteUserHandler = (e) => {
-    e.preventDefault();
-    if (
-      window.confirm(
-        `Are you sure you want to delete this account? This cannot be undone.`
-      )
-    ) {
-      axios
-        .patch(
-          `${import.meta.env.VITE_REACT_APP_API_URL}/api/users/deleteuser`,
-          {
-            password,
-          },
-          { withCredentials: true }
-        )
-        .then((res) => {
-          console.log(res);
-          setLoggedIn(false);
-          getUser();
-          navigate("/");
-        })
-        .catch((err) => {
-          if (err.response.data.code === 11000) {
-            let keyName = Object.keys(err.response.data.keyValue)[0];
-            setErrors([`The ${keyName} provided already exists.`]);
-          } else {
-            console.log(err);
-            const errorResponse = err.response.data.errors;
-            const errorArray = [];
-            for (const key of Object.keys(errorResponse)) {
-              errorArray.push(errorResponse[key].message);
-            }
-            setErrors(errorArray);
-          }
-        });
-    }
-  };
 
   return (
     <div className="newUserPage">
@@ -199,7 +163,6 @@ const EditUserForm = ({ user, getUser, setLoggedIn }) => {
         </h4>
         {deleteToggle ? (
           <DeleteUser
-            setPassword={setPassword}
             setDeleteToggle={setDeleteToggle}
             deleteToggle={deleteToggle}
             getUser={getUser}

@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useContext } from "react";
+import UserContext from "../UserContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./DeleteUser.scss";
 
-const DeleteUser = ({ setDeleteToggle, deleteToggle, getUser }) => {
+const DeleteUser = ({ setDeleteToggle, deleteToggle }) => {
+  const { getUser } = useContext(UserContext);
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  console.log("working");
 
   const deleteUserHandler = (e) => {
     e.preventDefault();

@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import UserContext from "../UserContext";
 import axios from "axios";
 import KitchenRoundedIcon from "@mui/icons-material/KitchenRounded";
 import FastfoodRoundedIcon from "@mui/icons-material/FastfoodRounded";
@@ -19,7 +20,8 @@ import $ from "jquery";
 import ErrorMessage from "../errorMessage/ErrorMessage";
 import "./NewListForm.scss";
 
-const NewListForm = ({ getUser }) => {
+const NewListForm = () => {
+  const { getUser } = useContext(UserContext);
   const [listName, setListName] = useState("");
   const [iconPath, setIconPath] = useState("");
   const [errors, setErrors] = useState([]);
