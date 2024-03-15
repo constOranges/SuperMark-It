@@ -24,6 +24,7 @@ export const UserProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    console.log("running");
     getUser();
   }, [user]);
 
