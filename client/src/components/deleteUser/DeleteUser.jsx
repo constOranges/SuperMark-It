@@ -5,7 +5,7 @@ import axios from "axios";
 import "./DeleteUser.scss";
 
 const DeleteUser = ({ setDeleteToggle, deleteToggle }) => {
-  const { getUser } = useContext(UserContext);
+  const { getUser, setLoggedIn } = useContext(UserContext);
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
@@ -25,24 +25,23 @@ const DeleteUser = ({ setDeleteToggle, deleteToggle }) => {
           { withCredentials: true }
         )
         .then((res) => {
-          console.log(res);
-          getUser();
-          navigate("/");
+          axios
+          .post(
+            `${import.meta.env.VITE_REACT_APP_API_URL}/api/users/logout`,
+            {},
+            { withCredentials: true }
+          )
+          .then((res) => {
+            setLoggedIn(false);
+            console.log(res);
+            getUser();
+            navigate("/");
+            setOpen(false);
+          })
+          .catch((err) => console.log(err));
         })
         .catch((err) => {
           console.log(err);
-          // if (err.response.data.code === 11000) {
-          //   let keyName = Object.keys(err.response.data.keyValue)[0];
-          //   setErrors([`The ${keyName} provided already exists.`]);
-          // } else {
-          //   console.log(err);
-          //   const errorResponse = err.response.data.errors;
-          //   const errorArray = [];
-          //   for (const key of Object.keys(errorResponse)) {
-          //     errorArray.push(errorResponse[key].message);
-          //   }
-          //   setErrors(errorArray);
-          // }
         });
     }
   };

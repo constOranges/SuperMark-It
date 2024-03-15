@@ -7,8 +7,8 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
 
-  const getUser = () => {
-    axios
+  const getUser = async () => {
+    await axios
       .get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/users/currentuser`, {
         withCredentials: true,
       })
@@ -22,11 +22,6 @@ export const UserProvider = ({ children }) => {
         console.log(err);
       });
   };
-
-  useEffect(() => {
-    console.log("running");
-    getUser();
-  }, [user]);
 
   return (
     <UserContext.Provider value={{ user, getUser, loggedIn, setLoggedIn }}>

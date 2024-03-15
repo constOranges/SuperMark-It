@@ -18,7 +18,7 @@ import "./Navbar.scss";
 const socket = io("http://localhost:8000");
 
 const Navbar = () => {
-  const { loggedIn, setLoggedIn, user, getUser } = useContext(UserContext)
+  const { loggedIn, setLoggedIn, user, getUser } = useContext(UserContext);
   const [open, setOpen] = useState(false);
   const [addDropDown, setAddDropDown] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);

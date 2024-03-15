@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import UserContext from "../UserContext";
 import "../homepage/Homepage.scss";
 import axios from "axios";
 import Options from "../options/Options";
@@ -7,6 +8,7 @@ import ListOptions from "../listOptions/ListOptions";
 import $ from "jquery";
 
 const Homepage = () => {
+  const { user, getUser } = useContext(UserContext);
   // useState that controls toggle visiblity between Kitchen categories and List categories
   const [kitchen, setKitchen] = useState(true);
 

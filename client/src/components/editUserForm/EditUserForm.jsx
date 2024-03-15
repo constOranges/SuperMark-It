@@ -165,7 +165,6 @@ const EditUserForm = () => {
           <DeleteUser
             setDeleteToggle={setDeleteToggle}
             deleteToggle={deleteToggle}
-            getUser={getUser}
           />
         ) : null}
       </div>
