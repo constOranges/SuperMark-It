@@ -65,6 +65,12 @@ const AddNewItem = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     console.log(expDate, notifyDate);
+    if (!categoryId) {
+      setErrors([
+        "Please select a category."
+      ]);
+      return;
+    }
     axios
       .post(
         `${import.meta.env.VITE_REACT_APP_API_URL}/api/items/newItemToCategory`,
@@ -124,7 +130,7 @@ const AddNewItem = () => {
               id="categories_id"
               onChange={categoryHandler}
             >
-              <option defaultValue>Select Category</option>
+              <option defaultValue value={""}>Select Category</option>
               {categories.map((category) => {
                 return (
                   <option value={category._id} key={category._id}>
