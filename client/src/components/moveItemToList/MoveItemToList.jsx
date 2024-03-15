@@ -50,6 +50,16 @@ const MoveItemToList = ({ item }) => {
   const moveToListHandler = (e) => {
     e.preventDefault();
 
+    setSuccess(false);
+    setErrors([]);
+
+    if (selectedLists.length < 1) {
+      setErrors([
+        "Please select a list.",
+      ]);
+      return;
+    }
+
     selectedLists.forEach((list) => {
       lists.push(list._id);
     });
@@ -142,7 +152,7 @@ const MoveItemToList = ({ item }) => {
           </div>
         </div>
       </form>
-      {success ? <p>Item added succesfully!</p> : null}
+      {success ? <p>Item added successfully!</p> : null}
       {errors ? (
         <div className="errorMessage">
           {errors.map((err) => (
