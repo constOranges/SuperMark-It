@@ -73,6 +73,7 @@ const Navbar = () => {
         console.log(res);
         getUser();
         navigate("/");
+        setOpen(false);
       })
       .catch((err) => console.log(err));
   };
