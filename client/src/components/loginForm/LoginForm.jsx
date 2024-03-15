@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import UserContext from "../UserContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./LoginForm.scss";
 
-const LoginForm = ({ setLoggedIn, getUser }) => {
+const LoginForm = ({setOpen}) => {
+
+  const { setLoggedIn, getUser } = useContext(UserContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,6 +30,7 @@ const LoginForm = ({ setLoggedIn, getUser }) => {
         setLoggedIn(true);
         getUser();
         navigate("/");
+        setOpen(false)
       })
       .catch((err) => {
         console.log(err);

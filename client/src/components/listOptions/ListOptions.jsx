@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import UserContext from "../UserContext.jsx";
 import "./ListOptions.scss";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import KitchenRoundedIcon from "@mui/icons-material/KitchenRounded";
@@ -19,7 +19,9 @@ import LocalPizzaRoundedIcon from "@mui/icons-material/LocalPizza";
 import LunchDiningRoundedIcon from "@mui/icons-material/LunchDining";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
-const ListOptions = ({ user }) => {
+const ListOptions = () => {
+  const { user } = useContext(UserContext);
+  
   function UserIcon(iconPath) {
     const value = JSON.stringify(iconPath);
     if (value.includes("kitchen")) {

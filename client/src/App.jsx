@@ -2,6 +2,7 @@ import "./App.scss";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import { UserProvider } from "./components/UserContext";
 import Homepage from "./components/homepage/Homepage";
 import Navbar from "./components/navbar/Navbar";
 import Search from "./components/search/Search";
@@ -19,40 +20,33 @@ import UpdateCatForm from "./components/updateCatForm/UpdateCatForm";
 import EditUserForm from "./components/editUserForm/EditUserForm";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [user, setUser] = useState(null);
+  // const [loggedIn, setLoggedIn] = useState(false);
+  // const [user, setUser] = useState(null);
 
-  const getUser = async () => {
-    await axios
-      .get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/users/currentuser`, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        setLoggedIn(true);
-        setUser(res.data.user);
-      })
-      .catch((err) => {
-        setLoggedIn(false);
-        setUser(null);
-        console.log(err);
-      });
-  };
+  // const getUser = async () => {
+  //   await axios
+  //     .get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/users/currentuser`, {
+  //       withCredentials: true,
+  //     })
+  //     .then((res) => {
+  //       setLoggedIn(true);
+  //       setUser(res.data.user);
+  //     })
+  //     .catch((err) => {
+  //       setLoggedIn(false);
+  //       setUser(null);
+  //       console.log(err);
+  //     });
+  // };
 
-  useEffect(() => {
-    getUser();
-  }, []);
-
-  console.log(user);
+  // useEffect(() => {
+  //   getUser();
+  // }, []);
 
   const Layout = () => {
     return (
       <div className="app">
-        <Navbar
-          loggedIn={loggedIn}
-          setLoggedIn={setLoggedIn}
-          user={user}
-          getUser={getUser}
-        />
+        <Navbar />
         <Outlet />
       </div>
     );
@@ -65,7 +59,7 @@ function App() {
       children: [
         {
           path: "/",
-          element: <Homepage user={user} />,
+          element: <Homepage />,
         },
         {
           path: "/category/:id",
@@ -101,31 +95,19 @@ function App() {
         },
         {
           path: "/newUser",
-          element: (
-            <NewUserForm
-              loggedIn={loggedIn}
-              setLoggedIn={setLoggedIn}
-              getUser={getUser}
-            />
-          ),
+          element: <NewUserForm />,
         },
         {
           path: "/editUser",
-          element: (
-            <EditUserForm
-              user={user}
-              getUser={getUser}
-              setLoggedIn={setLoggedIn}
-            />
-          ),
+          element: <EditUserForm />,
         },
         {
           path: "/newCategory",
-          element: <NewCategoryForm getUser={getUser}  />,
+          element: <NewCategoryForm />,
         },
         {
           path: "/newList",
-          element: <NewListForm getUser={getUser} />,
+          element: <NewListForm />,
         },
         {
           path: "/updateCategory",
@@ -138,7 +120,9 @@ function App() {
   return (
     <>
       <div>
-        <RouterProvider router={router} forceRefresh={true} />
+        <UserProvider>
+          <RouterProvider router={router} forceRefresh={true} />
+        </UserProvider>
       </div>
     </>
   );

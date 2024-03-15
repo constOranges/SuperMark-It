@@ -15,10 +15,10 @@ const MoveItemToCat = ({ item }) => {
   const [brand, setBrand] = useState(item.brand ? item.brand : "");
   const [quantity, setQuantity] = useState(item.quantity ? item.quantity : 0);
   const [expDate, setExpDate] = useState(
-    itemExpDate ? itemExpDate : new Date()
+    itemExpDate ? itemExpDate : null
   );
   const [notifyDate, setNotifyDate] = useState(
-    itemNotifyDate ? itemNotifyDate : new Date()
+    itemNotifyDate ? itemNotifyDate : null
   );
   const [imagePath, setImagePath] = useState(
     item.imagePath ? item.imagePath : null

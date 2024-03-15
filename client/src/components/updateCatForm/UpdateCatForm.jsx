@@ -117,7 +117,7 @@ const UpdateCatForm = () => {
       )
       .then((res) => {
         console.log(res);
-        navigate(-1);
+        navigate(`/category/${categoryId}`);
       })
       .catch((err) => {
         console.log(err);

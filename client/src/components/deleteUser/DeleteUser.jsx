@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useContext } from "react";
+import UserContext from "../UserContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./DeleteUser.scss";
 
-const DeleteUser = ({ setPassword, setDeleteToggle, deleteToggle }) => {
+const DeleteUser = ({ setDeleteToggle, deleteToggle }) => {
+  const { getUser, setLoggedIn } = useContext(UserContext);
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  console.log("working");
 
   const deleteUserHandler = (e) => {
     e.preventDefault();
@@ -23,23 +25,23 @@ const DeleteUser = ({ setPassword, setDeleteToggle, deleteToggle }) => {
           { withCredentials: true }
         )
         .then((res) => {
-          console.log(res);
-          getUser();
-          navigate("/");
+          axios
+          .post(
+            `${import.meta.env.VITE_REACT_APP_API_URL}/api/users/logout`,
+            {},
+            { withCredentials: true }
+          )
+          .then((res) => {
+            setLoggedIn(false);
+            console.log(res);
+            getUser();
+            navigate("/");
+            setOpen(false);
+          })
+          .catch((err) => console.log(err));
         })
         .catch((err) => {
-          if (err.response.data.code === 11000) {
-            let keyName = Object.keys(err.response.data.keyValue)[0];
-            setErrors([`The ${keyName} provided already exists.`]);
-          } else {
-            console.log(err);
-            const errorResponse = err.response.data.errors;
-            const errorArray = [];
-            for (const key of Object.keys(errorResponse)) {
-              errorArray.push(errorResponse[key].message);
-            }
-            setErrors(errorArray);
-          }
+          console.log(err);
         });
     }
   };
