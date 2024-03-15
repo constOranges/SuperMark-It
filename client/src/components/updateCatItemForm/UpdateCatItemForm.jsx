@@ -7,8 +7,10 @@ import "./UpdateCatItemForm.scss";
 const UpdateCatItemForm = () => {
   const location = useLocation();
   let { item, categoryId } = location.state;
-  const itemExpDate = item.expDate.slice(0, 10);
-  const itemNotifyDate = item.notifyDate.slice(0, 10);
+
+  const itemExpDate = item.expDate ? item.expDate.slice(0, 10) : null;
+  const itemNotifyDate = item.notifyDate ? item.notifyDate.slice(0, 10) : null;
+
   const [itemName, setItemName] = useState(item.itemName);
   const [brand, setBrand] = useState(item.brand);
   const [quantity, setQuantity] = useState(item.quantity);

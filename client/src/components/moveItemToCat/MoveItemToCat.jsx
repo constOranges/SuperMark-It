@@ -59,6 +59,15 @@ const MoveItemToCat = ({ item }) => {
 
   const moveToCatHandler = (e) => {
     e.preventDefault();
+    setSuccess(false);
+    setErrors([]);
+
+    if (selectedCategories.length < 1) {
+      setErrors([
+        "Please select a category.",
+      ]);
+      return;
+    }
 
     selectedCategories.forEach((category) => {
       categories.push(category._id);
@@ -66,8 +75,7 @@ const MoveItemToCat = ({ item }) => {
 
     axios
       .patch(
-        `${
-          import.meta.env.VITE_REACT_APP_API_URL
+        `${import.meta.env.VITE_REACT_APP_API_URL
         }/api/items/existingItemToCategories`,
         {
           itemId,
@@ -179,7 +187,7 @@ const MoveItemToCat = ({ item }) => {
         </div>
       </form>
 
-      {success ? <p>Item added succesfully!</p> : null}
+      {success ? <p>Item added successfully!</p> : null}
       {errors ? (
         <div className="errorMessage">
           {errors.map((err) => (
