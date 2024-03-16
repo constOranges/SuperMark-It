@@ -16,7 +16,7 @@
     }
 
     input {
-      width: 100%;
+      width: 450px;
     }
 
     .loginBtn {
@@ -44,18 +44,21 @@
     align-items: center;
 
     h4 {
-      font-weight: 100;
-      letter-spacing: 1px;
-      text-transform: uppercase;
+      display: none;
     }
 
     label {
       font-size: 14px;
     }
+
+    input {
+      width: 20em;
+    }
+
     .loginBtn {
       margin-top: 0.5em;
       font-size: 15px;
-      width: 24em;
+      width: 18em;
       height: 2.5em;
       background-color: #47b6fe;
       color: white;

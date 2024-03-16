@@ -201,7 +201,11 @@ const Navbar = () => {
                   <div className="formContainer">
                     {loggedIn ? (
                       <div className="logoutForm">
-                        <Link className="link" to="/editUser" onClick={closeLogin}>
+                        <Link
+                          className="link"
+                          to="/editUser"
+                          onClick={closeLogin}
+                        >
                           Account Settings
                         </Link>
                         <Link className="link" to="/" onClick={logoutHandler}>
@@ -210,11 +214,16 @@ const Navbar = () => {
                       </div>
                     ) : (
                       <div className="logInOverlay">
+                        <div className="logInLogo">
+                          <img
+                            className="logo"
+                            src="/images/logo.jpg"
+                            alt="Blue background with white text"
+                          />
+                        </div>
                         <ClickAwayListener onClickAway={closeLogin}>
                           <div className="userForm">
-                            <LoginForm
-                              setOpen={setOpen}
-                            />
+                            <LoginForm setOpen={setOpen} />
                             <Link
                               className="link"
                               to="/newUser"
