@@ -42,7 +42,7 @@ const LoginForm = ({setOpen}) => {
 
   return (
     <div className="loginForm">
-      <h4>Log in</h4>
+      <h4>Log In</h4>
       <form onSubmit={loginHandler}>
         <div className="form-group">
           <label htmlFor="email">Email</label>
