@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
+import UserContext from "../UserContext";
 import KitchenRoundedIcon from "@mui/icons-material/KitchenRounded";
 import FastfoodRoundedIcon from "@mui/icons-material/FastfoodRounded";
 import BreakfastDiningOutlinedIcon from "@mui/icons-material/BreakfastDiningOutlined";
@@ -20,6 +21,7 @@ import ErrorMessage from "../errorMessage/ErrorMessage";
 import "./UpdateCatForm.scss";
 
 const UpdateCatForm = () => {
+  const { getUser } = useContext(UserContext);
   const location = useLocation();
   let { categoryId, listId, category, list } = location.state;
   const [categoryName, setCategoryName] = useState(
@@ -117,6 +119,7 @@ const UpdateCatForm = () => {
       )
       .then((res) => {
         console.log(res);
+        getUser();
         navigate(`/category/${categoryId}`);
       })
       .catch((err) => {
@@ -145,7 +148,8 @@ const UpdateCatForm = () => {
       )
       .then((res) => {
         console.log(res);
-        navigate(-1);
+        getUser();
+        navigate(`/list/${listId}`);
       })
       .catch((err) => {
         console.log(err);
