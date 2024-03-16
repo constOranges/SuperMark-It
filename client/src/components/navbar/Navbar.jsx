@@ -41,13 +41,23 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+    console.log("Getting notifications on initial render...");
     getNotifications();
   }, []);
 
   // Current bug regarding lost socket connection that occurs sometimes when restarting project,
   // could just be development issue but something to look into
   useEffect(() => {
-    console.log("Socket connection established.");
+    console.log("Establishing socket connection...");
+
+    socket.on("connect", () => {
+      console.log("Socket connection established.");
+      getNotifications();
+    });
+
+    socket.on("disconnect", () => {
+      console.log("Socket disconnected.");
+    });
 
     socket.on("new-notification", (notification) => {
       console.log(notification);
