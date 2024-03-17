@@ -24,6 +24,7 @@ const Navbar = () => {
   const [openAlert, setOpenAlert] = useState(false);
   const [mobileAlert, setMobileAlert] = useState(false);
   const [notifications, setNotifications] = useState([]);
+  const [hideNavbar, setHideNavbar] = useState(false);
   const navigate = useNavigate();
 
   const getNotifications = async () => {
@@ -41,9 +42,22 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+    if (window.location.pathname == `/newUser`) {
+      setHideNavbar(true);
+    }
+  });
+
+  useEffect(() => {
     console.log("Getting notifications on initial render...");
     getNotifications();
   }, []);
+
+  useEffect(() => {
+    getUser();
+    if (!loggedIn) {
+      setOpen(true);
+    }
+  }, [loggedIn]);
 
   // Current bug regarding lost socket connection that occurs sometimes when restarting project,
   // could just be development issue but something to look into
@@ -81,9 +95,7 @@ const Navbar = () => {
       .then((res) => {
         setLoggedIn(false);
         console.log(res);
-        getUser();
         navigate("/");
-        setOpen(false);
       })
       .catch((err) => console.log(err));
   };
@@ -125,113 +137,114 @@ const Navbar = () => {
 
   return (
     <div className="navbar">
-      <div className="wrapper">
-        <div className="left">
-          <Link className="link logo" to="/">
-            <img
-              className="logo"
-              src="/images/logo.jpg"
-              alt="Blue background with white text"
-            />
-          </Link>
+      {!hideNavbar ? (
+        <div className="wrapper">
+          <div className="left">
+            <Link className="link logo" to="/">
+              <img
+                className="logo"
+                src="/images/logo.jpg"
+                alt="Blue background with white text"
+              />
+            </Link>
 
-          <div className="mobileNotifIcon">
-            <NotificationsRoundedIcon
-              className="navIcon icon"
-              onClick={() => setMobileAlert(!mobileAlert)}
-            />
-            {notifications.length > 0 ? (
-              <span>{notifications.length}</span>
-            ) : null}
+            <div className="mobileNotifIcon">
+              <NotificationsRoundedIcon
+                className="navIcon icon"
+                onClick={() => setMobileAlert(!mobileAlert)}
+              />
+              {notifications.length > 0 ? (
+                <span>{notifications.length}</span>
+              ) : null}
+            </div>
           </div>
-        </div>
-        <div className="right">
-          <div className="icons">
-            <div className="homeIcon icon">
-              <Link className="link" to="/">
-                <HomeRoundedIcon className="navIcon" />
-              </Link>
-            </div>
-            <div className="searchIcon icon">
-              <Link className="link" to="/search">
-                <SearchRoundedIcon className="navIcon" />
-              </Link>
-            </div>
-            <ClickAwayListener onClickAway={addItemClickAway}>
-              <div className="addIcon icon">
-                <AddBoxRoundedIcon
-                  className="navIcon link"
-                  onClick={() => setAddDropDown(!addDropDown)}
-                />
-                {addDropDown && (
-                  <div className="addItemDropDown">
-                    <Link
-                      className="link addLink"
-                      to="/add"
-                      onClick={() => setAddDropDown(!addDropDown)}
-                    >
-                      Add To Category
-                    </Link>
-                    <Link
-                      className="link addLink"
-                      to="/addListItem"
-                      onClick={() => setAddDropDown(!addDropDown)}
-                    >
-                      Add To List
-                    </Link>
-                  </div>
-                )}
-              </div>
-            </ClickAwayListener>
-            {user ? (
-              <div className="favIcon icon">
-                <Link className="link" to={`/list/${favoritesList._id}`}>
-                  <FavoriteRoundedIcon className="navIcon" />
+          <div className="right">
+            <div className="icons">
+              <div className="homeIcon icon">
+                <Link className="link" to="/">
+                  <HomeRoundedIcon className="navIcon" />
                 </Link>
               </div>
-            ) : (
-              <div className="favIcon">
-                <Link className="link" to={`/list/1`}>
-                  <FavoriteRoundedIcon className="navIcon" />
+              <div className="searchIcon icon">
+                <Link className="link" to="/search">
+                  <SearchRoundedIcon className="navIcon" />
                 </Link>
               </div>
-            )}
-
-            {/* Handler that closes login form when clicking outside of container */}
-            <ClickAwayListener onClickAway={handleClickAway}>
-              <div className="dropDown">
-                <div className="profileIcon link icon">
-                  <PersonRoundedIcon
-                    className="navIcon userIcon"
-                    onClick={() => setOpen(!open)}
+              <ClickAwayListener onClickAway={addItemClickAway}>
+                <div className="addIcon icon">
+                  <AddBoxRoundedIcon
+                    className="navIcon link"
+                    onClick={() => setAddDropDown(!addDropDown)}
                   />
+                  {addDropDown && (
+                    <div className="addItemDropDown">
+                      <Link
+                        className="link addLink"
+                        to="/add"
+                        onClick={() => setAddDropDown(!addDropDown)}
+                      >
+                        Add To Category
+                      </Link>
+                      <Link
+                        className="link addLink"
+                        to="/addListItem"
+                        onClick={() => setAddDropDown(!addDropDown)}
+                      >
+                        Add To List
+                      </Link>
+                    </div>
+                  )}
                 </div>
+              </ClickAwayListener>
+              {user ? (
+                <div className="favIcon icon">
+                  <Link className="link" to={`/list/${favoritesList._id}`}>
+                    <FavoriteRoundedIcon className="navIcon" />
+                  </Link>
+                </div>
+              ) : (
+                <div className="favIcon">
+                  <Link className="link" to={`/list/1`}>
+                    <FavoriteRoundedIcon className="navIcon" />
+                  </Link>
+                </div>
+              )}
 
-                {open && (
-                  <div className="formContainer">
-                    {loggedIn ? (
-                      <div className="logoutForm">
-                        <Link
-                          className="link"
-                          to="/editUser"
-                          onClick={closeLogin}
-                        >
-                          Account Settings
-                        </Link>
-                        <Link className="link" to="/" onClick={logoutHandler}>
-                          Logout
-                        </Link>
-                      </div>
-                    ) : (
-                      <div className="logInOverlay">
-                        <div className="logInLogo">
-                          <img
-                            className="logo"
-                            src="/images/logo.jpg"
-                            alt="Blue background with white text"
-                          />
+              {/* Handler that closes login form when clicking outside of container */}
+              <ClickAwayListener onClickAway={handleClickAway}>
+                <div className="dropDown">
+                  <div className="profileIcon link icon">
+                    <PersonRoundedIcon
+                      className="navIcon userIcon"
+                      onClick={() => setOpen(!open)}
+                    />
+                  </div>
+
+                  {open && (
+                    <div className="formContainer">
+                      {loggedIn ? (
+                        <div className="logoutForm">
+                          <Link
+                            className="link"
+                            to="/editUser"
+                            onClick={closeLogin}
+                          >
+                            Account Settings
+                          </Link>
+                          <Link className="link" to="/" onClick={logoutHandler}>
+                            Logout
+                          </Link>
                         </div>
-                        <ClickAwayListener onClickAway={closeLogin}>
+                      ) : (
+                        <div className="logInOverlay">
+                          <div className="logInLogo">
+                            <img
+                              className="logo"
+                              src="/images/logo.jpg"
+                              alt="Blue background with white text"
+                            />
+                          </div>
+
                           <div className="userForm">
                             <LoginForm setOpen={setOpen} />
                             <Link
@@ -242,37 +255,37 @@ const Navbar = () => {
                               Sign-up
                             </Link>
                           </div>
-                        </ClickAwayListener>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-            </ClickAwayListener>
-
-            <ClickAwayListener onClickAway={alertClickAway}>
-              <div className="dropDown">
-                <div className="notifIcon link icon">
-                  <NotificationsRoundedIcon
-                    className="navIcon"
-                    onClick={() => setOpenAlert(!openAlert)}
-                  />
-                  {notifications.length > 0 ? (
-                    <span>{notifications.length}</span>
-                  ) : null}
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
-              </div>
-            </ClickAwayListener>
-            {openAlert || mobileAlert ? (
-              <Alerts
-                notifications={notifications}
-                getNotifications={getNotifications}
-                setMobileAlert={setMobileAlert}
-              />
-            ) : null}
+              </ClickAwayListener>
+
+              <ClickAwayListener onClickAway={alertClickAway}>
+                <div className="dropDown">
+                  <div className="notifIcon link icon">
+                    <NotificationsRoundedIcon
+                      className="navIcon"
+                      onClick={() => setOpenAlert(!openAlert)}
+                    />
+                    {notifications.length > 0 ? (
+                      <span>{notifications.length}</span>
+                    ) : null}
+                  </div>
+                </div>
+              </ClickAwayListener>
+              {openAlert || mobileAlert ? (
+                <Alerts
+                  notifications={notifications}
+                  getNotifications={getNotifications}
+                  setMobileAlert={setMobileAlert}
+                />
+              ) : null}
+            </div>
           </div>
         </div>
-      </div>
+      ) : null}
     </div>
   );
 };
