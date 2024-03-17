@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import UserContext from "../UserContext.jsx";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import moment from "moment-timezone";
 import "./NewUserForm.scss";
@@ -8,7 +8,6 @@ import ErrorMessage from "../errorMessage/ErrorMessage";
 
 const NewUserForm = () => {
   const { setLoggedIn, getUser } = useContext(UserContext);
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [timezoneArray, setTimezoneArray] = useState([]);
@@ -37,6 +36,7 @@ const NewUserForm = () => {
         setLoggedIn(true);
         navigate("/");
         getUser();
+        window.location.reload(false);
       })
       .catch((err) => {
         if (err.response.data.code === 11000) {
@@ -76,6 +76,7 @@ const NewUserForm = () => {
   const resetHandler = (e) => {
     e.preventDefault();
     navigate("/");
+    window.location.reload(false);
   };
 
   return (

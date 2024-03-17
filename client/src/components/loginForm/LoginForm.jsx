@@ -27,7 +27,6 @@ const LoginForm = ({setOpen}) => {
       )
       .then((res) => {
         console.log(res);
-        setLoggedIn(true);
         getUser();
         navigate("/");
         setOpen(false)
