@@ -134,7 +134,12 @@ const ItemOptions = ({
         </div>
       </Link>
 
-      {toggleCat ? <MoveItemToCat item={item} /> : null}
+      {toggleCat ? (
+        <MoveItemToCat
+          item={item}
+          setToggleCat={setToggleCat}
+        />
+      ) : null}
 
       <Link className="iconLink" onClick={toggleListHandler}>
         <div className="item">
@@ -143,7 +148,12 @@ const ItemOptions = ({
         </div>
       </Link>
 
-      {toggleList ? <MoveItemToList item={item} /> : null}
+      {toggleList ? (
+        <MoveItemToList
+          item={item}
+          setToggleList={setToggleList}
+        />
+      ) : null}
 
       {categoryId ? (
         <Link
@@ -183,6 +193,7 @@ const ItemOptions = ({
           item={item}
           categoryId={categoryId}
           getCategory={getCategory}
+          setToggleRenew={setToggleRenew}
         />
       ) : null}
 

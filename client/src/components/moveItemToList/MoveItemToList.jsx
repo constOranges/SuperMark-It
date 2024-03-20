@@ -4,7 +4,7 @@ import { MultiSelect } from "primereact/multiselect";
 import axios from "axios";
 import "./MoveItemToList.scss";
 
-const MoveItemToList = ({ item }) => {
+const MoveItemToList = ({ item, setToggleList }) => {
   const [listOptions, setListOptions] = useState([]);
   const [selectedLists, setSelectedLists] = useState([]);
   const [itemName] = useState(item.itemName);
@@ -82,6 +82,7 @@ const MoveItemToList = ({ item }) => {
       .then((res) => {
         console.log(res);
         setSuccess(true);
+        setTimeout(() => {setToggleList(false)}, 2000)
       })
       .catch((err) => {
         console.log(err);
