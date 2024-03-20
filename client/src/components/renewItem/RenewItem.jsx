@@ -3,7 +3,7 @@ import axios from "axios";
 import ErrorMessage from "../errorMessage/ErrorMessage";
 import "./RenewItem.scss";
 
-const RenewItem = ({ item, categoryId, getCategory }) => {
+const RenewItem = ({ item, categoryId, getCategory, setToggleRenew }) => {
   if (item.expDate && item.notifyDate) {
     var itemExpDate = item.expDate.slice(0, 10);
     var itemNotifyDate = item.notifyDate.slice(0, 10);
@@ -28,9 +28,7 @@ const RenewItem = ({ item, categoryId, getCategory }) => {
     e.preventDefault();
     axios
       .patch(
-        `${
-          import.meta.env.VITE_REACT_APP_API_URL
-        }/api/items/renewItem`,
+        `${import.meta.env.VITE_REACT_APP_API_URL}/api/items/renewItem`,
         {
           expDate,
           notifyDate,
@@ -42,6 +40,9 @@ const RenewItem = ({ item, categoryId, getCategory }) => {
       .then((res) => {
         console.log(res);
         setSuccess(true);
+        setTimeout(() => {
+          setToggleRenew(false);
+        }, 2000);
         if (typeof getCategory === "function") {
           getCategory();
         } else {

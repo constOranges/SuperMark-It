@@ -4,7 +4,7 @@ import { MultiSelect } from "primereact/multiselect";
 import axios from "axios";
 import "./MoveItemToCat.scss";
 
-const MoveItemToCat = ({ item }) => {
+const MoveItemToCat = ({ item, setToggleCat }) => {
   if (item.expDate && item.notifyDate) {
     var itemExpDate = item.expDate.slice(0, 10);
     var itemNotifyDate = item.notifyDate.slice(0, 10);
@@ -92,6 +92,7 @@ const MoveItemToCat = ({ item }) => {
       .then((res) => {
         console.log(res);
         setSuccess(true);
+        setTimeout(() => {setToggleCat(false)}, 2000)
       })
       .catch((err) => {
         console.log(err);

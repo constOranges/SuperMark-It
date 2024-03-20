@@ -56,6 +56,8 @@ const Navbar = () => {
     getUser();
     if (!loggedIn) {
       setOpen(true);
+    } else {
+      setOpen(false)
     }
   }, [loggedIn]);
 
