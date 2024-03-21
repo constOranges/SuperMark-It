@@ -77,9 +77,9 @@ const EditUserForm = () => {
       });
   };
 
-
   return (
     <div className="newUserPage">
+      <h5>*Password is required to make changes to your account</h5>
       <div className="registrationForm">
         <h2>Update Account Settings</h2>
         <form onSubmit={updateHandler} onReset={resetHandler}>
@@ -112,7 +112,7 @@ const EditUserForm = () => {
             </select>
           </div>
           <div className="form-group">
-            <label htmlFor="password">Old Password</label>
+            <label htmlFor="password">Current Password*</label>
             <input
               type="password"
               className="form-control"
