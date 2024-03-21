@@ -6,6 +6,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import ItemCard from "../itemCard/ItemCard";
 import $ from "jquery";
 import "./Search.scss";
+//
 
 const Search = () => {
   const [search, setSearch] = useState("");
