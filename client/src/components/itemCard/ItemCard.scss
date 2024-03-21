@@ -9,7 +9,7 @@
   .expiredText {
     span {
       color: red;
-      font-size: 13.2px
+      font-size: 13.2px;
     }
   }
 
@@ -23,6 +23,9 @@
     flex: 2;
     font-family: Verdana;
     padding-left: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     h3 {
       font-size: 15px;
