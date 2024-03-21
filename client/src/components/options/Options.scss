@@ -18,6 +18,7 @@
     margin: 1em;
     width: auto;
     height: auto;
+    text-overflow: ellipsis;
     .top {
       display: flex;
       margin-bottom: 50px;
@@ -60,6 +61,12 @@
           margin-left: 5px;
           margin-right: 5px;
           text-transform: uppercase;
+
+          .catBody {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
 
           .catIcon {
             margin-top: 30px;
@@ -115,6 +122,12 @@
           margin-right: 5px;
           text-transform: uppercase;
 
+          .catBody {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
           .catIcon {
             margin-top: 30px;
             font-size: 70px;
@@ -166,6 +179,12 @@
           width: 200px;
           margin-bottom: 3em;
           text-transform: uppercase;
+
+          .catBody {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
 
           .catIcon {
             margin-top: 30px;

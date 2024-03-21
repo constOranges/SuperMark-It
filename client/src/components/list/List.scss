@@ -1,6 +1,12 @@
 .list {
   margin-top: 80px;
 
+  h1 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .top {
     display: flex;
     align-items: center;
@@ -95,6 +101,7 @@
         padding-bottom: 40px;
       }
     }
+
 
     .noItems {
       p {

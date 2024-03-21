@@ -1,6 +1,12 @@
 .category {
   margin-top: 80px;
 
+  h1 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .top {
     display: flex;
     align-items: center;
@@ -61,7 +67,7 @@
       }
 
       .selectedSort {
-        color:#47b6fe;
+        color: #47b6fe;
         font-weight: 600;
       }
     }
@@ -95,7 +101,6 @@
     margin: 120px 25%;
 
     .center {
-      
       .searchForm {
         padding-bottom: 40px;
       }

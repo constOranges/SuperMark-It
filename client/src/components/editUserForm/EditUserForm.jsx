@@ -127,9 +127,9 @@ const EditUserForm = () => {
             <input
               type="password"
               className="form-control"
-              name="password"
-              id="password"
-              placeholder="Password"
+              name="newPassword"
+              id="newPassword"
+              placeholder="New Password"
               onChange={(e) => setNewPassword(e.target.value)}
             />
           </div>
