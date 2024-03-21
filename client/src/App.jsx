@@ -20,28 +20,7 @@ import UpdateCatForm from "./components/updateCatForm/UpdateCatForm";
 import EditUserForm from "./components/editUserForm/EditUserForm";
 
 function App() {
-  // const [loggedIn, setLoggedIn] = useState(false);
-  // const [user, setUser] = useState(null);
 
-  // const getUser = async () => {
-  //   await axios
-  //     .get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/users/currentuser`, {
-  //       withCredentials: true,
-  //     })
-  //     .then((res) => {
-  //       setLoggedIn(true);
-  //       setUser(res.data.user);
-  //     })
-  //     .catch((err) => {
-  //       setLoggedIn(false);
-  //       setUser(null);
-  //       console.log(err);
-  //     });
-  // };
-
-  // useEffect(() => {
-  //   getUser();
-  // }, []);
 
   const Layout = () => {
     return (

@@ -8,7 +8,7 @@ import ListOptions from "../listOptions/ListOptions";
 import $ from "jquery";
 
 const Homepage = () => {
-  const { user, getUser } = useContext(UserContext);
+  const { user, getUser, loading, setLoading } = useContext(UserContext);
   // useState that controls toggle visiblity between Kitchen categories and List categories
   const [kitchen, setKitchen] = useState(true);
 
@@ -20,26 +20,40 @@ const Homepage = () => {
     });
   });
 
+  useEffect(() => {
+    if(user){
+      setLoading(false);
+    }
+  }, [user])
+
   return (
     <div className="homepage">
-      <div className="options">
-        <div className="top">
-          <div className="item">
-            <Link
-              className="link hLink selected"
-              onClick={() => setKitchen(true)}
-            >
-              <div> KITCHEN </div>
-            </Link>
-          </div>
-          <div className="item">
-            <Link className="link hLink" onClick={() => setKitchen(false)}>
-              <div>LISTS</div>
-            </Link>
-          </div>
+      {loading ? (
+        <div className="loading"> 
+          <h1>Loading...</h1>
         </div>
-      </div>
-      {kitchen ? <Options /> : <ListOptions />}
+      ) : (
+        <div>
+          <div className="options">
+            <div className="top">
+              <div className="item">
+                <Link
+                  className="link hLink selected"
+                  onClick={() => setKitchen(true)}
+                >
+                  <div> KITCHEN </div>
+                </Link>
+              </div>
+              <div className="item">
+                <Link className="link hLink" onClick={() => setKitchen(false)}>
+                  <div>LISTS</div>
+                </Link>
+              </div>
+            </div>
+          </div>
+          <div>{kitchen ? <Options /> : <ListOptions />}</div>
+        </div>
+      )}
     </div>
   );
 };

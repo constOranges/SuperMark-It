@@ -7,7 +7,7 @@ import "./NewUserForm.scss";
 import ErrorMessage from "../errorMessage/ErrorMessage";
 
 const NewUserForm = () => {
-  const { setLoggedIn, getUser } = useContext(UserContext);
+  const { setLoggedIn, getUser, setLoading ,setHideNavbar } = useContext(UserContext);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [timezoneArray, setTimezoneArray] = useState([]);
@@ -34,7 +34,9 @@ const NewUserForm = () => {
       )
       .then((res) => {
         setLoggedIn(true);
+        setLoading(true);
         navigate("/");
+        setHideNavbar(false);
         getUser();
         window.location.reload(false);
       })
@@ -76,6 +78,7 @@ const NewUserForm = () => {
   const resetHandler = (e) => {
     e.preventDefault();
     navigate("/");
+    setHideNavbar(false);
     window.location.reload(false);
   };
 
