@@ -18,13 +18,12 @@ import "./Navbar.scss";
 const socket = io("http://localhost:8000");
 
 const Navbar = () => {
-  const { loggedIn, setLoggedIn, user, getUser } = useContext(UserContext);
+  const { loggedIn, setLoggedIn, user, getUser, hideNavbar, setHideNavbar } = useContext(UserContext);
   const [open, setOpen] = useState(false);
   const [addDropDown, setAddDropDown] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
   const [mobileAlert, setMobileAlert] = useState(false);
   const [notifications, setNotifications] = useState([]);
-  const [hideNavbar, setHideNavbar] = useState(false);
   const navigate = useNavigate();
 
   const getNotifications = async () => {

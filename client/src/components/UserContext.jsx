@@ -6,6 +6,8 @@ const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [hideNavbar, setHideNavbar] = useState(false);
 
   const getUser = async () => {
     await axios
@@ -24,7 +26,18 @@ export const UserProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ user, getUser, loggedIn, setLoggedIn }}>
+    <UserContext.Provider
+      value={{
+        user,
+        getUser,
+        loggedIn,
+        setLoggedIn,
+        loading,
+        setLoading,
+        hideNavbar,
+        setHideNavbar,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );
