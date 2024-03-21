@@ -68,12 +68,26 @@ module.exports.updateUser = async (req, res) => {
         const user = await User.findById(req.userId);
 
         if (!user) {
-            return res.status(404).json({ error: "User not found." });
+            return res.status(404).json({
+                errors: {
+                    userNotFound: {
+                        message: "User information not found. Please reload the page."
+                    }
+                }
+            });
         }
 
         const passwordCheck = await bcrypt.compare(oldPassword, user.password);
         if (!passwordCheck) {
-            return res.status(401).json({ error: "The old password you entered is incorrect." });
+            return res.status(401).json({
+                errors: {
+                    passwordMatch: {
+                        message: "The current password you entered is incorrect."
+                    }
+                }
+            });
+        } else {
+            user.password = oldPassword;
         }
 
         if (email) {
@@ -86,14 +100,16 @@ module.exports.updateUser = async (req, res) => {
             user.confirmPassword = confirmPassword;
             // password is hashed in model validations
             user.password = newPassword;
+            await user.save();
+        } else {
+            await user.save({ validateBeforeSave: false });
         }
 
-        await user.save();
         res.status(200).json({ message: "User updated successfully." });
     } catch (err) {
         // Fix error handling
         console.log(err);
-        res.status(500).json({ error: "Internal server error." });
+        res.status(500).json(err);
     }
 }
 
