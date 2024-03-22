@@ -15,7 +15,9 @@ import io from "socket.io-client";
 import $ from "jquery";
 import "./Navbar.scss";
 
-const socket = io("http://localhost:8000");
+const socket = io(import.meta.env.VITE_REACT_APP_API_URL, {
+  withCredentials: true,
+});
 
 const Navbar = () => {
   const { loggedIn, setLoggedIn, user, getUser, hideNavbar, setHideNavbar } = useContext(UserContext);
