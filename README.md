@@ -24,6 +24,8 @@ Welcome to Super Mark-It! This organization application helps you efficiently ma
 
 ## Usage
 
+To start using Super Mark-It, simply visit the deployed site: [Super Mark-It](https://supermark-it.onrender.com/)
+
 1. **Sign Up or Log In**: Create an account or log in to access your personalized kitchen inventory.
 
 2. **Add Items**: Upload items from your kitchen and categorize them into predefined or custom categories/lists.
@@ -42,21 +44,3 @@ Welcome to Super Mark-It! This organization application helps you efficiently ma
 
 This application is designed to be fully accessible on both full-screen and mobile devices.
 
-## Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/constOranges/SuperMark-It.git
-
-2. Navigate to the project directory:
-   ```bash
-   cd SuperMark-It
-
-4. Install dependencies:
-   ```bash
-   npm install
-
-5. Start the application:
-   ```bash
-   npm start
-   
