@@ -26,7 +26,9 @@ module.exports.createUser = (req, res) => {
             res
                 .cookie("usertoken", userToken, {
                     httpOnly: true,
-                    partitioned: true
+                    partitioned: true,
+                    sameSite: 'Lax',
+                    secure: true,
                 })
                 .json({ user: userInfo });
         })
@@ -53,7 +55,9 @@ module.exports.loginUser = async (req, res) => {
     res
         .cookie("usertoken", userToken, {
             httpOnly: true,
-            partitioned: true
+            partitioned: true,
+            sameSite: 'Lax',
+            secure: true,
         })
         .json({ user: userInfo });
 }
