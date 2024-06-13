@@ -27,7 +27,7 @@ module.exports.createUser = (req, res) => {
                 .cookie("usertoken", userToken, {
                     httpOnly: true,
                     partitioned: true,
-                    sameSite: 'Lax',
+                    sameSite: 'None',
                     secure: true,
                 })
                 .json({ user: userInfo });
@@ -56,15 +56,21 @@ module.exports.loginUser = async (req, res) => {
         .cookie("usertoken", userToken, {
             httpOnly: true,
             partitioned: true,
-            sameSite: 'Lax',
+            sameSite: 'None',
             secure: true,
         })
         .json({ user: userInfo });
 }
 
 module.exports.logout = (req, res) => {
-    res.clearCookie("usertoken");
-    res.sendStatus(200);
+    res.clearCookie("usertoken", {
+        httpOnly: true,
+        partitioned: true,
+        sameSite: 'None',
+        secure: true,
+    });
+    // res.sendStatus(200);
+    res.end();
 }
 
 module.exports.updateUser = async (req, res) => {
