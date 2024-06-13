@@ -25,10 +25,9 @@ module.exports.createUser = (req, res) => {
 
             res
                 .cookie("usertoken", userToken, {
-                    domain: 'onrender.com', // set only in production. change to use env variables in future
                     httpOnly: true,
                     partitioned: true,
-                    sameSite: 'Lax',
+                    sameSite: 'None',
                     secure: true,
                 })
                 .json({ user: userInfo });
@@ -55,10 +54,9 @@ module.exports.loginUser = async (req, res) => {
 
     res
         .cookie("usertoken", userToken, {
-            domain: 'onrender.com', // set only in production. change to use env variables in future
             httpOnly: true,
             partitioned: true,
-            sameSite: 'Lax',
+            sameSite: 'None',
             secure: true,
         })
         .json({ user: userInfo });
@@ -66,10 +64,9 @@ module.exports.loginUser = async (req, res) => {
 
 module.exports.logout = (req, res) => {
     res.clearCookie("usertoken", {
-        domain: 'onrender.com', // set only in production. change to use env variables in future
         httpOnly: true,
         partitioned: true,
-        sameSite: 'Lax',
+        sameSite: 'None',
         secure: true,
     });
     // res.sendStatus(200);
